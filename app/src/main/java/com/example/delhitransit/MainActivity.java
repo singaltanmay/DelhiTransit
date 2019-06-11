@@ -1,7 +1,11 @@
 package com.example.delhitransit;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.loader.content.AsyncTaskLoader;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import java.io.FileInputStream;
@@ -17,30 +21,57 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        InputStream file = null;
+//        InputStream file = null;
+//
+//        try {
+//            file = (InputStream) new FileInputStream("src/VehiclePositions.pb");
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//
+//        GtfsRealtime.FeedMessage feedMessage = null;
+//        try {
+//            feedMessage = GtfsRealtime.FeedMessage.parseFrom(file);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        System.out.println(feedMessage.toString());
+//
+//        List<GtfsRealtime.FeedEntity> entityList = feedMessage.getEntityList();
+//
+//        for (GtfsRealtime.FeedEntity entity : entityList) {
+//
+//            System.out.println("id: " + entity.getId() + " route: " + entity.getVehicle().getTrip().getRouteId() + " coordinates: " + entity.getVehicle().getPosition().getLatitude() + " " + entity.getVehicle().getPosition().getLongitude() + " speed: " + entity.getVehicle().getPosition().getSpeed());
+//
+//        }
 
-        try {
-            file = (InputStream) new FileInputStream("src/VehiclePositions.pb");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        GtfsRealtime.FeedMessage feedMessage = null;
-        try {
-            feedMessage = GtfsRealtime.FeedMessage.parseFrom(file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println(feedMessage.toString());
-
-        List<GtfsRealtime.FeedEntity> entityList = feedMessage.getEntityList();
-
-        for (GtfsRealtime.FeedEntity entity : entityList) {
-
-            System.out.println("id: " + entity.getId() + " route: " + entity.getVehicle().getTrip().getRouteId() + " coordinates: " + entity.getVehicle().getPosition().getLatitude() + " " + entity.getVehicle().getPosition().getLongitude() + " speed: " + entity.getVehicle().getPosition().getSpeed());
-
-        }
+        VehiclePositionLoader loader = new VehiclePositionLoader(this);
+        loader.loadInBackground();
 
     }
+
+
+    private class VehiclePositionLoader extends AsyncTaskLoader<List<GtfsRealtime.FeedEntity>> {
+
+
+        private String LOG_TAG = VehiclePositionLoader.class.getSimpleName();
+
+        public VehiclePositionLoader(@NonNull Context context) {
+            super(context);
+        }
+
+
+        @Override
+        protected void onStartLoading() {
+            forceLoad();
+        }
+
+        @Nullable
+        @Override
+        public List<GtfsRealtime.FeedEntity> loadInBackground() {
+            return DataParser.fetchPositionData();
+        }
+    }
+
 }
