@@ -24,8 +24,8 @@ public class DataParser {
         makeRetrofitRequest();
 
         while (!isLoaded) {
+            Log.d(LOG_TAG, "BEFORE LOADER");
         }
-        isLoaded = false;
 
         return feedEntity;
 
@@ -41,7 +41,7 @@ public class DataParser {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
-                Log.d(LOG_TAG, response.message());
+                Log.d(LOG_TAG, "Success! " + response.message());
                 isLoaded = true;
 
             }

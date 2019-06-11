@@ -7,6 +7,7 @@ import androidx.loader.content.AsyncTaskLoader;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -15,6 +16,8 @@ import java.io.InputStream;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
         private String LOG_TAG = VehiclePositionLoader.class.getSimpleName();
 
-        public VehiclePositionLoader(@NonNull Context context) {
+        private VehiclePositionLoader(@NonNull Context context) {
             super(context);
         }
 
