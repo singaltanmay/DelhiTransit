@@ -10,5 +10,5 @@ stop_times.txt -> stop_id
     Multiple entries for same route corresponding to different trips
     needs to be stored as time of stops is different
 
-stop.txt
+stops.txt
     Get information about each stop
