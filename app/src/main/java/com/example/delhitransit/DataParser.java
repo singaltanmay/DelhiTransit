@@ -43,6 +43,11 @@ public class DataParser {
             } else
                 Log.e(LOG_TAG, "Error connecting to server. Response code : " + urlConnection.getResponseCode());
 
+            if (inputStream != null) {
+                inputStream.close();
+            }
+            urlConnection.disconnect();
+
 
         } catch (
                 Exception e) {
