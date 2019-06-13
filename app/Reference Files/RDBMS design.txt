@@ -1,12 +1,9 @@
 routes.txt -> route_id
     Uniquely identifies a route
 
-
-
 trips.txt -> trip_id corresponding to route_id
     Uniquely identifies a trip
     Multiple trips on same route
-
 
 stop_times.txt -> stop_id
     Uniquely identifies a stop
