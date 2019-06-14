@@ -5,7 +5,9 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.example.delhitransit.Data.DAO.BusRouteDao;
+import com.example.delhitransit.Data.DAO.BusStopDao;
 import com.example.delhitransit.Data.DataClasses.BusRoute;
+import com.example.delhitransit.Data.DataClasses.BusStop;
 import com.example.delhitransit.GtfsRealtime;
 import com.example.delhitransit.R;
 
@@ -21,7 +23,6 @@ import java.util.List;
 public class DataParser {
 
     private static AppDatabase database;
-    private static Context context;
     private static final String LOG_TAG = DataParser.class.getSimpleName();
 
     public static List<GtfsRealtime.FeedEntity> fetchPositionData() {
@@ -71,22 +72,31 @@ public class DataParser {
 
     }
 
-    public static void initDb(Context context) {
+    public static void initDb(final Context context) {
 
-        DataParser.context = context;
 
-        database = AppDatabase.getInstance(DataParser.context.getApplicationContext());
+        database = AppDatabase.getInstance(context.getApplicationContext());
 
         Thread initRoutes = new Thread(new Runnable() {
             @Override
             public void run() {
-                initRoutesTable();
+                initRoutesTable(context);
                 //For debugging purposes only
 //                logAllEntries(database.getBusRouteDao().loadAllRoutes());
             }
         });
 
         initRoutes.run();
+
+        final Thread initStops = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                initStopTable(context);
+//                logAllEntries(database.getBusStopDao().loadAllBusStops());
+            }
+        });
+
+        initStops.run();
 
 
     }
@@ -98,13 +108,13 @@ public class DataParser {
         }
     }
 
-    private static void initRoutesTable() {
+    private static void initRoutesTable(Context context) {
 
         BusRouteDao busRouteDao = database.getBusRouteDao();
         busRouteDao.deleteAllRoutes();
 
 
-        InputStream stream = DataParser.context.getResources().openRawResource(R.raw.routes);
+        InputStream stream = context.getResources().openRawResource(R.raw.routes);
 
         InputStreamReader inputStreamReader = new InputStreamReader(stream, Charset.forName("UTF-8" /*Name of Charset to convert to*/));
 
@@ -135,7 +145,7 @@ public class DataParser {
                     String route_short_name = "";
                     String route_long_name = "";
                     int route_type = -1;
-                    int route_id = -1;
+                    int route_id;
 
                     int prev_comma = 0;
                     int next_comma;
@@ -179,45 +189,97 @@ public class DataParser {
 
     }
 
+    private static void initStopTable(Context context) {
 
-//    private void readTxtFile() {
-//
-//        StringBuilder output = new StringBuilder();
-//
-//        InputStream stream = this.getResources().openRawResource(R.raw.dummy_file);
-//
-//        if (stream != null) {
-//            InputStreamReader inputStreamReader = new InputStreamReader(stream, Charset.forName("UTF-8" /*Name of Charset to convert to*/));
-//
-//            // Since InputStreamReader can only read one character at a time
-//            // but a BufferedReader can read a lot more at once it is being used
-//            // to imporve performance (dramatically)
-//            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-//
-//            // First line of the stream
-//            String line = null;
-//            try {
-//                line = bufferedReader.readLine();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//            // Read till end of stream
-//            while (line != null) {
-//                // Append line to StringBuilder
-//                output.append(line);
-//                // readline() automatically moves to next line after reading
-//                try {
-//                    line = bufferedReader.readLine();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-//
-//        Log.v(LOG_TAG, output.toString());
-//
-//    }
+        BusStopDao busStopDao = database.getBusStopDao();
+        busStopDao.deleteAllStops();
 
+        InputStream stream = context.getResources().openRawResource(R.raw.stops);
+
+        InputStreamReader inputStreamReader = new InputStreamReader(stream, Charset.forName("UTF-8" /*Name of Charset to convert to*/));
+
+        // Since InputStreamReader can only read one character at a time
+        // but a BufferedReader can read a lot more at once it is being used
+        // to dramatically improve performance
+        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+        // First line of the stream
+        //Being skipped as it contains headers and not actual data
+        String line = null;
+        try {
+            line = bufferedReader.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Read till end of stream
+        while (line != null) {
+
+            // readline() automatically moves to next line after reading
+            try {
+                line = bufferedReader.readLine();
+
+                //Skip any empty lines
+                if (!TextUtils.isEmpty(line)) {
+
+
+                    int stop_id = -1;
+                    String stop_code = "";
+                    String stop_name = "";
+                    double stop_lat = -1;
+                    double stop_lon = -1;
+
+                    if (line.contains(",")) {
+                        int comma = line.indexOf(",");
+                        stop_id = Integer.parseInt(line.substring(0, comma));
+                        line = line.substring(comma + 1);
+                    }
+
+                    if (line.contains(",")) {
+                        int comma = line.indexOf(",");
+                        stop_code = line.substring(0, comma);
+                        line = line.substring(comma + 1);
+                    }
+
+                    if (line.contains(",")) {
+                        int comma = line.indexOf(",");
+                        //TODO implement stack based method to ignore , between ""
+                        //TODO restore "Sec-7 / 8 Xing" to "Sec-7,8 Xing" in line 2586
+                        /*// Prevent parsing comma that is part of value
+                        if (line.substring(0, comma).contains("\"")) {
+                            if (line.substring(comma + 1).contains("\"")) {
+                                comma += line.substring(comma + 1).indexOf("\"");
+                            }
+                        }*/
+
+                        stop_name = line.substring(0, comma);
+                        line = line.substring(comma + 1);
+                    }
+
+                    if (line.contains(",")) {
+                        int comma = line.indexOf(",");
+                        stop_lat = Double.parseDouble(line.substring(0, comma));
+                        line = line.substring(comma + 1);
+                    }
+
+                    stop_lon = Double.parseDouble(line);
+
+
+                    BusStop busStop = new BusStop(stop_id, stop_code, stop_name, stop_lat, stop_lon);
+                    busStopDao.insertBusStop(busStop);
+
+
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        Log.d(LOG_TAG, "stops table initialized, Rows inserted: " + busStopDao.loadAllBusStops().size());
+
+
+    }
 
 }

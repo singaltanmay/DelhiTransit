@@ -2583,7 +2583,7 @@ stop_id,stop_code,stop_name,stop_lat,stop_lon
 2662,DC3896,Savitri Cinema (E Block Gurudwara),28.539883,77.2402
 2663,U01510A,RR Hospital,28.590067,77.155817
 2664,U01699,Sarai Peepal Thala,28.720417,77.166983
-2665,U01194,"Rohini Sec-7,8 Xing",28.708,77.125
+2665,U01194,"Rohini Sec-7 / 8 Xing",28.708,77.125
 2666,DC3856,Krishna Colony,28.743833,77.08545
 2667,DC0077,Don Bosco School,28.528046,77.247943
 2668,DC3810,Rajghat Cluster Depot,28.643983,77.2526

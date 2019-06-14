@@ -46,8 +46,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0295bf16-f5a5-46e5-8e88-9119e2a57e16" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DAO/BusRouteDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DAO/BusRouteDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/AppDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/AppDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DAO/BusStopDao.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DAO/BusStopDao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DataClasses/BusStop.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DataClasses/BusStop.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DataParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DataParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/raw/stops.txt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/raw/stops.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -81,26 +85,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DAO/BusRouteDao.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="38">
-              <caret line="2" column="25" selection-start-line="2" selection-start-column="25" selection-end-line="2" selection-end-column="25" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DataParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="507">
-              <caret line="95" column="17" selection-start-line="95" selection-start-column="17" selection-end-line="95" selection-end-column="17" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#2450#2596#0" expanded="true" />
-                <element signature="e#2595#2596#0" expanded="true" />
-                <element signature="e#5639#5673#0" />
-              </folding>
+            <state relative-caret-position="247">
+              <caret line="42" column="40" lean-forward="true" selection-start-line="42" selection-start-column="40" selection-end-line="42" selection-end-column="40" />
             </state>
           </provider>
         </entry>
@@ -125,6 +114,7 @@
       <find>MyAdapter</find>
       <find>short</find>
       <find>short</find>
+      <find>8 Xing</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -158,12 +148,14 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/BusTrip.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/BusRouteDao.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/MainActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DataClasses/BusStop.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DataClasses/BusStopTime.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DataClasses/BusTrip.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/AppDatabase.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DAO/BusRouteDao.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/AppDatabase.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DAO/BusStopDao.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/raw/stops.txt" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DataClasses/BusStop.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DataParser.java" />
       </list>
     </option>
@@ -426,7 +418,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.18924849" />
+      <window_info content_ui="combo" id="Project" order="1" weight="0.18924849" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.32967636" />
       <window_info id="Favorites" order="3" side_tool="true" weight="0.32967636" />
       <window_info id="Build Variants" order="4" side_tool="true" />
@@ -453,30 +445,30 @@
     </layout>
     <layout-to-restore>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.2638508" />
-      <window_info id="Structure" order="2" side_tool="true" />
-      <window_info id="Favorites" order="3" side_tool="true" />
+      <window_info content_ui="combo" id="Project" order="1" weight="0.18924849" />
+      <window_info id="Structure" order="2" side_tool="true" weight="0.32967636" />
+      <window_info id="Favorites" order="3" side_tool="true" weight="0.32967636" />
       <window_info id="Build Variants" order="4" side_tool="true" />
       <window_info id="Image Layers" order="5" />
       <window_info id="Designer" order="6" />
       <window_info id="Resources Explorer" order="7" />
       <window_info id="Capture Tool" order="8" />
-      <window_info anchor="bottom" id="Run" order="0" weight="0.32972974" />
-      <window_info anchor="bottom" id="Logcat" order="1" sideWeight="0.49972573" weight="0.43675676" />
-      <window_info anchor="bottom" id="TODO" order="2" weight="0.32972974" />
+      <window_info anchor="bottom" id="Run" order="0" sideWeight="0.4976415" weight="0.32972974" />
+      <window_info active="true" anchor="bottom" id="Logcat" order="1" sideWeight="0.49808007" visible="true" weight="0.71675676" />
+      <window_info anchor="bottom" id="TODO" order="2" sideWeight="0.49972573" weight="0.32972974" />
       <window_info anchor="bottom" id="Find" order="3" weight="0.32864866" />
-      <window_info anchor="bottom" id="Terminal" order="4" weight="0.32864866" />
-      <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.5002743" side_tool="true" weight="0.3264865" />
-      <window_info anchor="bottom" id="Version Control" order="6" />
-      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.49972573" weight="0.3264865" />
+      <window_info anchor="bottom" id="Terminal" order="4" sideWeight="0.49972573" weight="0.32864866" />
+      <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.50246847" side_tool="true" weight="0.3264865" />
+      <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.4991772" weight="0.32972974" />
+      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.49753153" weight="0.3264865" />
       <window_info anchor="bottom" id="Debug" order="8" weight="0.32972974" />
       <window_info anchor="bottom" id="Android Profiler" order="9" />
-      <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" weight="0.32967636" />
-      <window_info anchor="right" id="Capture Analysis" order="1" />
-      <window_info anchor="right" id="Gradle" order="2" />
-      <window_info anchor="right" id="Theme Preview" order="3" />
-      <window_info anchor="right" id="Palette&#9;" order="4" />
-      <window_info anchor="right" id="Preview" order="5" weight="0.32857928" />
+      <window_info anchor="right" id="Capture Analysis" order="0" />
+      <window_info anchor="right" id="Gradle" order="1" />
+      <window_info anchor="right" id="Theme Preview" order="2" />
+      <window_info anchor="right" id="Palette&#9;" order="3" />
+      <window_info anchor="right" id="Preview" order="4" weight="0.32857928" />
+      <window_info anchor="right" id="Device File Explorer" order="5" side_tool="true" weight="0.32967636" />
     </layout-to-restore>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -749,13 +741,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/raw/stops.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="1" column="59" selection-start-line="1" selection-start-column="59" selection-end-line="1" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$USER_HOME$/Android/Sdk/platforms/android-29/android.jar!/java/lang/Object.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="137">
@@ -776,16 +761,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="38">
           <caret line="2" column="22" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DAO/BusStopDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -847,30 +822,10 @@
     <entry file="file://$USER_HOME$/AndroidStudio/DeviceExplorer/emulator-5554/data/data/com.example.delhitransit/databases/staticData-wal">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DataClasses/BusStop.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DataClasses/BusTrip.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="266">
           <caret line="14" column="27" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/AppDatabase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="16" column="85" selection-start-line="16" selection-start-column="85" selection-end-line="16" selection-end-column="85" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -887,10 +842,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/raw/routes.txt">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DataClasses/BusRoute.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-10196">
-          <caret line="1" column="12" selection-start-line="1" selection-start-column="12" selection-end-line="1" selection-end-column="12" />
+        <state>
+          <caret column="33" selection-start-column="33" selection-end-column="33" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DAO/BusRouteDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="399">
+          <caret line="21" selection-start-line="21" selection-end-line="22" selection-end-column="27" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -906,33 +874,54 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DataClasses/BusRoute.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/raw/stops.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="33" selection-start-column="33" selection-end-column="33" />
+        <state relative-caret-position="-57299">
+          <caret line="409" column="2" selection-start-line="409" selection-start-column="2" selection-end-line="409" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/AppDatabase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="30" column="41" selection-start-line="30" selection-start-column="41" selection-end-line="30" selection-end-column="41" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DAO/BusRouteDao.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DataClasses/BusStop.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="38">
-          <caret line="2" column="25" selection-start-line="2" selection-start-column="25" selection-end-line="2" selection-end-column="25" />
+        <state relative-caret-position="512">
+          <caret line="67" column="39" lean-forward="true" selection-start-line="67" selection-start-column="39" selection-end-line="67" selection-end-column="39" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DAO/BusStopDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="15" column="12" selection-start-line="15" selection-start-column="12" selection-end-line="15" selection-end-column="12" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/raw/routes.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="1" column="12" selection-start-line="1" selection-start-column="12" selection-end-line="1" selection-end-column="12" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DataParser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="507">
-          <caret line="95" column="17" selection-start-line="95" selection-start-column="17" selection-end-line="95" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2450#2596#0" expanded="true" />
-            <element signature="e#2595#2596#0" expanded="true" />
-            <element signature="e#5639#5673#0" />
-          </folding>
+        <state relative-caret-position="247">
+          <caret line="42" column="40" lean-forward="true" selection-start-line="42" selection-start-column="40" selection-end-line="42" selection-end-column="40" />
         </state>
       </provider>
     </entry>

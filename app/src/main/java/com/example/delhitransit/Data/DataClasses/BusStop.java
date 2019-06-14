@@ -61,4 +61,20 @@ public class BusStop {
     public void setStop_lon(double stop_lon) {
         this.stop_lon = stop_lon;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("\nStop ID:\t");
+        builder.append(stop_id);
+        builder.append("\nStop Code:\t");
+        builder.append(stop_code);
+        builder.append("\nStop Name:\t");
+        builder.append(stop_name);
+        builder.append("\nStop Coordinates:\t");
+        builder.append(stop_lat);
+        builder.append(",");
+        builder.append(stop_lon);
+        return builder.toString();
+    }
 }

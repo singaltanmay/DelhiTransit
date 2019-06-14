@@ -15,6 +15,9 @@ public interface BusStopDao {
     @Query("SELECT * FROM stops")
     List<BusStop> loadAllBusStops();
 
+    @Query("DELETE FROM stops")
+    void deleteAllStops();
+
     @Insert
     void insertBusStop(BusStop stop);
 

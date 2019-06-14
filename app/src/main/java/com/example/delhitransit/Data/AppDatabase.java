@@ -9,6 +9,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
 import com.example.delhitransit.Data.DAO.BusRouteDao;
+import com.example.delhitransit.Data.DAO.BusStopDao;
 import com.example.delhitransit.Data.DataClasses.BusRoute;
 import com.example.delhitransit.Data.DataClasses.BusStop;
 import com.example.delhitransit.Data.DataClasses.BusStopTime;
@@ -40,10 +41,10 @@ public abstract class AppDatabase extends RoomDatabase {
     }
 
     public abstract BusRouteDao getBusRouteDao();
-/*
 
     public abstract BusStopDao getBusStopDao();
 
+    /*
     public abstract BusStopTimeDao getBusStopTimeDao();
 
     public abstract BusTripDao getBusTripDao();
