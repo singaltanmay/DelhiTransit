@@ -1,4 +1,4 @@
-package com.example.delhitransit.Data;
+package com.example.delhitransit.Data.DataClasses;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

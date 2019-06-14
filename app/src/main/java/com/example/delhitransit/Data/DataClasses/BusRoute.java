@@ -1,4 +1,4 @@
-package com.example.delhitransit.Data;
+package com.example.delhitransit.Data.DataClasses;
 
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -60,5 +60,22 @@ public class BusRoute {
 
     public void setRoute_id(int route_id) {
         this.route_id = route_id;
+    }
+
+    @Ignore
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("\nRoute ID:\t");
+        builder.append(route_id);
+        builder.append("\nRoute Long Name:\t");
+        builder.append(route_long_name);
+        builder.append("\nRoute Short Name:\t");
+        builder.append(route_short_name);
+        builder.append("\nRoute type:\t");
+        builder.append(route_type);
+        return builder.toString();
+
+
     }
 }

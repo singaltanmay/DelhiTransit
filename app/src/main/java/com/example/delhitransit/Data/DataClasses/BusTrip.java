@@ -1,18 +1,18 @@
-package com.example.delhitransit.Data;
+package com.example.delhitransit.Data.DataClasses;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
-import androidx.room.PrimaryKey;
 
 import static androidx.room.ForeignKey.CASCADE;
 
-@Entity(tableName = "trips", foreignKeys = @ForeignKey(entity = BusRoute.class, parentColumns = "route_id", childColumns = "route_id", onDelete = CASCADE))
+@Entity(tableName = "trips",
+        primaryKeys = {"route_id", "trip_id"})
+//        foreignKeys = @ForeignKey(entity = BusRoute.class, parentColumns = "route_id", childColumns = "route_id", onDelete = CASCADE)
+
 public class BusTrip {
 
     private int route_id;
     private int service_id;
-
-    @PrimaryKey
     private int trip_id;
 
     public BusTrip(int route_id, int service_id, int trip_id) {

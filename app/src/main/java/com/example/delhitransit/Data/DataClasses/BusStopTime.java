@@ -1,4 +1,4 @@
-package com.example.delhitransit.Data;
+package com.example.delhitransit.Data.DataClasses;
 
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
@@ -6,9 +6,11 @@ import androidx.room.PrimaryKey;
 
 import static androidx.room.ForeignKey.CASCADE;
 
-@Entity(tableName = "stop_times", foreignKeys = {@ForeignKey(entity = BusStop.class,
-        parentColumns = "stop_id", childColumns = "stop_id", onDelete = CASCADE),
-        @ForeignKey(entity = BusTrip.class, parentColumns = "trip_id", childColumns = "trip_id", onDelete = CASCADE)})
+@Entity(tableName = "stop_times")
+//foreignKeys = {@ForeignKey(entity = BusStop.class,
+//        parentColumns = "stop_id", childColumns = "stop_id", onDelete = CASCADE)
+//        @ForeignKey(entity = BusTrip.class, parentColumns = "trip_id", childColumns = "trip_id", onDelete = CASCADE)}
+
 public class BusStopTime {
 
     private int trip_id;

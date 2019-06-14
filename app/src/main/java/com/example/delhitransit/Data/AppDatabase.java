@@ -8,6 +8,12 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import com.example.delhitransit.Data.DAO.BusRouteDao;
+import com.example.delhitransit.Data.DataClasses.BusRoute;
+import com.example.delhitransit.Data.DataClasses.BusStop;
+import com.example.delhitransit.Data.DataClasses.BusStopTime;
+import com.example.delhitransit.Data.DataClasses.BusTrip;
+
 @Database(entities = {BusRoute.class, BusStop.class, BusStopTime.class, BusTrip.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -32,4 +38,16 @@ public abstract class AppDatabase extends RoomDatabase {
         return sInstance;
 
     }
+
+    public abstract BusRouteDao getBusRouteDao();
+/*
+
+    public abstract BusStopDao getBusStopDao();
+
+    public abstract BusStopTimeDao getBusStopTimeDao();
+
+    public abstract BusTripDao getBusTripDao();
+
+*/
+
 }

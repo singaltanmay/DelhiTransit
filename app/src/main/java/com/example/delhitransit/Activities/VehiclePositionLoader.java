@@ -1,4 +1,4 @@
-package com.example.delhitransit;
+package com.example.delhitransit.Activities;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.delhitransit.Data.DataParser;
+import com.example.delhitransit.GtfsRealtime;
 
 import java.util.List;
 

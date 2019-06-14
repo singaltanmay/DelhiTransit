@@ -1,16 +1,27 @@
 package com.example.delhitransit.Data;
 
+import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
+import com.example.delhitransit.Data.DAO.BusRouteDao;
+import com.example.delhitransit.Data.DataClasses.BusRoute;
 import com.example.delhitransit.GtfsRealtime;
+import com.example.delhitransit.R;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.Charset;
 import java.util.List;
 
 public class DataParser {
 
+    private static AppDatabase database;
+    private static Context context;
     private static final String LOG_TAG = DataParser.class.getSimpleName();
 
     public static List<GtfsRealtime.FeedEntity> fetchPositionData() {
@@ -57,6 +68,113 @@ public class DataParser {
         }
 
         return feedEntityList;
+
+    }
+
+    public static void initDb(Context context) {
+
+        DataParser.context = context;
+
+        database = AppDatabase.getInstance(DataParser.context.getApplicationContext());
+
+        Thread initRoutes = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                initRoutesTable();
+                logAllRoutes();
+            }
+        });
+
+        initRoutes.run();
+
+
+    }
+
+    private static void logAllRoutes() {
+        List<BusRoute> busRoutes = database.getBusRouteDao().loadAllRoutes();
+        for (BusRoute route : busRoutes) {
+            Log.v(LOG_TAG, route.toString());
+        }
+    }
+
+    private static void initRoutesTable() {
+
+        BusRouteDao busRouteDao = database.getBusRouteDao();
+        busRouteDao.deleteAllRoutes();
+
+
+        InputStream stream = DataParser.context.getResources().openRawResource(R.raw.routes);
+
+        InputStreamReader inputStreamReader = new InputStreamReader(stream, Charset.forName("UTF-8" /*Name of Charset to convert to*/));
+
+        // Since InputStreamReader can only read one character at a time
+        // but a BufferedReader can read a lot more at once it is being used
+        // to dramatically improve performance
+        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+        // First line of the stream
+        //Being skipped as it contains headers and not actual data
+        String line = null;
+        try {
+            line = bufferedReader.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Read till end of stream
+        while (line != null) {
+
+            // readline() automatically moves to next line after reading
+            try {
+                line = bufferedReader.readLine();
+
+                //Skip any empty lines
+                if (!TextUtils.isEmpty(line)) {
+
+                    String route_short_name = "";
+                    String route_long_name = "";
+                    int route_type = -1;
+                    int route_id = -1;
+
+                    int prev_comma = 0;
+                    int next_comma;
+
+                    if (line.contains(",")) {
+                        next_comma = line.indexOf(",");
+                        route_short_name = line.substring(prev_comma, next_comma);
+                        prev_comma = next_comma;
+                        line = line.substring(prev_comma + 1);
+                    }
+
+                    if (line.contains(",")) {
+                        next_comma = line.indexOf(",");
+                        route_long_name = line.substring(prev_comma, next_comma);
+                        prev_comma = next_comma;
+                        line = line.substring(prev_comma + 1);
+                    }
+
+
+                    if (line.contains(",")) {
+                        next_comma = line.indexOf(",");
+                        route_type = Integer.parseInt(line.substring(0, next_comma));
+                        prev_comma = next_comma;
+                        line = line.substring(prev_comma + 1);
+                    }
+
+                    route_id = Integer.parseInt(line);
+
+                    BusRoute route = new BusRoute(route_short_name, route_long_name, route_type, route_id);
+                    busRouteDao.insertRoute(route);
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        Log.d(LOG_TAG, "routes table initialized, Rows inserted: " + busRouteDao.loadAllRoutes().size());
+
 
     }
 

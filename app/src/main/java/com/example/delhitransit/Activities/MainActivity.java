@@ -1,4 +1,4 @@
-package com.example.delhitransit;
+package com.example.delhitransit.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,7 +10,10 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.delhitransit.Data.AppDatabase;
-import com.example.delhitransit.Data.BusRoute;
+import com.example.delhitransit.Data.DataClasses.BusRoute;
+import com.example.delhitransit.Data.DataParser;
+import com.example.delhitransit.GtfsRealtime;
+import com.example.delhitransit.R;
 
 import java.util.List;
 
@@ -19,15 +22,28 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
     private static BusListAdapter adapter;
-    private static AppDatabase database;
+//    private static AppDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        database = AppDatabase.getInstance(getApplicationContext());
-        BusRoute route = new BusRoute("Short name", "Long name", 3, 1384);
+//        database = AppDatabase.getInstance(getApplicationContext());
+//        BusRoute route = new BusRoute("Short name", "Long name", 3, 1389);
+//        database.getBusRouteDao().insertRoute(route);
+//        List<BusRoute> busRoutes = database.getBusRouteDao().loadAllRoutes();
+//        for (BusRoute route1 : busRoutes) {
+//            Log.d(LOG_TAG, route1.toString());
+//        }
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                DataParser.initDb(MainActivity.this);
+            }
+        });
+        thread.run();
 
 
         RecyclerView busListView = findViewById(R.id.bus_list);

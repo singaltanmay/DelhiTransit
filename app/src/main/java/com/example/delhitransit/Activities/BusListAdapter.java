@@ -1,10 +1,13 @@
-package com.example.delhitransit;
+package com.example.delhitransit.Activities;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.delhitransit.GtfsRealtime;
+import com.example.delhitransit.R;
 
 import java.util.List;
 
