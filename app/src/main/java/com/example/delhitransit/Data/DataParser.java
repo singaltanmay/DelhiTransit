@@ -184,7 +184,7 @@ public class DataParser {
 
         }
 
-        Log.d(LOG_TAG, "routes table initialized, Rows inserted: " + busRouteDao.loadAllRoutes().size());
+        Log.d(LOG_TAG, "routes table initialized, Rows inserted: " + busRouteDao.getNumberOfRows());
 
 
     }
@@ -277,7 +277,7 @@ public class DataParser {
 
         }
 
-        Log.d(LOG_TAG, "stops table initialized, Rows inserted: " + busStopDao.loadAllBusStops().size());
+        Log.d(LOG_TAG, "stops table initialized, Rows inserted: " + busStopDao.getNumberOfRows());
 
 
     }

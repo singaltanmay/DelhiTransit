@@ -18,6 +18,10 @@ public interface BusStopDao {
     @Query("DELETE FROM stops")
     void deleteAllStops();
 
+
+    @Query("SELECT COUNT(stop_id) FROM stops")
+    int getNumberOfRows();
+
     @Insert
     void insertBusStop(BusStop stop);
 

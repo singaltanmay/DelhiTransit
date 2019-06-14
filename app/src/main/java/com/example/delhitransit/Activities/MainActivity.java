@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 //            Log.d(LOG_TAG, route1.toString());
 //        }
 
+        //TODO Replace Thread with an AsyncTask or something
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {

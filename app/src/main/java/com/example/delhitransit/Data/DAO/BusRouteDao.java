@@ -22,6 +22,9 @@ public interface BusRouteDao {
     @Query("DELETE FROM routes")
     void deleteAllRoutes();
 
+    @Query("SELECT COUNT(route_id) FROM routes")
+    int getNumberOfRows();
+
     @Insert
     void insertRoute(BusRoute route);
 
