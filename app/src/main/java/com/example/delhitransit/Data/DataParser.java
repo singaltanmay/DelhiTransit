@@ -81,7 +81,8 @@ public class DataParser {
             @Override
             public void run() {
                 initRoutesTable();
-                logAllRoutes();
+                //For debugging purposes only
+//                logAllEntries(database.getBusRouteDao().loadAllRoutes());
             }
         });
 
@@ -90,10 +91,10 @@ public class DataParser {
 
     }
 
-    private static void logAllRoutes() {
-        List<BusRoute> busRoutes = database.getBusRouteDao().loadAllRoutes();
-        for (BusRoute route : busRoutes) {
-            Log.v(LOG_TAG, route.toString());
+    // For debugging purposes only
+    private static <T> void logAllEntries(List<T> list) {
+        for (T item : list) {
+            Log.v(LOG_TAG, item.toString());
         }
     }
 
