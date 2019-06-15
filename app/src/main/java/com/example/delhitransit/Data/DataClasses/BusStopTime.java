@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey;
 
 import static androidx.room.ForeignKey.CASCADE;
 
-@Entity(tableName = "stop_times")
+@Entity(tableName = "stop_times", primaryKeys = {"trip_id", "stop_sequence"})
 //foreignKeys = {@ForeignKey(entity = BusStop.class,
 //        parentColumns = "stop_id", childColumns = "stop_id", onDelete = CASCADE)
 //        @ForeignKey(entity = BusTrip.class, parentColumns = "trip_id", childColumns = "trip_id", onDelete = CASCADE)}
@@ -17,7 +17,6 @@ public class BusStopTime {
     private String arrival_time;
     private String departure_time;
     private long stop_id;
-    @PrimaryKey
     private int stop_sequence;
 
     public BusStopTime(int trip_id, String arrival_time, String departure_time, long stop_id, int stop_sequence) {

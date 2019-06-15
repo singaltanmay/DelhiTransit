@@ -14,13 +14,13 @@ import java.util.List;
 public interface BusRouteDao {
 
     @Query("SELECT * FROM routes")
-    List<BusRoute> loadAllRoutes();
+    List<BusRoute> loadAll();
 
     @Query("SELECT * FROM routes WHERE route_id = :id")
     BusRoute loadRouteById(int id);
 
     @Query("DELETE FROM routes")
-    void deleteAllRoutes();
+    void deleteAll();
 
     @Query("SELECT COUNT(route_id) FROM routes")
     int getNumberOfRows();

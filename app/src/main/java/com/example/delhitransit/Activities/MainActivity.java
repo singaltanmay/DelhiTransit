@@ -5,13 +5,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.LoaderManager;
+import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.example.delhitransit.Data.AppDatabase;
-import com.example.delhitransit.Data.DataClasses.BusRoute;
-import com.example.delhitransit.Data.DataParser;
 import com.example.delhitransit.GtfsRealtime;
 import com.example.delhitransit.R;
 
@@ -22,30 +20,13 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
     private static BusListAdapter adapter;
-//    private static AppDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        database = AppDatabase.getInstance(getApplicationContext());
-//        BusRoute route = new BusRoute("Short name", "Long name", 3, 1389);
-//        database.getBusRouteDao().insertRoute(route);
-//        List<BusRoute> busRoutes = database.getBusRouteDao().loadAllRoutes();
-//        for (BusRoute route1 : busRoutes) {
-//            Log.d(LOG_TAG, route1.toString());
-//        }
-
-        //TODO Replace Thread with an AsyncTask or something
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                DataParser.initDb(MainActivity.this);
-            }
-        });
-        thread.run();
-
+        checkFirstRun();
 
         RecyclerView busListView = findViewById(R.id.bus_list);
         busListView.setLayoutManager(new LinearLayoutManager(this));
@@ -54,6 +35,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         getLoaderManager().initLoader(2924, null, this);
 
+    }
+
+    private void checkFirstRun() {
+        Intent intent = new Intent(MainActivity.this, DatabaseInitializerService.class);
+        startService(intent);
+        Log.d(LOG_TAG, "Starting DatabaseInitializerService");
     }
 
     @Override

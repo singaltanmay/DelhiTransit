@@ -13,10 +13,10 @@ public interface BusStopDao {
 
 
     @Query("SELECT * FROM stops")
-    List<BusStop> loadAllBusStops();
+    List<BusStop> loadAll();
 
     @Query("DELETE FROM stops")
-    void deleteAllStops();
+    void deleteAll();
 
 
     @Query("SELECT COUNT(stop_id) FROM stops")

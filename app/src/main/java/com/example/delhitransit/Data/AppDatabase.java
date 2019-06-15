@@ -10,6 +10,8 @@ import androidx.room.RoomDatabase;
 
 import com.example.delhitransit.Data.DAO.BusRouteDao;
 import com.example.delhitransit.Data.DAO.BusStopDao;
+import com.example.delhitransit.Data.DAO.BusStopTimeDao;
+import com.example.delhitransit.Data.DAO.BusTripDao;
 import com.example.delhitransit.Data.DataClasses.BusRoute;
 import com.example.delhitransit.Data.DataClasses.BusStop;
 import com.example.delhitransit.Data.DataClasses.BusStopTime;
@@ -18,6 +20,8 @@ import com.example.delhitransit.Data.DataClasses.BusTrip;
 @Database(entities = {BusRoute.class, BusStop.class, BusStopTime.class, BusTrip.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
+    public static final String DATABASE_SHARED_PREF_KEY = "ubpsieg7832";
+    public static final String DATABASE_IS_INITIALIZED_SHARED_PREF_KEY = "isInitialized";
     private static final String LOG_TAG = AppDatabase.class.getSimpleName();
     private static final Object LOCK = new Object();
     private static final String DATABASE_NAME = "staticData";
@@ -44,11 +48,8 @@ public abstract class AppDatabase extends RoomDatabase {
 
     public abstract BusStopDao getBusStopDao();
 
-    /*
     public abstract BusStopTimeDao getBusStopTimeDao();
 
     public abstract BusTripDao getBusTripDao();
-
-*/
 
 }

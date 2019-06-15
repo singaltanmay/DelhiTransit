@@ -12,8 +12,11 @@ import java.util.List;
 public interface BusStopTimeDao {
 
 
-    @Query("SELECT * FROM routes")
-    List<BusStopTime> loadAllStopTimes();
+    @Query("SELECT * FROM stop_times")
+    List<BusStopTime> loadAll();
+
+    @Query("DELETE FROM stop_times")
+    void deleteAll();
 
     @Insert
     void insertRoute(BusStopTime stopTime);

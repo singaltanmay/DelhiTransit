@@ -12,7 +12,16 @@ import java.util.List;
 public interface BusTripDao {
 
     @Query("SELECT * FROM trips")
-    List<BusTrip> loadAllTrips();
+    List<BusTrip> loadAll();
+
+
+    @Query("DELETE FROM trips")
+    void deleteAll();
+
+
+    @Query("SELECT COUNT(trip_id) FROM trips")
+    int getNumberOfRows();
+
 
     @Insert
     void insertTrip(BusTrip trip);

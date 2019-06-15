@@ -31,7 +31,7 @@ public class VehiclePositionLoader extends AsyncTaskLoader<List<GtfsRealtime.Fee
     @Override
     public List<GtfsRealtime.FeedEntity> loadInBackground() {
         Log.d(LOG_TAG, "Begin Loading");
-        List<GtfsRealtime.FeedEntity> entityList = DataParser.fetchPositionData();
+        List<GtfsRealtime.FeedEntity> entityList = DataParser.fetchPositionUpdateData();
 
 //        for (GtfsRealtime.FeedEntity entity : entityList) {
 //            Log.v(LOG_TAG, entity.getId() + entity.getVehicle().getStopId());

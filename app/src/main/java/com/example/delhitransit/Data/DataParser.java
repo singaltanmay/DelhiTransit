@@ -1,13 +1,18 @@
 package com.example.delhitransit.Data;
 
+import android.app.IntentService;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.example.delhitransit.Data.DAO.BusRouteDao;
 import com.example.delhitransit.Data.DAO.BusStopDao;
+import com.example.delhitransit.Data.DAO.BusStopTimeDao;
+import com.example.delhitransit.Data.DAO.BusTripDao;
 import com.example.delhitransit.Data.DataClasses.BusRoute;
 import com.example.delhitransit.Data.DataClasses.BusStop;
+import com.example.delhitransit.Data.DataClasses.BusStopTime;
+import com.example.delhitransit.Data.DataClasses.BusTrip;
 import com.example.delhitransit.GtfsRealtime;
 import com.example.delhitransit.R;
 
@@ -25,7 +30,7 @@ public class DataParser {
     private static AppDatabase database;
     private static final String LOG_TAG = DataParser.class.getSimpleName();
 
-    public static List<GtfsRealtime.FeedEntity> fetchPositionData() {
+    public static List<GtfsRealtime.FeedEntity> fetchPositionUpdateData() {
 
 
         List<GtfsRealtime.FeedEntity> feedEntityList = null;
@@ -82,22 +87,41 @@ public class DataParser {
             public void run() {
                 initRoutesTable(context);
                 //For debugging purposes only
-//                logAllEntries(database.getBusRouteDao().loadAllRoutes());
+//                logAllEntries(database.getBusRouteDao().loadAll());
             }
         });
 
-        initRoutes.run();
 
         final Thread initStops = new Thread(new Runnable() {
             @Override
             public void run() {
-                initStopTable(context);
-//                logAllEntries(database.getBusStopDao().loadAllBusStops());
+                initStopsTable(context);
+//                logAllEntries(database.getBusStopDao().loadAll());
             }
         });
 
-        initStops.run();
 
+        final Thread initStopTimes = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                initStopTimesTable(context);
+//                logAllEntries(database.getBusStopTimeDao().loadAll());
+            }
+        });
+
+
+        final Thread initTrips = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                initTripsTable(context);
+                logAllEntries(database.getBusTripDao().loadAll());
+            }
+        });
+
+        initRoutes.start();
+        initStops.start();
+        initStopTimes.start();
+        initTrips.start();
 
     }
 
@@ -111,7 +135,7 @@ public class DataParser {
     private static void initRoutesTable(Context context) {
 
         BusRouteDao busRouteDao = database.getBusRouteDao();
-        busRouteDao.deleteAllRoutes();
+        busRouteDao.deleteAll();
 
 
         InputStream stream = context.getResources().openRawResource(R.raw.routes);
@@ -135,7 +159,7 @@ public class DataParser {
         // Read till end of stream
         while (line != null) {
 
-            // readline() automatically moves to next line after reading
+            // readLine() automatically moves to next line after reading
             try {
                 line = bufferedReader.readLine();
 
@@ -189,10 +213,10 @@ public class DataParser {
 
     }
 
-    private static void initStopTable(Context context) {
+    private static void initStopsTable(Context context) {
 
         BusStopDao busStopDao = database.getBusStopDao();
-        busStopDao.deleteAllStops();
+        busStopDao.deleteAll();
 
         InputStream stream = context.getResources().openRawResource(R.raw.stops);
 
@@ -215,7 +239,7 @@ public class DataParser {
         // Read till end of stream
         while (line != null) {
 
-            // readline() automatically moves to next line after reading
+            // readLine() automatically moves to next line after reading
             try {
                 line = bufferedReader.readLine();
 
@@ -278,6 +302,156 @@ public class DataParser {
         }
 
         Log.d(LOG_TAG, "stops table initialized, Rows inserted: " + busStopDao.getNumberOfRows());
+
+
+    }
+
+    private static void initStopTimesTable(Context context) {
+
+        BusStopTimeDao busStopTimeDao = database.getBusStopTimeDao();
+        busStopTimeDao.deleteAll();
+
+        InputStream stream = context.getResources().openRawResource(R.raw.stop_times);
+
+        InputStreamReader inputStreamReader = new InputStreamReader(stream, Charset.forName("UTF-8" /*Name of Charset to convert to*/));
+
+        // Since InputStreamReader can only read one character at a time
+        // but a BufferedReader can read a lot more at once it is being used
+        // to dramatically improve performance
+        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+        // First line of the stream
+        //Being skipped as it contains headers and not actual data
+        String line = null;
+        try {
+            line = bufferedReader.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Read till end of stream
+        while (line != null) {
+
+            // readLine() automatically moves to next line after reading
+            try {
+                line = bufferedReader.readLine();
+
+                //Skip any empty lines
+                if (!TextUtils.isEmpty(line)) {
+
+                    int trip_id = -1;
+                    String arrival_time = "";
+                    String departure_time = "";
+                    long stop_id = -1;
+                    int stop_sequence = -1;
+
+                    if (line.contains(",")) {
+                        int comma = line.indexOf(",");
+                        trip_id = Integer.parseInt(line.substring(0, comma));
+                        line = line.substring(comma + 1);
+                    }
+
+                    if (line.contains(",")) {
+                        int comma = line.indexOf(",");
+                        arrival_time = line.substring(0, comma);
+                        line = line.substring(comma + 1);
+                    }
+
+                    if (line.contains(",")) {
+                        int comma = line.indexOf(",");
+                        departure_time = line.substring(0, comma);
+                        line = line.substring(comma + 1);
+                    }
+
+
+                    if (line.contains(",")) {
+                        int comma = line.indexOf(",");
+                        stop_id = Long.parseLong(line.substring(0, comma));
+                        line = line.substring(comma + 1);
+                    }
+
+                    stop_sequence = Integer.parseInt(line);
+
+                    BusStopTime stopTime = new BusStopTime(trip_id, arrival_time, departure_time, stop_id, stop_sequence);
+                    busStopTimeDao.insertRoute(stopTime);
+
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        Log.d(LOG_TAG, "stop_times table initialized, Rows inserted: " + busStopTimeDao.loadAll().size());
+
+
+    }
+
+    private static void initTripsTable(Context context) {
+
+        BusTripDao busTripDao = database.getBusTripDao();
+        busTripDao.deleteAll();
+
+        InputStream stream = context.getResources().openRawResource(R.raw.trips);
+
+        InputStreamReader inputStreamReader = new InputStreamReader(stream, Charset.forName("UTF-8" /*Name of Charset to convert to*/));
+
+        // Since InputStreamReader can only read one character at a time
+        // but a BufferedReader can read a lot more at once it is being used
+        // to dramatically improve performance
+        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+        // First line of the stream
+        //Being skipped as it contains headers and not actual data
+        String line = null;
+        try {
+            line = bufferedReader.readLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Read till end of stream
+        while (line != null) {
+
+            // readLine() automatically moves to next line after reading
+            try {
+                line = bufferedReader.readLine();
+
+                //Skip any empty lines
+                if (!TextUtils.isEmpty(line)) {
+
+
+                    int route_id = -1;
+                    int service_id = -1;
+                    int trip_id;
+
+                    if (line.contains(",")) {
+                        int comma = line.indexOf(",");
+                        route_id = Integer.parseInt(line.substring(0, comma));
+                        line = line.substring(comma + 1);
+                    }
+
+                    if (line.contains(",")) {
+                        int comma = line.indexOf(",");
+                        service_id = Integer.parseInt(line.substring(0, comma));
+                        line = line.substring(comma + 1);
+                    }
+
+                    trip_id = Integer.parseInt(line);
+
+                    BusTrip busTrip = new BusTrip(route_id, service_id, trip_id);
+                    busTripDao.insertTrip(busTrip);
+
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        Log.d(LOG_TAG, "trips table initialized, Rows inserted: " + busTripDao.getNumberOfRows());
 
 
     }

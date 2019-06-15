@@ -44,4 +44,16 @@ public class BusTrip {
     public void setTrip_id(int trip_id) {
         this.trip_id = trip_id;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("\nRoute ID:\t");
+        builder.append(route_id);
+        builder.append("\nService ID:\t");
+        builder.append(service_id);
+        builder.append("\nTrip ID:\t");
+        builder.append(trip_id);
+        return builder.toString();
+    }
 }
