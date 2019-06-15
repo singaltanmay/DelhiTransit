@@ -86,8 +86,7 @@ public class DataParser {
             @Override
             public void run() {
                 initRoutesTable(context);
-                //For debugging purposes only
-//                logAllEntries(database.getBusRouteDao().loadAll());
+                logAllEntries(database.getBusRouteDao().loadAll());
             }
         });
 
@@ -114,7 +113,7 @@ public class DataParser {
             @Override
             public void run() {
                 initTripsTable(context);
-                logAllEntries(database.getBusTripDao().loadAll());
+//                logAllEntries(database.getBusTripDao().loadAll());
             }
         });
 
@@ -171,29 +170,22 @@ public class DataParser {
                     int route_type = -1;
                     int route_id;
 
-                    int prev_comma = 0;
-                    int next_comma;
-
                     if (line.contains(",")) {
-                        next_comma = line.indexOf(",");
-                        route_short_name = line.substring(prev_comma, next_comma);
-                        prev_comma = next_comma;
-                        line = line.substring(prev_comma + 1);
+                        int comma = line.indexOf(",");
+                        route_short_name = line.substring(0, comma);
+                        line = line.substring(comma + 1);
                     }
 
                     if (line.contains(",")) {
-                        next_comma = line.indexOf(",");
-                        route_long_name = line.substring(prev_comma, next_comma);
-                        prev_comma = next_comma;
-                        line = line.substring(prev_comma + 1);
+                        int comma = line.indexOf(",");
+                        route_long_name = line.substring(0, comma);
+                        line = line.substring(comma + 1);
                     }
 
-
                     if (line.contains(",")) {
-                        next_comma = line.indexOf(",");
-                        route_type = Integer.parseInt(line.substring(0, next_comma));
-                        prev_comma = next_comma;
-                        line = line.substring(prev_comma + 1);
+                        int comma = line.indexOf(",");
+                        route_type = Integer.parseInt(line.substring(0, comma));
+                        line = line.substring(comma + 1);
                     }
 
                     route_id = Integer.parseInt(line);
