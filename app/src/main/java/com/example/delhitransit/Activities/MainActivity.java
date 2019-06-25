@@ -10,12 +10,12 @@ import android.content.Loader;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.example.delhitransit.GtfsRealtime;
+import com.example.delhitransit.Data.DataClasses.BusPosition;
 import com.example.delhitransit.R;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<GtfsRealtime.FeedEntity>> {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<BusPosition>> {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
@@ -44,20 +44,20 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
-    public Loader<List<GtfsRealtime.FeedEntity>> onCreateLoader(int i, Bundle bundle) {
+    public Loader<List<BusPosition>> onCreateLoader(int i, Bundle bundle) {
         return new VehiclePositionLoader(this);
     }
 
     @Override
-    public void onLoadFinished(Loader<List<GtfsRealtime.FeedEntity>> loader, List<GtfsRealtime.FeedEntity> feedEntities) {
+    public void onLoadFinished(Loader<List<BusPosition>> loader, List<BusPosition> feedEntities) {
         Log.d(LOG_TAG, "List Size Recieved by Loader : " + feedEntities.size());
-        adapter.setmDataset(feedEntities);
+        adapter.setDataset(feedEntities);
         adapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onLoaderReset(Loader<List<GtfsRealtime.FeedEntity>> loader) {
-        adapter.setmDataset(null);
+    public void onLoaderReset(Loader<List<BusPosition>> loader) {
+        adapter.setDataset(null);
         adapter.notifyDataSetChanged();
     }
 

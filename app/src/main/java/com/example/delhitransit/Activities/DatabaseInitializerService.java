@@ -33,6 +33,10 @@ public class DatabaseInitializerService extends IntentService {
             preferences.edit().putBoolean(AppDatabase.DATABASE_IS_INITIALIZED_SHARED_PREF_KEY, true).apply();
         } else Log.d(LOG_TAG, "Database is already initialized. Nothing to do.");
 
+
+        Log.d(LOG_TAG, "Killing service");
+        this.stopSelf();
+        Log.d(LOG_TAG, "Apparently not");
     }
 
 }

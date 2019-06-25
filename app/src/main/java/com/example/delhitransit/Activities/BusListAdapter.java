@@ -6,18 +6,15 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.delhitransit.GtfsRealtime;
+import com.example.delhitransit.Data.DataClasses.BusPosition;
 import com.example.delhitransit.R;
 
 import java.util.List;
 
 public class BusListAdapter extends RecyclerView.Adapter<BusListAdapter.MyViewHolder> {
 
-    private List<GtfsRealtime.FeedEntity> mDataset;
+    private List<BusPosition> mDataset;
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
     public class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView textView;
@@ -41,10 +38,9 @@ public class BusListAdapter extends RecyclerView.Adapter<BusListAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.textView.setText(mDataset.get(position).getId());
+        holder.textView.setText(mDataset.get(position).toString());
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         if (mDataset != null) {
@@ -53,12 +49,11 @@ public class BusListAdapter extends RecyclerView.Adapter<BusListAdapter.MyViewHo
         return 0;
     }
 
-    public void setmDataset(List<GtfsRealtime.FeedEntity> mDataset) {
+    public void setDataset(List<BusPosition> mDataset) {
         this.mDataset = mDataset;
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
-    public BusListAdapter(List<GtfsRealtime.FeedEntity> myDataset) {
+    public BusListAdapter(List<BusPosition> myDataset) {
         mDataset = myDataset;
     }
 

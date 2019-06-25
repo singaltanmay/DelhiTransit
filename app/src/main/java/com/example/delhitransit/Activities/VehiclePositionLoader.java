@@ -7,12 +7,12 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.delhitransit.Data.DataClasses.BusPosition;
 import com.example.delhitransit.Data.DataParser;
-import com.example.delhitransit.GtfsRealtime;
 
 import java.util.List;
 
-public class VehiclePositionLoader extends AsyncTaskLoader<List<GtfsRealtime.FeedEntity>> {
+public class VehiclePositionLoader extends AsyncTaskLoader<List<BusPosition>> {
 
 
     private String LOG_TAG = VehiclePositionLoader.class.getSimpleName();
@@ -29,14 +29,9 @@ public class VehiclePositionLoader extends AsyncTaskLoader<List<GtfsRealtime.Fee
 
     @Nullable
     @Override
-    public List<GtfsRealtime.FeedEntity> loadInBackground() {
+    public List<BusPosition> loadInBackground() {
         Log.d(LOG_TAG, "Begin Loading");
-        List<GtfsRealtime.FeedEntity> entityList = DataParser.fetchPositionUpdateData();
 
-//        for (GtfsRealtime.FeedEntity entity : entityList) {
-//            Log.v(LOG_TAG, entity.getId() + entity.getVehicle().getStopId());
-//        }
-
-        return entityList;
+        return DataParser.fetchAllPosition(getContext());
     }
 }

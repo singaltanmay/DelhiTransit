@@ -1,6 +1,8 @@
 package com.example.delhitransit.Data.DataClasses;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.example.delhitransit.GtfsRealtime;
@@ -9,6 +11,7 @@ import com.example.delhitransit.GtfsRealtime;
 public class BusPosition {
 
     @PrimaryKey
+    @NonNull
     String vehicleID;
 
     String tripID;
@@ -28,9 +31,11 @@ public class BusPosition {
         this.timestamp = timestamp;
     }
 
+    @Ignore
     public BusPosition() {
     }
 
+    @Ignore
     public BusPosition parseFrom(GtfsRealtime.FeedEntity entity) {
         this.vehicleID = entity.getId();
 

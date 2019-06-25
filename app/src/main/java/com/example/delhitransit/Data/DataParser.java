@@ -1,6 +1,5 @@
 package com.example.delhitransit.Data;
 
-import android.app.IntentService;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
@@ -25,6 +24,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DataParser {
@@ -32,7 +32,7 @@ public class DataParser {
     private static AppDatabase database;
     private static final String LOG_TAG = DataParser.class.getSimpleName();
 
-    public static List<GtfsRealtime.FeedEntity> fetchPositionUpdateData() {
+    public static List<GtfsRealtime.FeedEntity> fetchUpdateFromServer() {
 
 
         List<GtfsRealtime.FeedEntity> feedEntityList = null;
@@ -75,14 +75,14 @@ public class DataParser {
             e.printStackTrace();
         }
 
-
-        GtfsRealtime.FeedEntity feedEntity = feedEntityList.get(0);
-        if (feedEntity != null) {
-
-            GtfsRealtime.VehiclePosition vehicle = feedEntity.getVehicle();
-            GtfsRealtime.Position position = vehicle.getPosition();
-            Log.d(LOG_TAG, "\n" + feedEntity.getId() + "\n" + vehicle.getTrip().getRouteId() + "\n" + position.getLatitude() + "\n" + position.getLongitude() + "\n" + position.getSpeed());
-        }
+//
+//        GtfsRealtime.FeedEntity feedEntity = feedEntityList.get(0);
+//        if (feedEntity != null) {
+//
+//            GtfsRealtime.VehiclePosition vehicle = feedEntity.getVehicle();
+//            GtfsRealtime.Position position = vehicle.getPosition();
+//            Log.d(LOG_TAG, "\n" + feedEntity.getId() + "\n" + vehicle.getTrip().getRouteId() + "\n" + position.getLatitude() + "\n" + position.getLongitude() + "\n" + position.getSpeed());
+//        }
 
         return feedEntityList;
 
@@ -459,16 +459,57 @@ public class DataParser {
 
     }
 
-    private static void updatePositionsTable(Context context) {
+    public static List<BusPosition> fetchAllPosition(final Context context) {
 
-        List<GtfsRealtime.FeedEntity> feedEntities = fetchPositionUpdateData();
+        final List<BusPosition> positionList = new ArrayList<>();
 
-        BusPositionDao busPositionDao = database.getBusPositionDao();
+        List<GtfsRealtime.FeedEntity> feedEntities = fetchUpdateFromServer();
 
-        for (GtfsRealtime.FeedEntity entity : feedEntities){
-            busPositionDao.insertBusPosition(new BusPosition().parseFrom(entity));
+        for (GtfsRealtime.FeedEntity entity : feedEntities) {
+            positionList.add(new BusPosition().parseFrom(entity));
         }
 
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                updatePositionDatabase(positionList, context);
+            }
+        });
+
+        thread.start();
+
+        return positionList;
+
     }
+
+    private static void updatePositionDatabase(List<BusPosition> list, Context context) {
+
+        AppDatabase instance = AppDatabase.getInstance(context);
+        BusPositionDao busPositionDao = instance.getBusPositionDao();
+
+        for (BusPosition position : list) {
+            busPositionDao.insertBusPosition(position);
+        }
+
+
+    }
+
+//    private static List<BusPosition> updatePositionsTable() {
+//
+//        List<GtfsRealtime.FeedEntity> feedEntities = fetchUpdateFromServer();
+//
+//        List<BusPosition> positionArrayList = new ArrayList<>();
+//
+//        BusPositionDao busPositionDao = database.getBusPositionDao();
+//
+//        for (GtfsRealtime.FeedEntity entity : feedEntities) {
+//            BusPosition position = new BusPosition().parseFrom(entity);
+//            positionArrayList.add(position);
+//            busPositionDao.insertBusPosition(position);
+//        }
+//
+//        return positionArrayList;
+//
+//    }
 
 }
