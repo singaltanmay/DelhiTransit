@@ -5,10 +5,12 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.example.delhitransit.Data.DAO.BusPositionDao;
 import com.example.delhitransit.Data.DAO.BusRouteDao;
 import com.example.delhitransit.Data.DAO.BusStopDao;
 import com.example.delhitransit.Data.DAO.BusStopTimeDao;
 import com.example.delhitransit.Data.DAO.BusTripDao;
+import com.example.delhitransit.Data.DataClasses.BusPosition;
 import com.example.delhitransit.Data.DataClasses.BusRoute;
 import com.example.delhitransit.Data.DataClasses.BusStop;
 import com.example.delhitransit.Data.DataClasses.BusStopTime;
@@ -73,6 +75,15 @@ public class DataParser {
             e.printStackTrace();
         }
 
+
+        GtfsRealtime.FeedEntity feedEntity = feedEntityList.get(0);
+        if (feedEntity != null) {
+
+            GtfsRealtime.VehiclePosition vehicle = feedEntity.getVehicle();
+            GtfsRealtime.Position position = vehicle.getPosition();
+            Log.d(LOG_TAG, "\n" + feedEntity.getId() + "\n" + vehicle.getTrip().getRouteId() + "\n" + position.getLatitude() + "\n" + position.getLongitude() + "\n" + position.getSpeed());
+        }
+
         return feedEntityList;
 
     }
@@ -86,7 +97,7 @@ public class DataParser {
             @Override
             public void run() {
                 initRoutesTable(context);
-                logAllEntries(database.getBusRouteDao().loadAll());
+//                logAllEntries(database.getBusRouteDao().loadAll());
             }
         });
 
@@ -445,6 +456,18 @@ public class DataParser {
 
         Log.d(LOG_TAG, "trips table initialized, Rows inserted: " + busTripDao.getNumberOfRows());
 
+
+    }
+
+    private static void updatePositionsTable(Context context) {
+
+        List<GtfsRealtime.FeedEntity> feedEntities = fetchPositionUpdateData();
+
+        BusPositionDao busPositionDao = database.getBusPositionDao();
+
+        for (GtfsRealtime.FeedEntity entity : feedEntities){
+            busPositionDao.insertBusPosition(new BusPosition().parseFrom(entity));
+        }
 
     }
 

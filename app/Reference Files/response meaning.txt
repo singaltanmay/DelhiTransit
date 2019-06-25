@@ -1,0 +1,61 @@
+server response:
+
+1 {
+  1: "2.0"
+  2: 0
+  3: 1560164740
+}
+
+2 {
+  1: "DL1PC5562"
+  4 {
+    1 {
+      1: "14544"
+      5: "487"
+    }
+    2 {
+      1: 0x41e4bc6f
+      2: 0x429a7846
+      5: 0x00000000
+    }
+    5: 1560164734
+    8 {
+      1: "DL1PC5562"
+      2: "DL1PC5562"
+    }
+  }
+}
+
+
+server response decoded:
+
+
+FeedHeader {
+  gtfs_realtime_version: "2.0"
+  Incrementality: 0 (FULL_DATASET)
+  timestamp: 1560164740 (Time stamp in  POSIX time aka seconds since January 1st 1970 00:00:00 UTC)
+}
+
+
+FeedEntity {
+  id: "DL1PC5562"
+  VehiclePosition {
+    TripDescriptor {
+      trip_id: "14544"
+      route_id: "487"
+    }
+    Position {
+      latitude: 0x41e4bc6f
+      longitude: 0x429a7846
+      speed: 0x00000000  (Speed in metres/second)
+    }
+    timestamp: 1560164734
+    VehicleDescriptor {
+      id: "DL1PC5562"
+      label: "DL1PC5562"
+    }
+  }
+}
+
+
+
