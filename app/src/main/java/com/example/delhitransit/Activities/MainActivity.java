@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Log.d(LOG_TAG, "Current time : " + System.currentTimeMillis() / 1000 );
+
         checkFirstRun();
 
         RecyclerView busListView = findViewById(R.id.bus_list);

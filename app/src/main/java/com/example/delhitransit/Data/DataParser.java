@@ -512,6 +512,7 @@ public class DataParser {
         try {
 
             long epoch = new java.text.SimpleDateFormat("MM/dd/yyyy HH:mm:ss").parse("01/01/1970 " + timestamp).getTime() / 1000;
+            Log.d(LOG_TAG, "Human, Epoch " + timestamp + "\t" + epoch);
             return epoch;
         } catch (Exception e) {
             e.printStackTrace();
