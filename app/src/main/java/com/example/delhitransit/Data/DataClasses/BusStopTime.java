@@ -14,12 +14,12 @@ import static androidx.room.ForeignKey.CASCADE;
 public class BusStopTime {
 
     private int trip_id;
-    private String arrival_time;
-    private String departure_time;
+    private long arrival_time;
+    private long departure_time;
     private long stop_id;
     private int stop_sequence;
 
-    public BusStopTime(int trip_id, String arrival_time, String departure_time, long stop_id, int stop_sequence) {
+    public BusStopTime(int trip_id, long arrival_time, long departure_time, long stop_id, int stop_sequence) {
         this.trip_id = trip_id;
         this.arrival_time = arrival_time;
         this.departure_time = departure_time;
@@ -35,19 +35,19 @@ public class BusStopTime {
         this.trip_id = trip_id;
     }
 
-    public String getArrival_time() {
+    public long getArrival_time() {
         return arrival_time;
     }
 
-    public void setArrival_time(String arrival_time) {
+    public void setArrival_time(long arrival_time) {
         this.arrival_time = arrival_time;
     }
 
-    public String getDeparture_time() {
+    public long getDeparture_time() {
         return departure_time;
     }
 
-    public void setDeparture_time(String departure_time) {
+    public void setDeparture_time(long departure_time) {
         this.departure_time = departure_time;
     }
 

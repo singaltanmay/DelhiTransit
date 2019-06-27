@@ -311,7 +311,7 @@ public class DataParser {
 
     private static void initStopTimesTable(Context context) {
 
-        BusStopTimeDao busStopTimeDao = database.getBusStopTimeDao();
+        final BusStopTimeDao busStopTimeDao = database.getBusStopTimeDao();
         busStopTimeDao.deleteAll();
 
         InputStream stream = context.getResources().openRawResource(R.raw.stop_times);
@@ -339,46 +339,59 @@ public class DataParser {
             try {
                 line = bufferedReader.readLine();
 
-                //Skip any empty lines
-                if (!TextUtils.isEmpty(line)) {
+                final String xLine = line;
 
-                    int trip_id = -1;
-                    String arrival_time = "";
-                    String departure_time = "";
-                    long stop_id = -1;
-                    int stop_sequence = -1;
+                Runnable runnable = new Runnable() {
+                    @Override
+                    public void run() {
 
-                    if (line.contains(",")) {
-                        int comma = line.indexOf(",");
-                        trip_id = Integer.parseInt(line.substring(0, comma));
-                        line = line.substring(comma + 1);
+                        String fLine = xLine;
+
+                        //Skip any empty lines
+                        if (!TextUtils.isEmpty(fLine)) {
+
+                            int trip_id = -1;
+                            String arrival_time = "";
+                            String departure_time = "";
+                            long stop_id = -1;
+                            int stop_sequence = -1;
+
+                            if (fLine.contains(",")) {
+                                int comma = fLine.indexOf(",");
+                                trip_id = Integer.parseInt(fLine.substring(0, comma));
+                                fLine = fLine.substring(comma + 1);
+                            }
+
+                            if (fLine.contains(",")) {
+                                int comma = fLine.indexOf(",");
+                                arrival_time = fLine.substring(0, comma);
+                                fLine = fLine.substring(comma + 1);
+                            }
+
+                            if (fLine.contains(",")) {
+                                int comma = fLine.indexOf(",");
+                                departure_time = fLine.substring(0, comma);
+                                fLine = fLine.substring(comma + 1);
+                            }
+
+
+                            if (fLine.contains(",")) {
+                                int comma = fLine.indexOf(",");
+                                stop_id = Long.parseLong(fLine.substring(0, comma));
+                                fLine = fLine.substring(comma + 1);
+                            }
+
+                            stop_sequence = Integer.parseInt(fLine);
+
+                            BusStopTime stopTime = new BusStopTime(trip_id, convertTimeToEpoch(arrival_time), convertTimeToEpoch(departure_time), stop_id, stop_sequence);
+                            busStopTimeDao.insertRoute(stopTime);
+
+                        }
                     }
+                };
 
-                    if (line.contains(",")) {
-                        int comma = line.indexOf(",");
-                        arrival_time = line.substring(0, comma);
-                        line = line.substring(comma + 1);
-                    }
+                runnable.run();
 
-                    if (line.contains(",")) {
-                        int comma = line.indexOf(",");
-                        departure_time = line.substring(0, comma);
-                        line = line.substring(comma + 1);
-                    }
-
-
-                    if (line.contains(",")) {
-                        int comma = line.indexOf(",");
-                        stop_id = Long.parseLong(line.substring(0, comma));
-                        line = line.substring(comma + 1);
-                    }
-
-                    stop_sequence = Integer.parseInt(line);
-
-                    BusStopTime stopTime = new BusStopTime(trip_id, arrival_time, departure_time, stop_id, stop_sequence);
-                    busStopTimeDao.insertRoute(stopTime);
-
-                }
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -386,8 +399,9 @@ public class DataParser {
 
         }
 
-        Log.d(LOG_TAG, "stop_times table initialized, Rows inserted: " + busStopTimeDao.loadAll().size());
+        Log.d(LOG_TAG, "stop_times table initialized, Rows inserted: " + busStopTimeDao.loadAll().
 
+                size());
 
     }
 
@@ -494,6 +508,17 @@ public class DataParser {
 
     }
 
+    private static long convertTimeToEpoch(String timestamp) {
+        try {
+
+            long epoch = new java.text.SimpleDateFormat("MM/dd/yyyy HH:mm:ss").parse("01/01/1970 " + timestamp).getTime() / 1000;
+            return epoch;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
 //    private static List<BusPosition> updatePositionsTable() {
 //
 //        List<GtfsRealtime.FeedEntity> feedEntities = fetchUpdateFromServer();
