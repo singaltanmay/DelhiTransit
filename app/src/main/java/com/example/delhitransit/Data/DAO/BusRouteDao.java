@@ -17,7 +17,7 @@ public interface BusRouteDao {
     List<BusRoute> loadAll();
 
     @Query("SELECT * FROM routes WHERE route_id = :id")
-    BusRoute loadRouteById(int id);
+    BusRoute loadHavingRouteID(int id);
 
     @Query("DELETE FROM routes")
     void deleteAll();

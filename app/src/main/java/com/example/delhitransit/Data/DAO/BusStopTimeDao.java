@@ -15,6 +15,9 @@ public interface BusStopTimeDao {
     @Query("SELECT * FROM stop_times")
     List<BusStopTime> loadAll();
 
+    @Query("SELECT * FROM stop_times WHERE stop_id = :stop_code")
+    List<BusStopTime> loadHavingStopCode(long stop_code);
+
     @Query("DELETE FROM stop_times")
     void deleteAll();
 

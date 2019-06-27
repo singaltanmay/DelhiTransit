@@ -14,6 +14,9 @@ public interface BusTripDao {
     @Query("SELECT * FROM trips")
     List<BusTrip> loadAll();
 
+    @Query("SELECT * FROM trips WHERE trip_id = :trip_id")
+    List<BusTrip> loadHavingTripID(int trip_id);
+
 
     @Query("DELETE FROM trips")
     void deleteAll();

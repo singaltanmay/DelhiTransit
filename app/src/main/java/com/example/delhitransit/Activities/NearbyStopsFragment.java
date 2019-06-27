@@ -15,13 +15,20 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.example.delhitransit.Data.AppDatabase;
+import com.example.delhitransit.Data.DAO.BusRouteDao;
+import com.example.delhitransit.Data.DAO.BusTripDao;
+import com.example.delhitransit.Data.DataClasses.BusRoute;
 import com.example.delhitransit.Data.DataClasses.BusStop;
+import com.example.delhitransit.Data.DataClasses.BusStopTime;
+import com.example.delhitransit.Data.DataClasses.BusTrip;
 import com.example.delhitransit.R;
 
 import java.util.List;
 
 public class NearbyStopsFragment extends Fragment {
 
+    private final FragmentActivity activity = getActivity();
+    private final AppDatabase database = AppDatabase.getInstance(activity);
 
     public NearbyStopsFragment() {
         // Required empty public constructor
@@ -35,9 +42,8 @@ public class NearbyStopsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_nearby_stops, container, false);
 
         RecyclerView recyclerView = view.findViewById(R.id.nearbly_stops_recycler_view);
-        FragmentActivity activity = getActivity();
         StopsAdapter adapter = new StopsAdapter();
-        adapter.mDataset = AppDatabase.getInstance(activity).getBusStopDao().loadAll();
+        adapter.mDataset = database.getBusStopDao().loadAll();
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
 
@@ -47,6 +53,10 @@ public class NearbyStopsFragment extends Fragment {
     private class StopsAdapter extends RecyclerView.Adapter<StopsAdapter.MyViewHolder> {
 
         private List<BusStop> mDataset;
+
+
+        private BusTripDao busTripDao = database.getBusTripDao();
+        private BusRouteDao busRouteDao = database.getBusRouteDao();
 
         @NonNull
         @Override
@@ -61,9 +71,35 @@ public class NearbyStopsFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 
+            BusStop currentStop = mDataset.get(position);
+
             FrameLayout layout = ((FrameLayout) holder.view);
             TextView textView = layout.findViewById(R.id.card_content);
-            textView.setText(mDataset.get(position).toString());
+
+            StringBuilder builder = new StringBuilder();
+
+            builder.append(currentStop.getStop_name());
+
+            List<BusStopTime> busStopTimes = database.getBusStopTimeDao().loadHavingStopCode(currentStop.getStop_id());
+
+
+            for (BusStopTime x : busStopTimes) {
+                int trip_id = x.getTrip_id();
+                List<BusTrip> busTrips = busTripDao.loadHavingTripID(trip_id);
+
+                for (BusTrip y : busTrips) {
+
+                    int route_id = y.getRoute_id();
+                    BusRoute route = busRouteDao.loadHavingRouteID(route_id);
+                    String route_long_name = route.getRoute_long_name();
+                    builder.append("\n");
+                    builder.append(route_long_name);
+
+                }
+
+            }
+
+            textView.setText(builder.toString());
 
         }
 
