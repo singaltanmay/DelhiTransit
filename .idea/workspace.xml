@@ -77,6 +77,10 @@
   <component name="ChangeListManager">
     <list default="true" id="0295bf16-f5a5-46e5-8e88-9119e2a57e16" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/DatabaseInitializerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/AppService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/AppDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/AppDatabase.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -96,16 +100,108 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="34" selection-start-line="34" selection-end-line="34" />
+            <state relative-caret-position="-38">
+              <caret line="16" selection-start-line="16" selection-end-line="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/AppService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="361">
+              <caret line="53" column="43" selection-start-line="53" selection-start-column="43" selection-end-line="53" selection-end-column="43" />
               <folding>
-                <element signature="method#checkFirstRun#0;class#MainActivity#0" />
-                <element signature="method#onCreateLoader#0;class#MainActivity#0" />
-                <element signature="method#onLoadFinished#0;class#MainActivity#0" />
-                <element signature="method#onLoaderReset#0;class#MainActivity#0" />
+                <element signature="method#initDatabases#0;class#AppService#0" />
+                <element signature="e#1002#1236#1" />
+                <element signature="method#initDb#0;class#DataParser#0;class#AppService#0" />
+                <element signature="method#initRoutesTable#0;class#AppService#0" />
+                <element signature="e#4051#4115#0" />
+                <element signature="e#4344#4371#0" />
+                <element signature="e#4491#4556#0" />
+                <element signature="e#4579#4631#0" />
+                <element signature="e#4705#6339#1" />
+                <element signature="e#4805#6241#0" />
+                <element signature="e#4955#6222#1" />
+                <element signature="e#5197#5418#1" />
+                <element signature="e#5468#5688#1" />
+                <element signature="e#5738#5971#1" />
+                <element signature="e#6264#6324#0" />
+                <element signature="method#initStopsTable#0;class#AppService#0" />
+                <element signature="e#6855#6919#0" />
+                <element signature="e#7148#7175#0" />
+                <element signature="e#7295#7360#0" />
+                <element signature="e#7383#7435#0" />
+                <element signature="e#7509#9990#1" />
+                <element signature="e#7609#9892#0" />
+                <element signature="e#7759#9873#1" />
+                <element signature="e#8040#8270#1" />
+                <element signature="e#8320#8534#1" />
+                <element signature="e#8584#9337#1" />
+                <element signature="e#8673#8731#0" />
+                <element signature="e#9387#9620#1" />
+                <element signature="e#9915#9975#0" />
+                <element signature="method#initStopTimesTable#0;class#AppService#0" />
+                <element signature="e#10535#10599#0" />
+                <element signature="e#10828#10855#0" />
+                <element signature="e#10975#11040#0" />
+                <element signature="e#11063#11115#0" />
+                <element signature="e#11189#13798#1" />
+                <element signature="e#11289#13700#0" />
+                <element signature="e#11691#13594#1" />
+                <element signature="e#12027#12293#1" />
+                <element signature="e#12352#12605#1" />
+                <element signature="e#12664#12919#1" />
+                <element signature="e#12979#13243#1" />
+                <element signature="e#13723#13783#0" />
+                <element signature="method#initTripsTable#0;class#AppService#0" />
+                <element signature="e#14341#14405#0" />
+                <element signature="e#14634#14661#0" />
+                <element signature="e#14781#14846#0" />
+                <element signature="e#14869#14921#0" />
+                <element signature="e#14995#16279#1" />
+                <element signature="e#15095#16181#0" />
+                <element signature="e#15245#16162#1" />
+                <element signature="e#15423#15654#1" />
+                <element signature="e#15704#15937#1" />
+                <element signature="e#16204#16264#0" />
+                <element signature="method#convertTimeToEpoch#0;class#DataParser#0;class#AppService#0" />
+                <element signature="e#18817#19057#0" />
+                <element signature="e#19078#19122#0" />
+                <element signature="method#fetchAllPosition#0;class#AppService#0" />
+                <element signature="e#16174#16260#1" />
+                <element signature="method#updatePositionDatabase#0;class#AppService#0" />
+                <element signature="e#16834#16909#1" />
+                <element signature="method#logAllEntries#0;class#DataParser#0;class#AppService#0" />
+                <element signature="e#5848#5904#1" />
+                <element signature="e#19148#19211#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/AppDatabase.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="302">
+              <caret line="37" column="49" selection-start-line="37" selection-start-column="49" selection-end-line="37" selection-end-column="49" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DataClasses/BusPosition.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1026">
+              <caret line="54" column="20" selection-start-line="54" selection-start-column="20" selection-end-line="54" selection-end-column="20" />
+              <folding>
+                <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -134,6 +230,7 @@
       <find>8 Xing</find>
       <find>readline()</find>
       <find>double</find>
+      <find>static</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -175,7 +272,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DataClasses/BusPosition.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/VehiclePositionLoader.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/BusListAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/DatabaseInitializerService.java" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/res/menu/main_activity_action_bar.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_nearby_stops.xml" />
@@ -185,16 +281,19 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DAO/BusRouteDao.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/NearbyStopsFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DataClasses/BusStopTime.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/AppDatabase.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DataParser.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/DatabaseInitializerService.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/AppDatabase.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/AppService.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="78" />
-    <option name="width" value="936" />
-    <option name="height" value="1040" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="36" />
+    <option name="y" value="33" />
+    <option name="width" value="1583" />
+    <option name="height" value="986" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -204,6 +303,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -216,12 +316,6 @@
               <item name="DelhiTransit" type="b2602c69:ProjectViewProjectNode" />
               <item name="DelhiTransit" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-            </path>
-            <path>
-              <item name="DelhiTransit" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DelhiTransit" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="Reference Files" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="DelhiTransit" type="b2602c69:ProjectViewProjectNode" />
@@ -282,41 +376,12 @@
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="delhitransit" type="462c0819:PsiDirectoryNode" />
               <item name="Data" type="462c0819:PsiDirectoryNode" />
-              <item name="DAO" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DelhiTransit" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DelhiTransit" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="delhitransit" type="462c0819:PsiDirectoryNode" />
-              <item name="Data" type="462c0819:PsiDirectoryNode" />
               <item name="DataClasses" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DelhiTransit" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DelhiTransit" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="res" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DelhiTransit" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DelhiTransit" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="res" type="462c0819:PsiDirectoryNode" />
-              <item name="raw" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="AndroidView">
         <subPane>
           <expand>
@@ -369,7 +434,7 @@
   <component name="PropertiesComponent">
     <property name="android.sdk.path" value="$USER_HOME$/Android/Sdk" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="TEXT" />
-    <property name="device.picker.selection" value="a5dbdc53" />
+    <property name="device.picker.selection" value="4_WVGA_Nexus_S_API_21" />
     <property name="last_opened_file_path" value="$USER_HOME$/Documents" />
     <property name="project.structure.last.edited" value="Dependencies" />
     <property name="project.structure.proportion" value="0.17" />
@@ -381,12 +446,9 @@
     <option name="LAST_EDITED_BUILD_TYPE" value="release" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/app/Reference Files" />
-      <recent name="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities" />
-      <recent name="$PROJECT_DIR$/app/src/main/res" />
+    <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/src/main/res/raw" />
-      <recent name="$PROJECT_DIR$/app/src" />
+      <recent name="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.example.delhitransit" />
@@ -394,9 +456,12 @@
     <key name="android.template.packageName">
       <recent name="com.example.delhitransit.Activities" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/Reference Files" />
+      <recent name="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities" />
+      <recent name="$PROJECT_DIR$/app/src/main/res" />
       <recent name="$PROJECT_DIR$/app/src/main/res/raw" />
-      <recent name="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit" />
+      <recent name="$PROJECT_DIR$/app/src" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -503,10 +568,11 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="49" y="27" width="936" height="1053" extended-state="4" />
+    <frame x="36" y="33" width="1583" height="986" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.38426965" />
+      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.20169161" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.32967636" />
       <window_info id="Favorites" order="3" side_tool="true" weight="0.32967636" />
       <window_info id="Build Variants" order="4" side_tool="true" />
@@ -516,14 +582,14 @@
       <window_info id="Capture Tool" order="8" />
       <window_info anchor="bottom" id="Run" order="0" sideWeight="0.4976415" weight="0.32972974" />
       <window_info anchor="bottom" id="TODO" order="1" sideWeight="0.49972573" weight="0.32972974" />
-      <window_info anchor="bottom" id="Find" order="2" weight="0.32864866" />
-      <window_info anchor="bottom" id="Terminal" order="3" sideWeight="0.49753153" weight="0.28972974" />
+      <window_info anchor="bottom" id="Find" order="2" weight="0.32750583" />
+      <window_info anchor="bottom" id="Terminal" order="3" sideWeight="0.49753153" weight="0.28820962" />
       <window_info anchor="bottom" id="Event Log" order="4" sideWeight="0.503017" side_tool="true" weight="0.4789189" />
       <window_info anchor="bottom" id="Version Control" order="5" sideWeight="0.4991772" weight="0.32972974" />
-      <window_info anchor="bottom" id="Build" order="6" sideWeight="0.49753153" weight="0.32540542" />
+      <window_info anchor="bottom" id="Build" order="6" sideWeight="0.49753153" weight="0.32517484" />
       <window_info anchor="bottom" id="Debug" order="7" weight="0.32972974" />
       <window_info anchor="bottom" id="Android Profiler" order="8" weight="0.6756757" />
-      <window_info active="true" anchor="bottom" id="Logcat" order="9" sideWeight="0.496983" visible="true" weight="0.4789189" />
+      <window_info anchor="bottom" id="Logcat" order="9" sideWeight="0.496983" weight="0.47785547" />
       <window_info anchor="right" id="Capture Analysis" order="0" />
       <window_info anchor="right" id="Theme Preview" order="1" />
       <window_info anchor="right" id="Palette&#9;" order="2" />
@@ -753,16 +819,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/DatabaseInitializerService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="18" column="17" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/VehiclePositionLoader.java">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -916,13 +972,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DataParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7178">
-          <caret line="455" column="21" selection-start-line="455" selection-start-column="21" selection-end-line="455" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/NearbyStopsFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1748">
@@ -930,16 +979,6 @@
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="class#MyViewHolder#0;class#StopsAdapter#0;class#NearbyStopsFragment#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/AppDatabase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="21" column="104" selection-start-line="21" selection-start-column="104" selection-end-line="21" selection-end-column="104" />
-          <folding>
-            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -964,9 +1003,102 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DataParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="29" selection-start-line="29" selection-end-line="541" />
+          <folding>
+            <element signature="method#fetchUpdateFromServer#0;class#DataParser#0" />
+            <element signature="e#1467#2566#0" />
+            <element signature="e#1891#2304#1" />
+            <element signature="e#2462#2514#1" />
+            <element signature="e#2604#2648#0" />
+            <element signature="e#2650#2652#0" />
+            <element signature="method#initDb#0;class#DataParser#0" />
+            <element signature="method#logAllEntries#0;class#DataParser#0" />
+            <element signature="e#4550#4606#1" />
+            <element signature="method#initRoutesTable#0;class#DataParser#0" />
+            <element signature="e#5000#5064#0" />
+            <element signature="e#5277#5304#0" />
+            <element signature="e#5412#5469#0" />
+            <element signature="e#5492#5536#0" />
+            <element signature="e#5602#7108#1" />
+            <element signature="e#5694#7022#0" />
+            <element signature="e#5832#7007#1" />
+            <element signature="e#6054#6259#1" />
+            <element signature="e#6305#6509#1" />
+            <element signature="e#6555#6772#1" />
+            <element signature="e#7045#7097#0" />
+            <element signature="method#initStopsTable#0;class#DataParser#0" />
+            <element signature="e#7599#7663#0" />
+            <element signature="e#7876#7903#0" />
+            <element signature="e#8011#8068#0" />
+            <element signature="e#8091#8135#0" />
+            <element signature="e#8201#10522#1" />
+            <element signature="e#8293#10436#0" />
+            <element signature="e#8431#10421#1" />
+            <element signature="e#8688#8902#1" />
+            <element signature="e#8948#9146#1" />
+            <element signature="e#9192#9921#1" />
+            <element signature="e#9273#9331#0" />
+            <element signature="e#9967#10184#1" />
+            <element signature="e#10459#10511#0" />
+            <element signature="method#initStopTimesTable#0;class#DataParser#0" />
+            <element signature="e#11042#11106#0" />
+            <element signature="e#11319#11346#0" />
+            <element signature="e#11454#11511#0" />
+            <element signature="e#11534#11578#0" />
+            <element signature="e#11644#14069#1" />
+            <element signature="e#11736#13983#0" />
+            <element signature="e#12106#13893#1" />
+            <element signature="e#12418#12668#1" />
+            <element signature="e#12723#12960#1" />
+            <element signature="e#13015#13254#1" />
+            <element signature="e#13310#13558#1" />
+            <element signature="e#14006#14058#0" />
+            <element signature="method#initTripsTable#0;class#DataParser#0" />
+            <element signature="e#14583#14647#0" />
+            <element signature="e#14860#14887#0" />
+            <element signature="e#14995#15052#0" />
+            <element signature="e#15075#15119#0" />
+            <element signature="e#15185#16365#1" />
+            <element signature="e#15277#16279#0" />
+            <element signature="e#15415#16264#1" />
+            <element signature="e#15577#15792#1" />
+            <element signature="e#15838#16055#1" />
+            <element signature="e#16302#16354#0" />
+            <element signature="method#fetchAllPosition#0;class#DataParser#0" />
+            <element signature="e#16760#16838#1" />
+            <element signature="method#updatePositionDatabase#0;class#DataParser#0" />
+            <element signature="e#17367#17434#1" />
+            <element signature="method#convertTimeToEpoch#0;class#DataParser#0" />
+            <element signature="e#17519#17759#0" />
+            <element signature="e#17780#17824#0" />
+            <element signature="e#17850#17913#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-38">
+          <caret line="16" selection-start-line="16" selection-end-line="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/AppDatabase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="302">
+          <caret line="37" column="49" selection-start-line="37" selection-start-column="49" selection-end-line="37" selection-end-column="49" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DataClasses/BusPosition.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
+        <state relative-caret-position="1026">
           <caret line="54" column="20" selection-start-line="54" selection-start-column="20" selection-end-line="54" selection-end-column="20" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -974,15 +1106,74 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/MainActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/AppService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="34" selection-start-line="34" selection-end-line="34" />
+        <state relative-caret-position="361">
+          <caret line="53" column="43" selection-start-line="53" selection-start-column="43" selection-end-line="53" selection-end-column="43" />
           <folding>
-            <element signature="method#checkFirstRun#0;class#MainActivity#0" />
-            <element signature="method#onCreateLoader#0;class#MainActivity#0" />
-            <element signature="method#onLoadFinished#0;class#MainActivity#0" />
-            <element signature="method#onLoaderReset#0;class#MainActivity#0" />
+            <element signature="method#initDatabases#0;class#AppService#0" />
+            <element signature="e#1002#1236#1" />
+            <element signature="method#initDb#0;class#DataParser#0;class#AppService#0" />
+            <element signature="method#initRoutesTable#0;class#AppService#0" />
+            <element signature="e#4051#4115#0" />
+            <element signature="e#4344#4371#0" />
+            <element signature="e#4491#4556#0" />
+            <element signature="e#4579#4631#0" />
+            <element signature="e#4705#6339#1" />
+            <element signature="e#4805#6241#0" />
+            <element signature="e#4955#6222#1" />
+            <element signature="e#5197#5418#1" />
+            <element signature="e#5468#5688#1" />
+            <element signature="e#5738#5971#1" />
+            <element signature="e#6264#6324#0" />
+            <element signature="method#initStopsTable#0;class#AppService#0" />
+            <element signature="e#6855#6919#0" />
+            <element signature="e#7148#7175#0" />
+            <element signature="e#7295#7360#0" />
+            <element signature="e#7383#7435#0" />
+            <element signature="e#7509#9990#1" />
+            <element signature="e#7609#9892#0" />
+            <element signature="e#7759#9873#1" />
+            <element signature="e#8040#8270#1" />
+            <element signature="e#8320#8534#1" />
+            <element signature="e#8584#9337#1" />
+            <element signature="e#8673#8731#0" />
+            <element signature="e#9387#9620#1" />
+            <element signature="e#9915#9975#0" />
+            <element signature="method#initStopTimesTable#0;class#AppService#0" />
+            <element signature="e#10535#10599#0" />
+            <element signature="e#10828#10855#0" />
+            <element signature="e#10975#11040#0" />
+            <element signature="e#11063#11115#0" />
+            <element signature="e#11189#13798#1" />
+            <element signature="e#11289#13700#0" />
+            <element signature="e#11691#13594#1" />
+            <element signature="e#12027#12293#1" />
+            <element signature="e#12352#12605#1" />
+            <element signature="e#12664#12919#1" />
+            <element signature="e#12979#13243#1" />
+            <element signature="e#13723#13783#0" />
+            <element signature="method#initTripsTable#0;class#AppService#0" />
+            <element signature="e#14341#14405#0" />
+            <element signature="e#14634#14661#0" />
+            <element signature="e#14781#14846#0" />
+            <element signature="e#14869#14921#0" />
+            <element signature="e#14995#16279#1" />
+            <element signature="e#15095#16181#0" />
+            <element signature="e#15245#16162#1" />
+            <element signature="e#15423#15654#1" />
+            <element signature="e#15704#15937#1" />
+            <element signature="e#16204#16264#0" />
+            <element signature="method#convertTimeToEpoch#0;class#DataParser#0;class#AppService#0" />
+            <element signature="e#18817#19057#0" />
+            <element signature="e#19078#19122#0" />
+            <element signature="method#fetchAllPosition#0;class#AppService#0" />
+            <element signature="e#16174#16260#1" />
+            <element signature="method#updatePositionDatabase#0;class#AppService#0" />
+            <element signature="e#16834#16909#1" />
+            <element signature="method#logAllEntries#0;class#DataParser#0;class#AppService#0" />
+            <element signature="e#5848#5904#1" />
+            <element signature="e#19148#19211#0" />
           </folding>
         </state>
       </provider>
