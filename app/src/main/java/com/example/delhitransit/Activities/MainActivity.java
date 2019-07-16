@@ -2,7 +2,6 @@ package com.example.delhitransit.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,7 +14,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.example.delhitransit.Data.DataClasses.BusPosition;
 import com.example.delhitransit.R;
@@ -35,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         Log.d(LOG_TAG, "Current time : " + System.currentTimeMillis() / 1000 );
 
-        checkFirstRun();
+        launchAppService();
 
         RecyclerView busListView = findViewById(R.id.bus_list);
         busListView.setLayoutManager(new LinearLayoutManager(this));
@@ -46,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     }
 
-    private void checkFirstRun() {
+    private void launchAppService() {
         Intent intent = new Intent(MainActivity.this, DatabaseInitializerService.class);
         startService(intent);
         Log.d(LOG_TAG, "Starting DatabaseInitializerService");

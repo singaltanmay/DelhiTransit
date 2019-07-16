@@ -77,8 +77,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0295bf16-f5a5-46e5-8e88-9119e2a57e16" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DataParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DataParser.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -89,17 +87,7 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
-        <projects_view>
-          <tree_state>
-            <expand>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="DelhiTransit" type="f1a62948:ProjectNode" />
-              </path>
-            </expand>
-            <select />
-          </tree_state>
-        </projects_view>
+        <projects_view />
       </state>
     </system>
   </component>
@@ -108,108 +96,17 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/NearbyStopsFragment.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1748">
-              <caret line="92" column="35" selection-start-line="92" selection-start-column="35" selection-end-line="92" selection-end-column="35" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="class#MyViewHolder#0;class#StopsAdapter#0;class#NearbyStopsFragment#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="266">
-              <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
+              <caret line="34" selection-start-line="34" selection-end-line="34" />
               <folding>
                 <element signature="method#checkFirstRun#0;class#MainActivity#0" />
                 <element signature="method#onCreateLoader#0;class#MainActivity#0" />
                 <element signature="method#onLoadFinished#0;class#MainActivity#0" />
                 <element signature="method#onLoaderReset#0;class#MainActivity#0" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DataParser.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="916">
-              <caret line="510" column="62" selection-start-line="510" selection-start-column="62" selection-end-line="510" selection-end-column="62" />
-              <folding>
-                <element signature="method#fetchUpdateFromServer#0;class#DataParser#0" />
-                <element signature="e#1467#2566#0" />
-                <element signature="e#1891#2304#1" />
-                <element signature="e#2462#2514#1" />
-                <element signature="e#2604#2648#0" />
-                <element signature="e#2650#2652#0" />
-                <element signature="method#initDb#0;class#DataParser#0" />
-                <element signature="method#logAllEntries#0;class#DataParser#0" />
-                <element signature="e#4550#4606#1" />
-                <element signature="method#initRoutesTable#0;class#DataParser#0" />
-                <element signature="e#5000#5064#0" />
-                <element signature="e#5277#5304#0" />
-                <element signature="e#5412#5469#0" />
-                <element signature="e#5492#5536#0" />
-                <element signature="e#5602#7108#1" />
-                <element signature="e#5694#7022#0" />
-                <element signature="e#5832#7007#1" />
-                <element signature="e#6054#6259#1" />
-                <element signature="e#6305#6509#1" />
-                <element signature="e#6555#6772#1" />
-                <element signature="e#7045#7097#0" />
-                <element signature="method#initStopsTable#0;class#DataParser#0" />
-                <element signature="e#7599#7663#0" />
-                <element signature="e#7876#7903#0" />
-                <element signature="e#8011#8068#0" />
-                <element signature="e#8091#8135#0" />
-                <element signature="e#8201#10522#1" />
-                <element signature="e#8293#10436#0" />
-                <element signature="e#8431#10421#1" />
-                <element signature="e#8688#8902#1" />
-                <element signature="e#8948#9146#1" />
-                <element signature="e#9192#9921#1" />
-                <element signature="e#9273#9331#0" />
-                <element signature="e#9967#10184#1" />
-                <element signature="e#10459#10511#0" />
-                <element signature="e#11036#11100#0" />
-                <element signature="e#11313#11340#0" />
-                <element signature="e#11448#11505#0" />
-                <element signature="e#11528#11572#0" />
-                <element signature="e#11819#13813#0" expanded="true" />
-                <element signature="e#13812#13813#0" expanded="true" />
-                <element signature="e#13400#13452#0" />
-                <element signature="method#initTripsTable#0;class#DataParser#0" />
-                <element signature="e#13960#14024#0" />
-                <element signature="e#14237#14264#0" />
-                <element signature="e#14372#14429#0" />
-                <element signature="e#14452#14496#0" />
-                <element signature="e#14562#15742#1" />
-                <element signature="e#14654#15656#0" />
-                <element signature="e#14792#15641#1" />
-                <element signature="e#14954#15169#1" />
-                <element signature="e#15215#15432#1" />
-                <element signature="e#15679#15731#0" />
-                <element signature="method#fetchAllPosition#0;class#DataParser#0" />
-                <element signature="e#16137#16215#1" />
-                <element signature="method#updatePositionDatabase#0;class#DataParser#0" />
-                <element signature="e#16744#16811#1" />
-                <element signature="e#16821#16884#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/raw/stop_times.txt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5442">
-              <caret line="674910" selection-start-line="674910" selection-end-line="674910" />
             </state>
           </provider>
         </entry>
@@ -295,19 +192,19 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="49" />
-    <option name="y" value="25" />
+    <option name="x" value="78" />
     <option name="width" value="936" />
-    <option name="height" value="1055" />
+    <option name="height" value="1040" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectView">
-    <navigator proportions="" version="1">
+    <navigator currentView="ProjectPane" proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -372,7 +269,31 @@
               <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="res" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="delhitransit" type="462c0819:PsiDirectoryNode" />
+              <item name="Data" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DelhiTransit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DelhiTransit" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="delhitransit" type="462c0819:PsiDirectoryNode" />
+              <item name="Data" type="462c0819:PsiDirectoryNode" />
+              <item name="DAO" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DelhiTransit" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DelhiTransit" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="app" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="delhitransit" type="462c0819:PsiDirectoryNode" />
+              <item name="Data" type="462c0819:PsiDirectoryNode" />
+              <item name="DataClasses" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="DelhiTransit" type="b2602c69:ProjectViewProjectNode" />
@@ -381,7 +302,6 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="res" type="462c0819:PsiDirectoryNode" />
-              <item name="layout" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="DelhiTransit" type="b2602c69:ProjectViewProjectNode" />
@@ -396,6 +316,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="AndroidView">
         <subPane>
           <expand>
@@ -443,14 +364,12 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="android.sdk.path" value="$USER_HOME$/Android/Sdk" />
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="TEXT" />
-    <property name="device.picker.selection" value="Pixel_3_XL_API_29" />
+    <property name="device.picker.selection" value="a5dbdc53" />
     <property name="last_opened_file_path" value="$USER_HOME$/Documents" />
     <property name="project.structure.last.edited" value="Dependencies" />
     <property name="project.structure.proportion" value="0.17" />
@@ -584,11 +503,10 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="49" y="25" width="1871" height="1055" extended-state="6" />
-    <editor active="true" />
+    <frame x="49" y="27" width="936" height="1053" extended-state="4" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.15907845" />
+      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.38426965" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.32967636" />
       <window_info id="Favorites" order="3" side_tool="true" weight="0.32967636" />
       <window_info id="Build Variants" order="4" side_tool="true" />
@@ -597,15 +515,15 @@
       <window_info id="Resources Explorer" order="7" />
       <window_info id="Capture Tool" order="8" />
       <window_info anchor="bottom" id="Run" order="0" sideWeight="0.4976415" weight="0.32972974" />
-      <window_info active="true" anchor="bottom" id="Logcat" order="1" sideWeight="0.496983" visible="true" weight="0.4789189" />
-      <window_info anchor="bottom" id="TODO" order="2" sideWeight="0.49972573" weight="0.32972974" />
-      <window_info anchor="bottom" id="Find" order="3" weight="0.32864866" />
-      <window_info anchor="bottom" id="Terminal" order="4" sideWeight="0.49753153" weight="0.32540542" />
-      <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.503017" side_tool="true" weight="0.4789189" />
-      <window_info anchor="bottom" id="Version Control" order="6" sideWeight="0.4991772" weight="0.32972974" />
-      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.49753153" weight="0.32540542" />
-      <window_info anchor="bottom" id="Debug" order="8" weight="0.32972974" />
-      <window_info anchor="bottom" id="Android Profiler" order="9" weight="0.6756757" />
+      <window_info anchor="bottom" id="TODO" order="1" sideWeight="0.49972573" weight="0.32972974" />
+      <window_info anchor="bottom" id="Find" order="2" weight="0.32864866" />
+      <window_info anchor="bottom" id="Terminal" order="3" sideWeight="0.49753153" weight="0.28972974" />
+      <window_info anchor="bottom" id="Event Log" order="4" sideWeight="0.503017" side_tool="true" weight="0.4789189" />
+      <window_info anchor="bottom" id="Version Control" order="5" sideWeight="0.4991772" weight="0.32972974" />
+      <window_info anchor="bottom" id="Build" order="6" sideWeight="0.49753153" weight="0.32540542" />
+      <window_info anchor="bottom" id="Debug" order="7" weight="0.32972974" />
+      <window_info anchor="bottom" id="Android Profiler" order="8" weight="0.6756757" />
+      <window_info active="true" anchor="bottom" id="Logcat" order="9" sideWeight="0.496983" visible="true" weight="0.4789189" />
       <window_info anchor="right" id="Capture Analysis" order="0" />
       <window_info anchor="right" id="Theme Preview" order="1" />
       <window_info anchor="right" id="Palette&#9;" order="2" />
@@ -685,13 +603,7 @@
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/gtfs-realtime.proto" />
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/retrofit/2.5.0/5c17035548a41ec60f00291163d36596a23ddd1a/retrofit-2.5.0-sources.jar!/retrofit2/ExecutorCallAdapterFactory.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="62" selection-start-line="62" selection-end-line="62" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/retrofit/2.5.0/5c17035548a41ec60f00291163d36596a23ddd1a/retrofit-2.5.0-sources.jar!/retrofit2/ExecutorCallAdapterFactory.java" />
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/RetrofitClient.java" />
     <entry file="file://$PROJECT_DIR$/app/src/main/res/raw/calendar.txt">
       <provider selected="true" editor-type-id="text-editor" />
@@ -706,12 +618,12 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="228">
           <caret line="12" column="15" lean-forward="true" selection-start-line="12" selection-start-column="15" selection-end-line="12" selection-end-column="15" />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="jar://$USER_HOME$/Android/Sdk/platforms/android-29/android.jar!/java/lang/Object.class">
       <provider selected="true" editor-type-id="text-editor">
@@ -841,16 +753,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DAO/BusPositionDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="12" column="17" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/DatabaseInitializerService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="342">
@@ -875,16 +777,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DataClasses/BusPosition.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="423">
-          <caret line="86" column="18" selection-start-line="86" selection-start-column="18" selection-end-line="86" selection-end-column="18" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="273">
@@ -900,20 +792,20 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/main_activity_action_bar.xml">
+      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="171">
           <caret line="9" column="7" selection-start-line="9" selection-start-column="7" selection-end-line="9" selection-end-column="7" />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/list_item_bus.xml">
+      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret column="38" selection-start-column="38" selection-end-column="38" />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/BusListAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -926,28 +818,28 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/nearby_stops_item.xml">
+      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="437">
           <caret line="23" column="43" selection-start-line="23" selection-start-column="43" selection-end-line="23" selection-end-column="43" />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_nearby_stops.xml">
+      <provider editor-type-id="android-designer2" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="209">
           <caret line="11" column="34" selection-start-line="11" selection-start-column="34" selection-end-line="11" selection-end-column="34" />
         </state>
       </provider>
-      <provider editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider editor-type-id="android-manifest" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="76">
           <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
         </state>
       </provider>
-      <provider editor-type-id="android-manifest" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DataClasses/BusStopTime.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -963,23 +855,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="304">
           <caret line="16" selection-start-line="16" selection-end-line="16" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/AppDatabase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="113">
-          <caret line="7" column="18" selection-start-line="7" selection-start-column="18" selection-end-line="7" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DataClasses/BusStop.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="6" column="22" lean-forward="true" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1043,68 +918,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DataParser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="916">
-          <caret line="510" column="62" selection-start-line="510" selection-start-column="62" selection-end-line="510" selection-end-column="62" />
-          <folding>
-            <element signature="method#fetchUpdateFromServer#0;class#DataParser#0" />
-            <element signature="e#1467#2566#0" />
-            <element signature="e#1891#2304#1" />
-            <element signature="e#2462#2514#1" />
-            <element signature="e#2604#2648#0" />
-            <element signature="e#2650#2652#0" />
-            <element signature="method#initDb#0;class#DataParser#0" />
-            <element signature="method#logAllEntries#0;class#DataParser#0" />
-            <element signature="e#4550#4606#1" />
-            <element signature="method#initRoutesTable#0;class#DataParser#0" />
-            <element signature="e#5000#5064#0" />
-            <element signature="e#5277#5304#0" />
-            <element signature="e#5412#5469#0" />
-            <element signature="e#5492#5536#0" />
-            <element signature="e#5602#7108#1" />
-            <element signature="e#5694#7022#0" />
-            <element signature="e#5832#7007#1" />
-            <element signature="e#6054#6259#1" />
-            <element signature="e#6305#6509#1" />
-            <element signature="e#6555#6772#1" />
-            <element signature="e#7045#7097#0" />
-            <element signature="method#initStopsTable#0;class#DataParser#0" />
-            <element signature="e#7599#7663#0" />
-            <element signature="e#7876#7903#0" />
-            <element signature="e#8011#8068#0" />
-            <element signature="e#8091#8135#0" />
-            <element signature="e#8201#10522#1" />
-            <element signature="e#8293#10436#0" />
-            <element signature="e#8431#10421#1" />
-            <element signature="e#8688#8902#1" />
-            <element signature="e#8948#9146#1" />
-            <element signature="e#9192#9921#1" />
-            <element signature="e#9273#9331#0" />
-            <element signature="e#9967#10184#1" />
-            <element signature="e#10459#10511#0" />
-            <element signature="e#11036#11100#0" />
-            <element signature="e#11313#11340#0" />
-            <element signature="e#11448#11505#0" />
-            <element signature="e#11528#11572#0" />
-            <element signature="e#11819#13813#0" expanded="true" />
-            <element signature="e#13812#13813#0" expanded="true" />
-            <element signature="e#13400#13452#0" />
-            <element signature="method#initTripsTable#0;class#DataParser#0" />
-            <element signature="e#13960#14024#0" />
-            <element signature="e#14237#14264#0" />
-            <element signature="e#14372#14429#0" />
-            <element signature="e#14452#14496#0" />
-            <element signature="e#14562#15742#1" />
-            <element signature="e#14654#15656#0" />
-            <element signature="e#14792#15641#1" />
-            <element signature="e#14954#15169#1" />
-            <element signature="e#15215#15432#1" />
-            <element signature="e#15679#15731#0" />
-            <element signature="method#fetchAllPosition#0;class#DataParser#0" />
-            <element signature="e#16137#16215#1" />
-            <element signature="method#updatePositionDatabase#0;class#DataParser#0" />
-            <element signature="e#16744#16811#1" />
-            <element signature="e#16821#16884#0" />
-          </folding>
+        <state relative-caret-position="7178">
+          <caret line="455" column="21" selection-start-line="455" selection-start-column="21" selection-end-line="455" selection-end-column="21" />
         </state>
       </provider>
     </entry>
@@ -1119,10 +934,50 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/AppDatabase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="21" column="104" selection-start-line="21" selection-start-column="104" selection-end-line="21" selection-end-column="104" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DAO/BusPositionDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="247">
+          <caret line="19" selection-start-line="19" selection-end-line="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DataClasses/BusStop.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="456">
+          <caret line="78" column="5" selection-start-line="64" selection-start-column="4" selection-end-line="78" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Data/DataClasses/BusPosition.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="456">
+          <caret line="54" column="20" selection-start-line="54" selection-start-column="20" selection-end-line="54" selection-end-column="20" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="266">
-          <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
+          <caret line="34" selection-start-line="34" selection-end-line="34" />
           <folding>
             <element signature="method#checkFirstRun#0;class#MainActivity#0" />
             <element signature="method#onCreateLoader#0;class#MainActivity#0" />
