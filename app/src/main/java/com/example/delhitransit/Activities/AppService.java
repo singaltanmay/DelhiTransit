@@ -43,7 +43,7 @@ public class AppService extends IntentService {
     public AppService() {
         super("appbackgroundservice");
         Log.d(LOG_TAG, "Service constructed");
-        context = getApplicationContext();
+        context = this;
 //        database= AppDatabase.getInstance(context);
     }
 
