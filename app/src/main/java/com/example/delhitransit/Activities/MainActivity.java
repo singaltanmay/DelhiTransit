@@ -22,6 +22,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<BusPosition>> {
 
+    //LOG_TAG
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
     private static BusListAdapter adapter;
@@ -33,13 +34,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         Log.d(LOG_TAG, "Current time : " + System.currentTimeMillis() / 1000 );
 
+        // Launches app background service that provides database access and fetches data from the internet
         launchAppService();
 
+        // Recycler View to show data fetched from server
         RecyclerView busListView = findViewById(R.id.bus_list);
         busListView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new BusListAdapter(null);
         busListView.setAdapter(adapter);
 
+        // Initialize loader that keeps recycler view updated
         getLoaderManager().initLoader(2924, null, this);
 
     }
@@ -57,19 +61,25 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(Loader<List<BusPosition>> loader, List<BusPosition> feedEntities) {
-        Log.d(LOG_TAG, "List Size Recieved by Loader : " + feedEntities.size());
+        // Log the number of entries received by loader
+        Log.d(LOG_TAG, "List Size Received by Loader : " + feedEntities.size());
+        // Set new data-set on the adapter
         adapter.setDataset(feedEntities);
+        // Update the adapter
         adapter.notifyDataSetChanged();
     }
 
     @Override
     public void onLoaderReset(Loader<List<BusPosition>> loader) {
+        // Set null data-set on the adapter
         adapter.setDataset(null);
+        // Clear the adapter
         adapter.notifyDataSetChanged();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        //Inflate action menu
         new MenuInflater(this).inflate(R.menu.main_activity_action_bar, menu);
         return true;
     }
@@ -78,6 +88,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()) {
+
+            // Replace content with NearbyStopsFragment
             case R.id.action_open_nearby_stops_fragment:
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(android.R.id.content, new NearbyStopsFragment());
