@@ -32,7 +32,6 @@ public class VehiclePositionLoader extends AsyncTaskLoader<List<BusPosition>> {
     public List<BusPosition> loadInBackground() {
         Log.d(LOG_TAG, "Begin Loading");
 
-
         return DataParser.fetchAllPosition(getContext());
     }
 }

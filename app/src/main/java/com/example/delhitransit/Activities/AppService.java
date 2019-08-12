@@ -1,9 +1,11 @@
 package com.example.delhitransit.Activities;
 
 import android.app.IntentService;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.IBinder;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -33,21 +35,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class AppService extends IntentService {
+public class AppService extends Service {
 
     private final String LOG_TAG = AppService.class.getSimpleName();
     private Context context;
     private AppDatabase database;
 
     public AppService() {
-        super("appbackgroundservice");
         Log.d(LOG_TAG, "Service constructed");
         context = this;
     }
 
-
     @Override
-    protected void onHandleIntent(Intent intent) {
+    public IBinder onBind(Intent intent) {
 
         // Get a single instance of database to be used for all operations
         // This ensures data integrity as only single instance of DB initialized by application
@@ -55,6 +55,7 @@ public class AppService extends IntentService {
 
         DatabaseInitializer initializer = new DatabaseInitializer();
 
+        return null;
     }
 
     private long convertTimeToEpoch(String timestamp) {
