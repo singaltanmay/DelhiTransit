@@ -8,7 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.delhitransit.Data.DataClasses.BusPosition;
-import com.example.delhitransit.Data.DataParser;
 
 import java.util.List;
 
@@ -32,6 +31,10 @@ public class VehiclePositionLoader extends AsyncTaskLoader<List<BusPosition>> {
     public List<BusPosition> loadInBackground() {
         Log.d(LOG_TAG, "Begin Loading");
 
-        return DataParser.fetchAllPosition(getContext());
+        AppService service = AppService.getInstance();
+
+        Log.d(LOG_TAG, "Received service : "  + service);
+
+        return service.fetchAllPosition(getContext());
     }
 }

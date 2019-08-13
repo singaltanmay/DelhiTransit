@@ -1,6 +1,5 @@
 package com.example.delhitransit.Activities;
 
-import android.app.IntentService;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -37,8 +36,8 @@ import java.util.List;
 
 public class AppService extends Service {
 
-    private final String LOG_TAG = AppService.class.getSimpleName();
-    private Context context;
+    private static final String LOG_TAG = AppService.class.getSimpleName();
+    private static Context context;
     private AppDatabase database;
 
     public AppService() {
@@ -54,8 +53,19 @@ public class AppService extends Service {
         database = AppDatabase.getInstance(context.getApplicationContext());
 
         DatabaseInitializer initializer = new DatabaseInitializer();
+        initializer.checkDatabaseIntegrity();
 
         return null;
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        return START_NOT_STICKY;
+    }
+
+    public static AppService getInstance(){
+        if (context != null) return (AppService)context;
+        else return new AppService();
     }
 
     private long convertTimeToEpoch(String timestamp) {
@@ -182,10 +192,6 @@ public class AppService extends Service {
         private boolean stops_initalized = false;
         private boolean stop_times_initialized = false;
         private boolean trips_initialized = false;
-
-        private DatabaseInitializer(){
-            checkDatabaseIntegrity();
-        }
 
         private void updateInitializationStatus(){
 
