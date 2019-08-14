@@ -5,22 +5,22 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.example.delhitransit.Data.DataClasses.BusPosition;
+import com.example.delhitransit.Data.DataClasses.BusPositionUpdate;
 
 import java.util.List;
 
 @Dao
 public interface BusPositionDao {
 
-    @Query("SELECT * FROM positions")
-    List<BusPosition> loadAll();
+    @Query("SELECT * FROM BusPositionUpdate")
+    List<BusPositionUpdate> loadAll();
 
-    @Query("DELETE FROM positions")
+    @Query("DELETE FROM BusPositionUpdate")
     void deleteAll();
 
-    @Query("SELECT COUNT(vehicleID) FROM positions")
+    @Query("SELECT COUNT(vehicleID) FROM BusPositionUpdate")
     int getNumberOfRows();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertBusPosition(BusPosition position);
+    void insertBusPosition(BusPositionUpdate position);
 }

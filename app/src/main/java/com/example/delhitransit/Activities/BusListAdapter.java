@@ -6,14 +6,14 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.delhitransit.Data.DataClasses.BusPosition;
+import com.example.delhitransit.Data.DataClasses.BusPositionUpdate;
 import com.example.delhitransit.R;
 
 import java.util.List;
 
 public class BusListAdapter extends RecyclerView.Adapter<BusListAdapter.MyViewHolder> {
 
-    private List<BusPosition> mDataset;
+    private List<BusPositionUpdate> mDataset;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
@@ -49,11 +49,11 @@ public class BusListAdapter extends RecyclerView.Adapter<BusListAdapter.MyViewHo
         return 0;
     }
 
-    public void setDataset(List<BusPosition> mDataset) {
+    public void setDataset(List<BusPositionUpdate> mDataset) {
         this.mDataset = mDataset;
     }
 
-    public BusListAdapter(List<BusPosition> myDataset) {
+    public BusListAdapter(List<BusPositionUpdate> myDataset) {
         mDataset = myDataset;
     }
 

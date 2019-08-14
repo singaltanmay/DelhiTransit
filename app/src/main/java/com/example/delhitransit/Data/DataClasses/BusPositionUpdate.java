@@ -8,20 +8,20 @@ import androidx.room.PrimaryKey;
 import com.example.delhitransit.GtfsRealtime;
 
 @Entity(tableName = "positions")
-public class BusPosition {
+public class BusPositionUpdate {
 
     @PrimaryKey
     @NonNull
-    String vehicleID;
+    private String vehicleID = "";
 
-    String tripID;
-    String routeID;
-    float latitude;
-    float longitude;
-    float speed;
-    long timestamp;
+    private String tripID;
+    private String routeID;
+    private float latitude;
+    private float longitude;
+    private float speed;
+    private long timestamp;
 
-    public BusPosition(String vehicleID, String tripID, String routeID, float latitude, float longitude, float speed, long timestamp) {
+    public BusPositionUpdate(String vehicleID, String tripID, String routeID, float latitude, float longitude, float speed, long timestamp) {
         this.vehicleID = vehicleID;
         this.tripID = tripID;
         this.routeID = routeID;
@@ -32,11 +32,11 @@ public class BusPosition {
     }
 
     @Ignore
-    public BusPosition() {
+    public BusPositionUpdate() {
     }
 
     @Ignore
-    public BusPosition parseFrom(GtfsRealtime.FeedEntity entity) {
+    public BusPositionUpdate parseFrom(GtfsRealtime.FeedEntity entity) {
         this.vehicleID = entity.getId();
 
         GtfsRealtime.VehiclePosition vehicle = entity.getVehicle();

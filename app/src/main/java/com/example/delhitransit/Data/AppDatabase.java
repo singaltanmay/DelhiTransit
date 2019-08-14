@@ -13,13 +13,13 @@ import com.example.delhitransit.Data.DAO.BusRouteDao;
 import com.example.delhitransit.Data.DAO.BusStopDao;
 import com.example.delhitransit.Data.DAO.BusStopTimeDao;
 import com.example.delhitransit.Data.DAO.BusTripDao;
-import com.example.delhitransit.Data.DataClasses.BusPosition;
+import com.example.delhitransit.Data.DataClasses.BusPositionUpdate;
 import com.example.delhitransit.Data.DataClasses.BusRoute;
 import com.example.delhitransit.Data.DataClasses.BusStop;
 import com.example.delhitransit.Data.DataClasses.BusStopTime;
 import com.example.delhitransit.Data.DataClasses.BusTrip;
 
-@Database(entities = {BusRoute.class, BusStop.class, BusStopTime.class, BusTrip.class, BusPosition.class}, version = 1, exportSchema = false)
+@Database(entities = {BusRoute.class, BusStop.class, BusStopTime.class, BusTrip.class, BusPositionUpdate.class}, version = 1, exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     public static final String DATABASE_SHARED_PREF_KEY = "ubpsieg7832";

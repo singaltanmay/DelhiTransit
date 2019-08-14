@@ -8,14 +8,13 @@ import android.os.IBinder;
 import android.text.TextUtils;
 import android.util.Log;
 
-
 import com.example.delhitransit.Data.AppDatabase;
 import com.example.delhitransit.Data.DAO.BusPositionDao;
 import com.example.delhitransit.Data.DAO.BusRouteDao;
 import com.example.delhitransit.Data.DAO.BusStopDao;
 import com.example.delhitransit.Data.DAO.BusStopTimeDao;
 import com.example.delhitransit.Data.DAO.BusTripDao;
-import com.example.delhitransit.Data.DataClasses.BusPosition;
+import com.example.delhitransit.Data.DataClasses.BusPositionUpdate;
 import com.example.delhitransit.Data.DataClasses.BusRoute;
 import com.example.delhitransit.Data.DataClasses.BusStop;
 import com.example.delhitransit.Data.DataClasses.BusStopTime;
@@ -32,7 +31,6 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public class AppService extends Service {
 
@@ -68,119 +66,107 @@ public class AppService extends Service {
         else return new AppService();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        context = null;
+    }
+
     private long convertTimeToEpoch(String timestamp) {
         try {
-
-            long epoch = new java.text.SimpleDateFormat("MM/dd/yyyy HH:mm:ss").parse("01/01/1970 " + timestamp).getTime() / 1000;
+            long epoch = new java.text.SimpleDateFormat("MM/dd/yyyy HH:mm:ss").parse("01/01/1970" + timestamp).getTime() / 1000;
             Log.d(LOG_TAG, "Human, Epoch " + timestamp + "\t" + epoch);
             return epoch;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (Exception e) {e.printStackTrace();}
 
         return 0;
     }
 
-    public List<BusPosition> fetchAllPosition(final Context context) {
+    private class UpdateFetcher{
 
-        final List<BusPosition> positionList = new ArrayList<>();
+        // Initiates web update and delegates all related tasks
+        public List<BusPositionUpdate> fetchAllPosition(final Context context) {
 
-        List<GtfsRealtime.FeedEntity> feedEntities = fetchUpdateFromServer();
+            final List<BusPositionUpdate> positionList = new ArrayList<>();
 
-        for (GtfsRealtime.FeedEntity entity : feedEntities) {
-            positionList.add(new BusPosition().parseFrom(entity));
-        }
+            // Get the latest update from server
+            List<GtfsRealtime.FeedEntity> feedEntities = fetchUpdateFromServer();
 
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                updatePositionDatabase(positionList, context);
+            // Parses list element into a POJO and adds it to another positionList
+            for (GtfsRealtime.FeedEntity entity : feedEntities) {
+                positionList.add(new BusPositionUpdate().parseFrom(entity));
             }
-        });
 
-        thread.start();
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    // Update database with new information
+                    updatePositionDatabase(positionList, context);
+                }
+            });
 
-        return positionList;
+            thread.start();
 
-    }
-
-    private void updatePositionDatabase(List<BusPosition> list, Context context) {
-
-        AppDatabase instance = AppDatabase.getInstance(context);
-        BusPositionDao busPositionDao = instance.getBusPositionDao();
-
-        for (BusPosition position : list) {
-            busPositionDao.insertBusPosition(position);
+            // Return list for displaying in GUI
+            return positionList;
         }
 
+        // Makes a HTTP request and returns the latest update in a list
+        private List<GtfsRealtime.FeedEntity> fetchUpdateFromServer() {
 
-    }
+            List<GtfsRealtime.FeedEntity> feedEntityList = null;
+            String urlString = "https://otd.delhi.gov.in/api/realtime/VehiclePositions.pb?key=ObnMpq02enRlNc8m2iuOnR97GLnfKQUj";
 
-    public List<GtfsRealtime.FeedEntity> fetchUpdateFromServer() {
+            try {
 
+                URL url = new URL(urlString);
+                InputStream inputStream = null;
 
-        List<GtfsRealtime.FeedEntity> feedEntityList = null;
-        String urlString = "https://otd.delhi.gov.in/api/realtime/VehiclePositions.pb?key=ObnMpq02enRlNc8m2iuOnR97GLnfKQUj";
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setReadTimeout(10000);
+                urlConnection.setConnectTimeout(15000);
+                urlConnection.setRequestMethod("GET");
+                urlConnection.connect();
 
+                if (urlConnection.getResponseCode() == 200) {
 
-        try {
+                    Log.d(LOG_TAG, "Connected to server " + urlConnection.getResponseMessage());
 
-            URL url = new URL(urlString);
-            InputStream inputStream = null;
+                    inputStream = urlConnection.getInputStream();
 
-            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setReadTimeout(10000);
-            urlConnection.setConnectTimeout(15000);
-            urlConnection.setRequestMethod("GET");
-            urlConnection.connect();
+                    GtfsRealtime.FeedMessage feedMessage = GtfsRealtime.FeedMessage.parseFrom(inputStream);
+                    feedEntityList = feedMessage.getEntityList();
 
-            if (urlConnection.getResponseCode() == 200) {
+                    Log.d(LOG_TAG, "List Size : " + feedEntityList.size());
 
-                Log.d(LOG_TAG, "Connected to server " + urlConnection.getResponseMessage());
+                } else
+                    Log.e(LOG_TAG, "Error connecting to server. Response code : " + urlConnection.getResponseCode());
 
-                inputStream = urlConnection.getInputStream();
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+                urlConnection.disconnect();
 
-                GtfsRealtime.FeedMessage feedMessage = GtfsRealtime.FeedMessage.parseFrom(inputStream);
-                feedEntityList = feedMessage.getEntityList();
-
-                Log.d(LOG_TAG, "List Size : " + feedEntityList.size());
-
-            } else
-                Log.e(LOG_TAG, "Error connecting to server. Response code : " + urlConnection.getResponseCode());
-
-            if (inputStream != null) {
-                inputStream.close();
+            } catch (
+                    Exception e) {
+                e.printStackTrace();
             }
-            urlConnection.disconnect();
 
-
-        } catch (
-                Exception e) {
-            e.printStackTrace();
+            return feedEntityList;
         }
 
-        return feedEntityList;
+        // Updates the database with new information
+        private void updatePositionDatabase(List<BusPositionUpdate> list, Context context) {
+
+            BusPositionDao busPositionDao = database.getBusPositionDao();
+
+            for (BusPositionUpdate position : list) {
+                busPositionDao.insertBusPosition(position);
+            }
+
+        }
 
     }
-
-//    private List<BusPosition> updatePositionsTable() {
-//
-//        List<GtfsRealtime.FeedEntity> feedEntities = fetchUpdateFromServer();
-//
-//        List<BusPosition> positionArrayList = new ArrayList<>();
-//
-//        BusPositionDao busPositionDao = database.getBusPositionDao();
-//
-//        for (GtfsRealtime.FeedEntity entity : feedEntities) {
-//            BusPosition position = new BusPosition().parseFrom(entity);
-//            positionArrayList.add(position);
-//            busPositionDao.insertBusPosition(position);
-//        }
-//
-//        return positionArrayList;
-//
-//    }
-
 
     /* Class responsible for all initialization operation on the
      permanent data containing table of the database*/
@@ -189,21 +175,18 @@ public class AppService extends Service {
         private final String LOG_TAG = DatabaseInitializer.class.getSimpleName();
 
         private boolean routes_initialized = false;
-        private boolean stops_initalized = false;
+        private boolean stops_initialized = false;
         private boolean stop_times_initialized = false;
         private boolean trips_initialized = false;
 
         private void updateInitializationStatus(){
 
-            if (routes_initialized && stops_initalized && stop_times_initialized && trips_initialized){
+            if (routes_initialized && stops_initialized && stop_times_initialized && trips_initialized){
 
                 // Get SharedPreferences that stores the state of the database
                 final SharedPreferences preferences = getSharedPreferences(AppDatabase.DATABASE_SHARED_PREF_KEY, MODE_PRIVATE);
 
                 boolean key_exists = preferences.contains(AppDatabase.DATABASE_IS_INITIALIZED_SHARED_PREF_KEY);
-                boolean db_init_bool = key_exists && preferences.getBoolean(AppDatabase.DATABASE_IS_INITIALIZED_SHARED_PREF_KEY, false);
-
-                db_init_bool = true;
                 preferences.edit().putBoolean(AppDatabase.DATABASE_IS_INITIALIZED_SHARED_PREF_KEY, true).apply();
             }
         };
@@ -221,7 +204,7 @@ public class AppService extends Service {
 
                 routes_initialized = true;
                 stop_times_initialized = true;
-                stops_initalized= true;
+                stops_initialized = true;
                 trips_initialized = true;
                 Log.d(LOG_TAG, "Database is already initialized. Nothing to do.");
 
@@ -242,7 +225,7 @@ public class AppService extends Service {
                     initRoutes.start();
                 }
 
-                if (!stops_initalized){
+                if (!stops_initialized){
                     // Create new thread to init table
                     final Thread initStops = new Thread(new Runnable() {
                         @Override
@@ -448,7 +431,7 @@ public class AppService extends Service {
 
             }
 
-            stops_initalized = true;
+            stops_initialized = true;
             updateInitializationStatus();
             Log.d(LOG_TAG, "stops table initialized, Rows inserted: " + busStopDao.getNumberOfRows());
 
@@ -629,7 +612,6 @@ public class AppService extends Service {
         }
 
     }
-
 
 }
 

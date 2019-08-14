@@ -15,12 +15,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.example.delhitransit.Data.DataClasses.BusPosition;
+import com.example.delhitransit.Data.DataClasses.BusPositionUpdate;
 import com.example.delhitransit.R;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<BusPosition>> {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<BusPositionUpdate>> {
 
     //LOG_TAG
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
@@ -55,12 +55,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
-    public Loader<List<BusPosition>> onCreateLoader(int i, Bundle bundle) {
+    public Loader<List<BusPositionUpdate>> onCreateLoader(int i, Bundle bundle) {
         return new VehiclePositionLoader(this);
     }
 
     @Override
-    public void onLoadFinished(Loader<List<BusPosition>> loader, List<BusPosition> feedEntities) {
+    public void onLoadFinished(Loader<List<BusPositionUpdate>> loader, List<BusPositionUpdate> feedEntities) {
         // Log the number of entries received by loader
         Log.d(LOG_TAG, "List Size Received by Loader : " + feedEntities.size());
         // Set new data-set on the adapter
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
-    public void onLoaderReset(Loader<List<BusPosition>> loader) {
+    public void onLoaderReset(Loader<List<BusPositionUpdate>> loader) {
         // Set null data-set on the adapter
         adapter.setDataset(null);
         // Clear the adapter

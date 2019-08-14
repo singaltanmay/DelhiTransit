@@ -7,11 +7,11 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.example.delhitransit.Data.DataClasses.BusPosition;
+import com.example.delhitransit.Data.DataClasses.BusPositionUpdate;
 
 import java.util.List;
 
-public class VehiclePositionLoader extends AsyncTaskLoader<List<BusPosition>> {
+public class VehiclePositionLoader extends AsyncTaskLoader<List<BusPositionUpdate>> {
 
 
     private String LOG_TAG = VehiclePositionLoader.class.getSimpleName();
@@ -28,7 +28,7 @@ public class VehiclePositionLoader extends AsyncTaskLoader<List<BusPosition>> {
 
     @Nullable
     @Override
-    public List<BusPosition> loadInBackground() {
+    public List<BusPositionUpdate> loadInBackground() {
         Log.d(LOG_TAG, "Begin Loading");
 
         AppService service = AppService.getInstance();
