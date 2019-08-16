@@ -33,7 +33,7 @@ public class VehiclePositionLoader extends AsyncTaskLoader<List<BusPositionUpdat
 
         AppService service = AppService.getInstance();
 
-        Log.d(LOG_TAG, "Received service : "  + service);
+        Log.d(LOG_TAG, "Received service : " + service);
 
         return service.fetchAllPosition(getContext());
     }

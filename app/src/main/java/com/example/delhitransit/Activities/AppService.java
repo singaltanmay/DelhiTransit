@@ -44,25 +44,27 @@ public class AppService extends Service {
     }
 
     @Override
-    public IBinder onBind(Intent intent) {
-
+    public void onCreate() {
         // Get a single instance of database to be used for all operations
         // This ensures data integrity as only single instance of DB initialized by application
         database = AppDatabase.getInstance(context.getApplicationContext());
 
         DatabaseInitializer initializer = new DatabaseInitializer();
         initializer.checkDatabaseIntegrity();
+    }
 
+    @Override
+    public IBinder onBind(Intent intent) {
         return null;
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        return START_NOT_STICKY;
+        return START_STICKY;
     }
 
-    public static AppService getInstance(){
-        if (context != null) return (AppService)context;
+    public static AppService getInstance() {
+        if (context != null) return (AppService) context;
         else return new AppService();
     }
 
@@ -72,105 +74,98 @@ public class AppService extends Service {
         context = null;
     }
 
+    // Initiates web update and delegates all related tasks
+    public List<BusPositionUpdate> fetchAllPosition(final Context context) {
+
+        final List<BusPositionUpdate> positionList = new ArrayList<>();
+
+        // Get the latest update from server
+        List<GtfsRealtime.FeedEntity> feedEntities = fetchUpdateFromServer();
+
+        // Parses list element into a POJO and adds it to another positionList
+        for (GtfsRealtime.FeedEntity entity : feedEntities) {
+            positionList.add(new BusPositionUpdate().parseFrom(entity));
+        }
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // Update database with new information
+                updatePositionDatabase(positionList, context);
+            }
+        });
+
+        thread.start();
+
+        // Return list for displaying in GUI
+        return positionList;
+    }
+
+    // Makes a HTTP request and returns the latest update in a list
+    private List<GtfsRealtime.FeedEntity> fetchUpdateFromServer() {
+
+        List<GtfsRealtime.FeedEntity> feedEntityList = null;
+        String urlString = "https://otd.delhi.gov.in/api/realtime/VehiclePositions.pb?key=ObnMpq02enRlNc8m2iuOnR97GLnfKQUj";
+
+        try {
+
+            URL url = new URL(urlString);
+            InputStream inputStream = null;
+
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setReadTimeout(10000);
+            urlConnection.setConnectTimeout(15000);
+            urlConnection.setRequestMethod("GET");
+            urlConnection.connect();
+
+            if (urlConnection.getResponseCode() == 200) {
+
+                Log.d(LOG_TAG, "Connected to server " + urlConnection.getResponseMessage());
+
+                inputStream = urlConnection.getInputStream();
+
+                GtfsRealtime.FeedMessage feedMessage = GtfsRealtime.FeedMessage.parseFrom(inputStream);
+                feedEntityList = feedMessage.getEntityList();
+
+                Log.d(LOG_TAG, "List Size : " + feedEntityList.size());
+
+            } else
+                Log.e(LOG_TAG, "Error connecting to server. Response code : " + urlConnection.getResponseCode());
+
+            if (inputStream != null) {
+                inputStream.close();
+            }
+            urlConnection.disconnect();
+
+        } catch (
+                Exception e) {
+            e.printStackTrace();
+        }
+
+        return feedEntityList;
+    }
+
+    // Updates the database with new information
+    private void updatePositionDatabase(List<BusPositionUpdate> list, Context context) {
+        BusPositionDao busPositionDao = database.getBusPositionDao();
+        for (BusPositionUpdate position : list) busPositionDao.insertBusPosition(position);
+    }
+
     private long convertTimeToEpoch(String timestamp) {
         try {
             long epoch = new java.text.SimpleDateFormat("MM/dd/yyyy HH:mm:ss").parse("01/01/1970" + timestamp).getTime() / 1000;
             Log.d(LOG_TAG, "Human, Epoch " + timestamp + "\t" + epoch);
             return epoch;
-        } catch (Exception e) {e.printStackTrace();}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return 0;
     }
 
-    private class UpdateFetcher{
-
-        // Initiates web update and delegates all related tasks
-        public List<BusPositionUpdate> fetchAllPosition(final Context context) {
-
-            final List<BusPositionUpdate> positionList = new ArrayList<>();
-
-            // Get the latest update from server
-            List<GtfsRealtime.FeedEntity> feedEntities = fetchUpdateFromServer();
-
-            // Parses list element into a POJO and adds it to another positionList
-            for (GtfsRealtime.FeedEntity entity : feedEntities) {
-                positionList.add(new BusPositionUpdate().parseFrom(entity));
-            }
-
-            Thread thread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    // Update database with new information
-                    updatePositionDatabase(positionList, context);
-                }
-            });
-
-            thread.start();
-
-            // Return list for displaying in GUI
-            return positionList;
-        }
-
-        // Makes a HTTP request and returns the latest update in a list
-        private List<GtfsRealtime.FeedEntity> fetchUpdateFromServer() {
-
-            List<GtfsRealtime.FeedEntity> feedEntityList = null;
-            String urlString = "https://otd.delhi.gov.in/api/realtime/VehiclePositions.pb?key=ObnMpq02enRlNc8m2iuOnR97GLnfKQUj";
-
-            try {
-
-                URL url = new URL(urlString);
-                InputStream inputStream = null;
-
-                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setReadTimeout(10000);
-                urlConnection.setConnectTimeout(15000);
-                urlConnection.setRequestMethod("GET");
-                urlConnection.connect();
-
-                if (urlConnection.getResponseCode() == 200) {
-
-                    Log.d(LOG_TAG, "Connected to server " + urlConnection.getResponseMessage());
-
-                    inputStream = urlConnection.getInputStream();
-
-                    GtfsRealtime.FeedMessage feedMessage = GtfsRealtime.FeedMessage.parseFrom(inputStream);
-                    feedEntityList = feedMessage.getEntityList();
-
-                    Log.d(LOG_TAG, "List Size : " + feedEntityList.size());
-
-                } else
-                    Log.e(LOG_TAG, "Error connecting to server. Response code : " + urlConnection.getResponseCode());
-
-                if (inputStream != null) {
-                    inputStream.close();
-                }
-                urlConnection.disconnect();
-
-            } catch (
-                    Exception e) {
-                e.printStackTrace();
-            }
-
-            return feedEntityList;
-        }
-
-        // Updates the database with new information
-        private void updatePositionDatabase(List<BusPositionUpdate> list, Context context) {
-
-            BusPositionDao busPositionDao = database.getBusPositionDao();
-
-            for (BusPositionUpdate position : list) {
-                busPositionDao.insertBusPosition(position);
-            }
-
-        }
-
-    }
-
     /* Class responsible for all initialization operation on the
      permanent data containing table of the database*/
-    private class DatabaseInitializer{
+    private class DatabaseInitializer {
 
         private final String LOG_TAG = DatabaseInitializer.class.getSimpleName();
 
@@ -179,9 +174,9 @@ public class AppService extends Service {
         private boolean stop_times_initialized = false;
         private boolean trips_initialized = false;
 
-        private void updateInitializationStatus(){
+        private void updateInitializationStatus() {
 
-            if (routes_initialized && stops_initialized && stop_times_initialized && trips_initialized){
+            if (routes_initialized && stops_initialized && stop_times_initialized && trips_initialized) {
 
                 // Get SharedPreferences that stores the state of the database
                 final SharedPreferences preferences = getSharedPreferences(AppDatabase.DATABASE_SHARED_PREF_KEY, MODE_PRIVATE);
@@ -189,9 +184,11 @@ public class AppService extends Service {
                 boolean key_exists = preferences.contains(AppDatabase.DATABASE_IS_INITIALIZED_SHARED_PREF_KEY);
                 preferences.edit().putBoolean(AppDatabase.DATABASE_IS_INITIALIZED_SHARED_PREF_KEY, true).apply();
             }
-        };
+        }
 
-        private void checkDatabaseIntegrity(){
+        ;
+
+        private void checkDatabaseIntegrity() {
 
             // Get SharedPreferences that stores the state of the database
             final SharedPreferences preferences = getSharedPreferences(AppDatabase.DATABASE_SHARED_PREF_KEY, MODE_PRIVATE);
@@ -208,12 +205,12 @@ public class AppService extends Service {
                 trips_initialized = true;
                 Log.d(LOG_TAG, "Database is already initialized. Nothing to do.");
 
-            }else{
+            } else {
 
                 // DB not initialized
                 Log.d(LOG_TAG, "Initializing the database");
 
-                if (!routes_initialized){
+                if (!routes_initialized) {
                     // Create new thread to init table
                     Thread initRoutes = new Thread(new Runnable() {
                         @Override
@@ -225,7 +222,7 @@ public class AppService extends Service {
                     initRoutes.start();
                 }
 
-                if (!stops_initialized){
+                if (!stops_initialized) {
                     // Create new thread to init table
                     final Thread initStops = new Thread(new Runnable() {
                         @Override
@@ -237,7 +234,7 @@ public class AppService extends Service {
                     initStops.start();
                 }
 
-                if (!stop_times_initialized){
+                if (!stop_times_initialized) {
                     // Create new thread to init table
                     final Thread initStopTimes = new Thread(new Runnable() {
                         @Override
@@ -249,7 +246,7 @@ public class AppService extends Service {
                     initStopTimes.start();
                 }
 
-                if (!trips_initialized){
+                if (!trips_initialized) {
                     // Create new thread to init table
                     final Thread initTrips = new Thread(new Runnable() {
                         @Override
@@ -258,7 +255,7 @@ public class AppService extends Service {
 //                logAllEntries(database.getBusTripDao().loadAll());
                         }
                     });
-                   initTrips.start();
+                    initTrips.start();
                 }
 
 
@@ -530,7 +527,7 @@ public class AppService extends Service {
 
             stop_times_initialized = true;
             updateInitializationStatus();
-            Log.d(LOG_TAG, "stop_times table initialized, Rows inserted: " + busStopTimeDao.loadAll(). size());
+            Log.d(LOG_TAG, "stop_times table initialized, Rows inserted: " + busStopTimeDao.loadAll().size());
 
         }
 

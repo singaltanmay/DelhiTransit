@@ -12,13 +12,13 @@ import java.util.List;
 @Dao
 public interface BusPositionDao {
 
-    @Query("SELECT * FROM BusPositionUpdate")
+    @Query("SELECT * FROM positions")
     List<BusPositionUpdate> loadAll();
 
-    @Query("DELETE FROM BusPositionUpdate")
+    @Query("DELETE FROM positions")
     void deleteAll();
 
-    @Query("SELECT COUNT(vehicleID) FROM BusPositionUpdate")
+    @Query("SELECT COUNT(vehicleID) FROM positions")
     int getNumberOfRows();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
