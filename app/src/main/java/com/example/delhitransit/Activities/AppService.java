@@ -8,17 +8,17 @@ import android.os.IBinder;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.example.delhitransit.Data.AppDatabase;
-import com.example.delhitransit.Data.DAO.BusPositionDao;
-import com.example.delhitransit.Data.DAO.BusRouteDao;
-import com.example.delhitransit.Data.DAO.BusStopDao;
-import com.example.delhitransit.Data.DAO.BusStopTimeDao;
-import com.example.delhitransit.Data.DAO.BusTripDao;
-import com.example.delhitransit.Data.DataClasses.BusPositionUpdate;
-import com.example.delhitransit.Data.DataClasses.BusRoute;
-import com.example.delhitransit.Data.DataClasses.BusStop;
-import com.example.delhitransit.Data.DataClasses.BusStopTime;
-import com.example.delhitransit.Data.DataClasses.BusTrip;
+import com.example.delhitransit.RoomData.AppDatabase;
+import com.example.delhitransit.RoomData.DAO.BusPositionDao;
+import com.example.delhitransit.RoomData.DAO.BusRouteDao;
+import com.example.delhitransit.RoomData.DAO.BusStopDao;
+import com.example.delhitransit.RoomData.DAO.BusStopTimeDao;
+import com.example.delhitransit.RoomData.DAO.BusTripDao;
+import com.example.delhitransit.RoomData.DataClasses.BusPositionUpdate;
+import com.example.delhitransit.RoomData.DataClasses.BusRoute;
+import com.example.delhitransit.RoomData.DataClasses.BusStop;
+import com.example.delhitransit.RoomData.DataClasses.BusStopTime;
+import com.example.delhitransit.RoomData.DataClasses.BusTrip;
 import com.example.delhitransit.GtfsRealtime;
 import com.example.delhitransit.R;
 
@@ -45,6 +45,7 @@ public class AppService extends Service {
 
     @Override
     public void onCreate() {
+
         // Get a single instance of database to be used for all operations
         // This ensures data integrity as only single instance of DB initialized by application
         database = AppDatabase.getInstance(context.getApplicationContext());
@@ -65,7 +66,14 @@ public class AppService extends Service {
 
     public static AppService getInstance() {
         if (context != null) return (AppService) context;
-        else return new AppService();
+        else {
+            AppService service = new AppService();
+            if (service.database == null) {
+                Log.d(LOG_TAG, "Lifecycle not complete. Calling onCreate");
+                //service.onCreate();
+            }
+            return service;
+        }
     }
 
     @Override
@@ -152,13 +160,13 @@ public class AppService extends Service {
     }
 
     private long convertTimeToEpoch(String timestamp) {
-        try {
-            long epoch = new java.text.SimpleDateFormat("MM/dd/yyyy HH:mm:ss").parse("01/01/1970" + timestamp).getTime() / 1000;
-            Log.d(LOG_TAG, "Human, Epoch " + timestamp + "\t" + epoch);
-            return epoch;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            long epoch = new java.text.SimpleDateFormat("MM/dd/yyyy HH:mm:ss").parse("01/01/1970" + timestamp).getTime() / 1000;
+//            Log.d(LOG_TAG, "Human, Epoch " + timestamp + "\t" + epoch);
+//            return epoch;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         return 0;
     }

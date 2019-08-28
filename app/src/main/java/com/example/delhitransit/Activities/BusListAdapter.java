@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.delhitransit.Data.DataClasses.BusPositionUpdate;
+import com.example.delhitransit.RoomData.DataClasses.BusPositionUpdate;
 import com.example.delhitransit.R;
 
 import java.util.List;

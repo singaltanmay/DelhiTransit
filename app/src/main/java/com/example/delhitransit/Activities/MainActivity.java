@@ -15,7 +15,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.example.delhitransit.Data.DataClasses.BusPositionUpdate;
+import com.example.delhitransit.RoomData.DataClasses.BusPositionUpdate;
 import com.example.delhitransit.R;
 
 import java.util.List;
@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.d(LOG_TAG, "Current time : " + System.currentTimeMillis() / 1000 );
+        Log.d(LOG_TAG, "Current time : " + System.currentTimeMillis() / 1000);
 
         // Launches app background service that provides database access and fetches data from the internet
         launchAppService();
