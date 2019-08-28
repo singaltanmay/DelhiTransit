@@ -17,24 +17,13 @@ public class BaseContract {
     public static final String PATH_BUS_STOPS = "";
 
 
-    public static class StopsEntry implements BaseColumns {
+    public static class StaticEntry implements BaseColumns {
 
         // Refers to this particular database
-        public static final String STOPS_CONTENT_AUTHORITY = BaseContract.CONTENT_AUTHORITY + ".Database.StopsProvider";
-        public static final Uri STOPS_CONTENT_URI = Uri.parse("content://" + STOPS_CONTENT_AUTHORITY);
+        public static final String STATIC_CONTENT_AUTHORITY = BaseContract.CONTENT_AUTHORITY + ".Database.StaticProvider";
+        public static final Uri STOPS_CONTENT_URI = Uri.parse("content://" + STATIC_CONTENT_AUTHORITY);
 
-        //  Name of the table
-        public static final String TABLE_NAME = "busStops";
 
-        // Uri pointing to this particular table
-        public static final Uri CONTENT_URI = Uri.withAppendedPath(STOPS_CONTENT_URI, StopsEntry.TABLE_NAME);
-
-        //  Names of various columns
-        public static final String _ID = "stop_id";
-        public static final String COLUMN_NAME_STOP_CODE = "stop_code";
-        public static final String COLUMN_NAME_STOP_NAME = "stop_name";
-        public static final String COLUMN_NAME_STOP_LATITUDE = "stop_latitude";
-        public static final String COLUMN_NAME_STOP_LONGITUDE = "stop_longitude";
 
     }
 
