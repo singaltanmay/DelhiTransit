@@ -13,9 +13,6 @@ public class BaseContract {
     public static final String CONTENT_AUTHORITY = "com.example.delhitransit";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
-    // Refers to particular database
-    public static final String PATH_BUS_STOPS = "";
-
 
     public static class StaticEntry implements BaseColumns {
 
