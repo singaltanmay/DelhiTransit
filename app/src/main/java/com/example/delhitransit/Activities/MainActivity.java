@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // Launches app background service that provides database access and fetches data from the internet
         launchAppService();
 
-       /* // Recycler View to show data fetched from server
+        // Recycler View to show data fetched from server
         RecyclerView busListView = findViewById(R.id.bus_list);
         busListView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new BusListAdapter(null);
@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         // Initialize loader that keeps recycler view updated
         getLoaderManager().initLoader(2924, null, this);
-*/
     }
 
     private void launchAppService() {
@@ -89,12 +88,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         switch (item.getItemId()) {
 
-            // Replace content with NearbyStopsFragment
+           /* // Replace content with NearbyStopsFragment
             case R.id.action_open_nearby_stops_fragment:
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(android.R.id.content, new NearbyStopsFragment());
                 transaction.commit();
-                break;
+                break;*/
         }
 
         return true;

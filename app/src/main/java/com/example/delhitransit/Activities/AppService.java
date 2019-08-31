@@ -5,20 +5,16 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.IBinder;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.example.delhitransit.Database.StaticDbHelper;
-import com.example.delhitransit.Database.StaticProvider;
 import com.example.delhitransit.RoomData.AppDatabase;
 import com.example.delhitransit.RoomData.DAO.BusPositionDao;
-import com.example.delhitransit.RoomData.DAO.BusRouteDao;
 import com.example.delhitransit.RoomData.DAO.BusStopTimeDao;
 import com.example.delhitransit.RoomData.DAO.BusTripDao;
 import com.example.delhitransit.RoomData.DataClasses.BusPositionUpdate;
-import com.example.delhitransit.RoomData.DataClasses.BusRoute;
 import com.example.delhitransit.RoomData.DataClasses.BusStopTime;
 import com.example.delhitransit.RoomData.DataClasses.BusTrip;
 import com.example.delhitransit.GtfsRealtime;
@@ -197,7 +193,6 @@ public class AppService extends Service {
         }
 
 
-
         private void checkDatabaseIntegrity() {
 
             // Get SharedPreferences that stores the state of the database
@@ -276,10 +271,6 @@ public class AppService extends Service {
 
         private void initRoutesTable(Context context) {
 
-            BusRouteDao busRouteDao = database.getBusRouteDao();
-            busRouteDao.deleteAll();
-
-
             InputStream stream = context.getResources().openRawResource(R.raw.routes);
 
             InputStreamReader inputStreamReader = new InputStreamReader(stream, Charset.forName("UTF-8" /*Name of Charset to convert to*/));
@@ -333,8 +324,14 @@ public class AppService extends Service {
 
                         route_id = Integer.parseInt(line);
 
-                        BusRoute route = new BusRoute(route_short_name, route_long_name, route_type, route_id);
-                        busRouteDao.insertRoute(route);
+                        ContentValues values = new ContentValues();
+                        values.put(StaticDbHelper.COLUMN_NAME_ROUTE_ID, route_id);
+                        values.put(StaticDbHelper.COLUMN_NAME_ROUTE_SHORT_NAME, route_short_name);
+                        values.put(StaticDbHelper.COLUMN_NAME_ROUTE_LONG_NAME, route_long_name);
+                        values.put(StaticDbHelper.COLUMN_NAME_ROUTE_TYPE, route_type);
+
+                        getContentResolver().insert(StaticDbHelper.TABLE_NAME_ROUTES_CONTENT_URI, values);
+
                     }
 
                 } catch (IOException e) {
@@ -345,7 +342,7 @@ public class AppService extends Service {
 
             routes_initialized = true;
             updateInitializationStatus();
-            Log.d(LOG_TAG, "routes table initialized, Rows inserted: " + busRouteDao.getNumberOfRows());
+            Log.d(LOG_TAG, "routes table initialized");
 
 
         }
@@ -428,9 +425,7 @@ public class AppService extends Service {
                         values.put(COLUMN_NAME_STOP_NAME, stop_name);
                         values.put(COLUMN_NAME_STOP_LATITUDE, stop_lat);
                         values.put(COLUMN_NAME_STOP_LONGITUDE, stop_lon);
-                        Uri tableNameStopsContentUri = StaticDbHelper.TABLE_NAME_STOPS_CONTENT_URI;
-                        Log.v(LOG_TAG, tableNameStopsContentUri.toString());
-                        getContentResolver().insert(tableNameStopsContentUri, values);
+                        getContentResolver().insert(StaticDbHelper.TABLE_NAME_STOPS_CONTENT_URI, values);
 
                     }
 
