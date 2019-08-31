@@ -93,7 +93,7 @@ public class StaticProvider extends ContentProvider {
 
         if (rowID == -1) Log.e(LOG_TAG, "The provided Uri " + uri.toString() + " is not valid");
 
-        Log.v(LOG_TAG, "Added stop code : "  + values.getAsString(StaticDbHelper.COLUMN_NAME_STOP_CODE));
+        Log.v(LOG_TAG, "Added stop code : " + values.getAsString(StaticDbHelper.COLUMN_NAME_STOP_CODE));
 
         // Notify about change
         getContext().getContentResolver().notifyChange(uri, null);
@@ -105,12 +105,59 @@ public class StaticProvider extends ContentProvider {
 
     @Override
     public int delete(@NonNull Uri uri, @Nullable String s, @Nullable String[] strings) {
-        return 0;
+
+        switch (sUriMatcher.match(uri)) {
+            case STOPS:
+                int numDeletedRows = deleteItem(s, strings, StaticDbHelper.TABLE_NAME_STOPS);
+                if (numDeletedRows != 0) getContext().getContentResolver().notifyChange(uri, null);
+                return numDeletedRows;
+            case STOPS_ID:
+                s = StaticDbHelper.COLUMN_NAME_STOP_ID + "=?";
+                strings = new String[]{String.valueOf(ContentUris.parseId(uri))};
+                int numDeletedRowss = deleteItem(s, strings, StaticDbHelper.TABLE_NAME_STOPS);
+                if (numDeletedRowss != 0) getContext().getContentResolver().notifyChange(uri, null);
+                return numDeletedRowss;
+            default:
+                throw new IllegalArgumentException(invalidUriErrorGenerator(uri));
+
+        }
+    }
+
+    private int deleteItem(String selection, String[] selectionArgs, String tableName) {
+        SQLiteDatabase database = mDbHelper.getWritableDatabase();
+        return database.delete(tableName, selection, selectionArgs);
     }
 
     @Override
-    public int update(@NonNull Uri uri, @Nullable ContentValues contentValues, @Nullable String s, @Nullable String[] strings) {
-        return 0;
+    public int update(@NonNull Uri uri, @Nullable ContentValues values, @Nullable String selection, @Nullable String[] selectionArgs) {
+
+        int NO_UPDATE = -1;
+
+        if (values.size() == 0) return NO_UPDATE;
+
+        switch (sUriMatcher.match(uri)) {
+            case STOPS:
+                int numItemsUpdated = updateItem(values, selection, selectionArgs, StaticDbHelper.TABLE_NAME_STOPS);
+                if (numItemsUpdated != 0) getContext().getContentResolver().notifyChange(uri, null);
+                return numItemsUpdated;
+            case STOPS_ID:
+                selection = StaticDbHelper.COLUMN_NAME_STOP_ID + "=?";
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
+                int numItemsUpdatedd = updateItem(values, selection, selectionArgs, StaticDbHelper.TABLE_NAME_STOPS);
+                if (numItemsUpdatedd != 0)
+                    getContext().getContentResolver().notifyChange(uri, null);
+                return numItemsUpdatedd;
+            default:
+                throw new IllegalArgumentException(invalidUriErrorGenerator(uri));
+        }
+    }
+
+
+    private int updateItem(ContentValues values, String selection, String[] selectionArgs, String tableName) {
+
+        SQLiteDatabase database = mDbHelper.getWritableDatabase();
+        return database.update(tableName, values, selection, selectionArgs);
+
     }
 
 
