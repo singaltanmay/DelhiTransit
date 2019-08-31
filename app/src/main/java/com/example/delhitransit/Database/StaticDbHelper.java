@@ -7,7 +7,7 @@ import android.net.Uri;
 
 public class StaticDbHelper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "staticData";
+    public static final String DATABASE_NAME = "staticData.db";
     public static final short DATABASE_VERSION = 1;
     private Context context;
 
@@ -32,8 +32,8 @@ public class StaticDbHelper extends SQLiteOpenHelper {
     // Names of various tables
     public static final String TABLE_NAME_STOPS = "stops";
 
-    public static final  String TABLE_STOPS_CONTENT_AUTHORITY = STATIC_CONTENT_AUTHORITY + "." + TABLE_NAME_STOPS;
-    public static final Uri TABLE_NAME_STOPS_CONTENT_URI = Uri.parse("content://" + TABLE_STOPS_CONTENT_AUTHORITY);
+    // Uri pointing to this particular table
+    public static final Uri TABLE_NAME_STOPS_CONTENT_URI = Uri.withAppendedPath(STATIC_CONTENT_URI, TABLE_NAME_STOPS);
 
     // Create stops table
     public static final String SQL_CREATE_STOPS_TABLE =
