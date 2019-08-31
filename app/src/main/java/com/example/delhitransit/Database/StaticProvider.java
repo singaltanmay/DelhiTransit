@@ -8,12 +8,14 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
-import android.os.CancellationSignal;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 public class StaticProvider extends ContentProvider {
+
+    private static final String LOG_TAG = StaticProvider.class.getSimpleName();
 
     private static final int STOPS = 0;
     private static final int STOPS_ID = 1;
@@ -38,7 +40,7 @@ public class StaticProvider extends ContentProvider {
         SQLiteDatabase database = mDbHelper.getReadableDatabase();
         Cursor cursor;
 
-        switch (sUriMatcher.match(uri)){
+        switch (sUriMatcher.match(uri)) {
             case STOPS:
                 cursor = database.query(StaticDbHelper.TABLE_NAME_STOPS, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
@@ -48,7 +50,7 @@ public class StaticProvider extends ContentProvider {
                 cursor = database.query(StaticDbHelper.TABLE_NAME_STOPS, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             default:
-                    throw new IllegalArgumentException(invalidUriErrorGenerator(uri));
+                throw new IllegalArgumentException(invalidUriErrorGenerator(uri));
         }
 
         return cursor;
@@ -71,15 +73,32 @@ public class StaticProvider extends ContentProvider {
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues contentValues) {
 
-        switch (sUriMatcher.match(uri)){
-            case STOPS :
+        switch (sUriMatcher.match(uri)) {
+            case STOPS:
+                insertItem(StaticDbHelper.TABLE_NAME_STOPS, contentValues, uri);
                 break;
 
             default:
-                    throw new IllegalArgumentException(invalidUriErrorGenerator(uri));
+                throw new IllegalArgumentException(invalidUriErrorGenerator(uri));
         }
 
         return null;
+    }
+
+    private Uri insertItem(String table_name, ContentValues values, Uri uri) {
+
+        SQLiteDatabase database = mDbHelper.getWritableDatabase();
+
+        long rowID = database.insert(table_name, null, values);
+
+        if (rowID == -1) Log.e(LOG_TAG, "The provided Uri " + uri.toString() + " is not valid");
+
+        // Notify about change
+        getContext().getContentResolver().notifyChange(uri, null);
+
+        // return the uri of inserted row
+        return ContentUris.withAppendedId(uri, rowID);
+
     }
 
     @Override
