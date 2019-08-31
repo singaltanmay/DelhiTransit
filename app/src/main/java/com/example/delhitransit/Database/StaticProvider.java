@@ -19,11 +19,16 @@ public class StaticProvider extends ContentProvider {
 
     private static final int STOPS = 0;
     private static final int STOPS_ID = 1;
+    private static final int ROUTES = 2;
+    private static final int ROUTES_ID = 3;
 
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
         sUriMatcher.addURI(StaticDbHelper.STATIC_CONTENT_AUTHORITY, StaticDbHelper.TABLE_NAME_STOPS, STOPS);
+        sUriMatcher.addURI(StaticDbHelper.STATIC_CONTENT_AUTHORITY, StaticDbHelper.TABLE_NAME_STOPS + "/#", STOPS_ID);
+        sUriMatcher.addURI(StaticDbHelper.STATIC_CONTENT_AUTHORITY, StaticDbHelper.TABLE_NAME_ROUTES, ROUTES);
+        sUriMatcher.addURI(StaticDbHelper.STATIC_CONTENT_AUTHORITY, StaticDbHelper.TABLE_NAME_ROUTES + "/#", ROUTES_ID);
     }
 
     private StaticDbHelper mDbHelper;
@@ -38,23 +43,32 @@ public class StaticProvider extends ContentProvider {
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
         SQLiteDatabase database = mDbHelper.getReadableDatabase();
-        Cursor cursor;
 
         switch (sUriMatcher.match(uri)) {
             case STOPS:
-                cursor = database.query(StaticDbHelper.TABLE_NAME_STOPS, projection, selection, selectionArgs, null, null, sortOrder);
-                break;
+                return broadQuery(database, StaticDbHelper.TABLE_NAME_STOPS, projection, selection, selectionArgs, sortOrder);
             case STOPS_ID:
-                selection = StaticDbHelper.COLUMN_NAME_STOP_ID + "=?";
-                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
-                cursor = database.query(StaticDbHelper.TABLE_NAME_STOPS, projection, selection, selectionArgs, null, null, sortOrder);
-                break;
+                return narrowQuery(StaticDbHelper.COLUMN_NAME_STOP_ID, database, StaticDbHelper.TABLE_NAME_STOPS, uri, projection, selection, selectionArgs, sortOrder);
+            case ROUTES:
+                return broadQuery(database, StaticDbHelper.TABLE_NAME_ROUTES, projection, selection, selectionArgs, sortOrder);
+            case ROUTES_ID:
+                return narrowQuery(StaticDbHelper.COLUMN_NAME_ROUTE_ID, database, StaticDbHelper.TABLE_NAME_ROUTES, uri, projection, selection, selectionArgs, sortOrder);
             default:
                 throw new IllegalArgumentException(invalidUriErrorGenerator(uri));
         }
 
-        return cursor;
     }
+
+    private Cursor broadQuery(SQLiteDatabase database, String tableName, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
+        return database.query(tableName, projection, selection, selectionArgs, null, null, sortOrder);
+    }
+
+    private Cursor narrowQuery(String idCol, SQLiteDatabase database, String tableName, Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
+        selection = idCol + "=?";
+        selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
+        return database.query(tableName, projection, selection, selectionArgs, null, null, sortOrder);
+    }
+
 
     @Nullable
     @Override
@@ -64,6 +78,10 @@ public class StaticProvider extends ContentProvider {
                 return ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + BaseContract.CONTENT_AUTHORITY + "/" + StaticDbHelper.TABLE_NAME_STOPS;
             case STOPS_ID:
                 return ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + BaseContract.CONTENT_AUTHORITY + "/" + StaticDbHelper.TABLE_NAME_STOPS;
+            case ROUTES:
+                return ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + BaseContract.CONTENT_AUTHORITY + "/" + StaticDbHelper.TABLE_NAME_ROUTES;
+            case ROUTES_ID:
+                return ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + BaseContract.CONTENT_AUTHORITY + "/" + StaticDbHelper.TABLE_NAME_ROUTES;
             default:
                 throw new IllegalStateException(invalidUriErrorGenerator(uri));
         }
@@ -76,6 +94,9 @@ public class StaticProvider extends ContentProvider {
         switch (sUriMatcher.match(uri)) {
             case STOPS:
                 insertItem(StaticDbHelper.TABLE_NAME_STOPS, contentValues, uri);
+                break;
+            case ROUTES:
+                insertItem(StaticDbHelper.TABLE_NAME_ROUTES, contentValues, uri);
                 break;
 
             default:
@@ -117,6 +138,17 @@ public class StaticProvider extends ContentProvider {
                 int numDeletedRowss = deleteItem(s, strings, StaticDbHelper.TABLE_NAME_STOPS);
                 if (numDeletedRowss != 0) getContext().getContentResolver().notifyChange(uri, null);
                 return numDeletedRowss;
+            case ROUTES:
+                int numDeletedRows2 = deleteItem(s, strings, StaticDbHelper.TABLE_NAME_ROUTES);
+                if (numDeletedRows2 != 0) getContext().getContentResolver().notifyChange(uri, null);
+                return numDeletedRows2;
+            case ROUTES_ID:
+                s = StaticDbHelper.COLUMN_NAME_ROUTE_ID + "=?";
+                strings = new String[]{String.valueOf(ContentUris.parseId(uri))};
+                int numDeletedRowss4 = deleteItem(s, strings, StaticDbHelper.TABLE_NAME_ROUTES);
+                if (numDeletedRowss4 != 0)
+                    getContext().getContentResolver().notifyChange(uri, null);
+                return numDeletedRowss4;
             default:
                 throw new IllegalArgumentException(invalidUriErrorGenerator(uri));
 
@@ -147,6 +179,17 @@ public class StaticProvider extends ContentProvider {
                 if (numItemsUpdatedd != 0)
                     getContext().getContentResolver().notifyChange(uri, null);
                 return numItemsUpdatedd;
+            case ROUTES:
+                int numItemsUpdate = updateItem(values, selection, selectionArgs, StaticDbHelper.TABLE_NAME_ROUTES);
+                if (numItemsUpdate != 0) getContext().getContentResolver().notifyChange(uri, null);
+                return numItemsUpdate;
+            case ROUTES_ID:
+                selection = StaticDbHelper.COLUMN_NAME_ROUTE_ID + "=?";
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
+                int numItemsUpdateddx = updateItem(values, selection, selectionArgs, StaticDbHelper.TABLE_NAME_ROUTES);
+                if (numItemsUpdateddx != 0)
+                    getContext().getContentResolver().notifyChange(uri, null);
+                return numItemsUpdateddx;
             default:
                 throw new IllegalArgumentException(invalidUriErrorGenerator(uri));
         }
@@ -154,10 +197,8 @@ public class StaticProvider extends ContentProvider {
 
 
     private int updateItem(ContentValues values, String selection, String[] selectionArgs, String tableName) {
-
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
         return database.update(tableName, values, selection, selectionArgs);
-
     }
 
 
