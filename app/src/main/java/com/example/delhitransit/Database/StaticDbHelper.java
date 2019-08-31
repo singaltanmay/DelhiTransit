@@ -28,12 +28,18 @@ public class StaticDbHelper extends SQLiteOpenHelper {
     public static final String COLUMN_NAME_STOP_NAME = "stop_name";
     public static final String COLUMN_NAME_STOP_LATITUDE = "stop_latitude";
     public static final String COLUMN_NAME_STOP_LONGITUDE = "stop_longitude";
+    public static final String COLUMN_NAME_ROUTE_ID = "route_id";
+    public static final String COLUMN_NAME_ROUTE_SHORT_NAME = "route_short_name";
+    public static final String COLUMN_NAME_ROUTE_LONG_NAME = "route_long_name";
+    public static final String COLUMN_NAME_ROUTE_TYPE = "route_type";
 
     // Names of various tables
-    public static final String TABLE_NAME_STOPS = "stops";
+    public static final String TABLE_NAME_STOPS = "stops_table";
+    public static final String TABLE_NAME_ROUTES = "routes_table";
 
     // Uri pointing to this particular table
     public static final Uri TABLE_NAME_STOPS_CONTENT_URI = Uri.withAppendedPath(STATIC_CONTENT_URI, TABLE_NAME_STOPS);
+    public static final Uri TABLE_NAME_ROUTES_CONTENT_URI = Uri.withAppendedPath(STATIC_CONTENT_URI, TABLE_NAME_ROUTES);
 
     // Create stops table
     public static final String SQL_CREATE_STOPS_TABLE =
@@ -44,18 +50,28 @@ public class StaticDbHelper extends SQLiteOpenHelper {
                     COLUMN_NAME_STOP_LATITUDE + " DOUBLE, " +
                     COLUMN_NAME_STOP_LONGITUDE + " DOUBLE);";
 
-    // Drop stops table
-    public static final String SQL_DROP_STOPS_TABLE =
-            "DROP TABLE IF EXISTS " + TABLE_NAME_STOPS;
+    // Create routes table
+    public static final String SQL_CREATE_ROUTES_TABLE =
+            "CREATE TABLE " + TABLE_NAME_ROUTES + " (" +
+                    COLUMN_NAME_ROUTE_ID + " INTEGER PRIMARY KEY, " +
+                    COLUMN_NAME_ROUTE_SHORT_NAME + " TEXT, " +
+                    COLUMN_NAME_ROUTE_LONG_NAME + " TEXT, " +
+                    COLUMN_NAME_ROUTE_TYPE + " INTEGER);";
+
+    private void dropTable(SQLiteDatabase database, String tableName) {
+        database.execSQL("DROP TABLE IF EXISTS " + tableName);
+    }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(SQL_CREATE_STOPS_TABLE);
+        sqLiteDatabase.execSQL(SQL_CREATE_ROUTES_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        sqLiteDatabase.execSQL(SQL_DROP_STOPS_TABLE);
+        dropTable(sqLiteDatabase, TABLE_NAME_STOPS);
+        dropTable(sqLiteDatabase, TABLE_NAME_ROUTES);
         onCreate(sqLiteDatabase);
     }
 
