@@ -34,16 +34,21 @@ public class StaticDbHelper extends SQLiteOpenHelper {
     public static final String COLUMN_NAME_ROUTE_TYPE = "route_type";
     public static final String COLUMN_NAME_TRIP_ID = "trip_id";
     public static final String COLUMN_NAME_SERVICE_ID = "service_id";
+    public static final String COLUMN_NAME_ARRIVAL_TIME = "arrival_time";
+    public static final String COLUMN_NAME_DEPARTURE_TIME = "departure_time";
+    public static final String COLUMN_NAME_STOP_SEQUENCE = "stop_sequence";
 
     // Names of various tables
     public static final String TABLE_NAME_STOPS = "stops_table";
     public static final String TABLE_NAME_ROUTES = "routes_table";
     public static final String TABLE_NAME_TRIPS = "trips_table";
+    public static final String TABLE_NAME_STOP_TIMES = "stop_times_table"
 
     // Uri pointing to this particular table
     public static final Uri TABLE_NAME_STOPS_CONTENT_URI = Uri.withAppendedPath(STATIC_CONTENT_URI, TABLE_NAME_STOPS);
     public static final Uri TABLE_NAME_ROUTES_CONTENT_URI = Uri.withAppendedPath(STATIC_CONTENT_URI, TABLE_NAME_ROUTES);
     public static final Uri TABLE_NAME_TRIPS_CONTENT_URI = Uri.withAppendedPath(STATIC_CONTENT_URI, TABLE_NAME_TRIPS);
+    public static final Uri TABLE_NAME_STOP_TIMES_CONTENT_URI = Uri.withAppendedPath(STATIC_CONTENT_URI, TABLE_NAME_STOP_TIMES);
 
     // Create stops table
     public static final String SQL_CREATE_STOPS_TABLE =
@@ -69,6 +74,15 @@ public class StaticDbHelper extends SQLiteOpenHelper {
                     COLUMN_NAME_TRIP_ID + " INTEGER, " +
                     COLUMN_NAME_SERVICE_ID + " INTEGER);";
 
+    // Create stop times table
+    public static final String SQL_CREATE_STOP_TIMES_TABLE =
+            "CREATE TABLE " + TABLE_NAME_STOP_TIMES + " (" +
+                    COLUMN_NAME_TRIP_ID + " INTEGER, " +
+                    COLUMN_NAME_ARRIVAL_TIME + " INTEGER, " +
+                    COLUMN_NAME_DEPARTURE_TIME + " INTEGER, " +
+                    COLUMN_NAME_STOP_ID + " INTEGER, " +
+                    COLUMN_NAME_STOP_SEQUENCE + " INTEGER);";
+
     private void dropTable(SQLiteDatabase database, String tableName) {
         database.execSQL("DROP TABLE IF EXISTS " + tableName);
     }
@@ -78,6 +92,7 @@ public class StaticDbHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(SQL_CREATE_STOPS_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_ROUTES_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_TRIPS_TABLE);
+        sqLiteDatabase.execSQL(SQL_CREATE_STOP_TIMES_TABLE);
     }
 
     @Override
@@ -85,6 +100,7 @@ public class StaticDbHelper extends SQLiteOpenHelper {
         dropTable(sqLiteDatabase, TABLE_NAME_STOPS);
         dropTable(sqLiteDatabase, TABLE_NAME_ROUTES);
         dropTable(sqLiteDatabase, TABLE_NAME_TRIPS);
+        dropTable(sqLiteDatabase, TABLE_NAME_STOP_TIMES);
         onCreate(sqLiteDatabase);
     }
 
