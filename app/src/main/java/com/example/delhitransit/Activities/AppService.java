@@ -13,10 +13,8 @@ import com.example.delhitransit.Database.StaticDbHelper;
 import com.example.delhitransit.RoomData.AppDatabase;
 import com.example.delhitransit.RoomData.DAO.BusPositionDao;
 import com.example.delhitransit.RoomData.DAO.BusStopTimeDao;
-import com.example.delhitransit.RoomData.DAO.BusTripDao;
 import com.example.delhitransit.RoomData.DataClasses.BusPositionUpdate;
 import com.example.delhitransit.RoomData.DataClasses.BusStopTime;
-import com.example.delhitransit.RoomData.DataClasses.BusTrip;
 import com.example.delhitransit.GtfsRealtime;
 import com.example.delhitransit.R;
 
@@ -30,11 +28,14 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_ROUTE_ID;
+import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_SERVICE_ID;
 import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_CODE;
 import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_ID;
 import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_LATITUDE;
 import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_LONGITUDE;
 import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_NAME;
+import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_TRIP_ID;
 
 public class AppService extends Service {
 
@@ -540,9 +541,6 @@ public class AppService extends Service {
 
         private void initTripsTable(Context context) {
 
-            BusTripDao busTripDao = database.getBusTripDao();
-            busTripDao.deleteAll();
-
             InputStream stream = context.getResources().openRawResource(R.raw.trips);
 
             InputStreamReader inputStreamReader = new InputStreamReader(stream, Charset.forName("UTF-8" /*Name of Charset to convert to*/));
@@ -590,9 +588,11 @@ public class AppService extends Service {
 
                         trip_id = Integer.parseInt(line);
 
-                        BusTrip busTrip = new BusTrip(route_id, service_id, trip_id);
-                        busTripDao.insertTrip(busTrip);
-
+                        ContentValues values = new ContentValues();
+                        values.put(COLUMN_NAME_ROUTE_ID, route_id);
+                        values.put(COLUMN_NAME_SERVICE_ID, service_id);
+                        values.put(COLUMN_NAME_TRIP_ID, trip_id);
+                        getContentResolver().insert(StaticDbHelper.TABLE_NAME_TRIPS_CONTENT_URI, values);
                     }
 
                 } catch (IOException e) {
@@ -603,7 +603,7 @@ public class AppService extends Service {
 
             trips_initialized = true;
             updateInitializationStatus();
-            Log.d(LOG_TAG, "trips table initialized, Rows inserted: " + busTripDao.getNumberOfRows());
+            Log.d(LOG_TAG, "trips table initialized");
 
 
         }
