@@ -3,6 +3,7 @@ package com.example.delhitransit.Database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.net.Uri;
 
 public class StaticDbHelper extends SQLiteOpenHelper {
 
@@ -15,6 +16,11 @@ public class StaticDbHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
     }
+
+
+    public static final String STATIC_CONTENT_AUTHORITY = BaseContract.CONTENT_AUTHORITY + ".Database.StaticProvider";
+    public static final Uri STATIC_CONTENT_URI = Uri.parse("content://" + STATIC_CONTENT_AUTHORITY);
+
 
     //  Names of various columns
     public static final String COLUMN_NAME_STOP_ID = "stop_id";

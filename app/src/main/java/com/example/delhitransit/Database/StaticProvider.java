@@ -23,7 +23,7 @@ public class StaticProvider extends ContentProvider {
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
-        sUriMatcher.addURI(BaseContract.StaticEntry.STATIC_CONTENT_AUTHORITY, StaticDbHelper.TABLE_NAME_STOPS, STOPS);
+        sUriMatcher.addURI(StaticDbHelper.STATIC_CONTENT_AUTHORITY, StaticDbHelper.TABLE_NAME_STOPS, STOPS);
     }
 
     private StaticDbHelper mDbHelper;

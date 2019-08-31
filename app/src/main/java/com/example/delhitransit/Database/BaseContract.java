@@ -14,15 +14,4 @@ public class BaseContract {
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
 
 
-    public static class StaticEntry implements BaseColumns {
-
-        // Refers to this particular database
-        public static final String STATIC_CONTENT_AUTHORITY = BaseContract.CONTENT_AUTHORITY + ".Database.StaticProvider";
-        public static final Uri STOPS_CONTENT_URI = Uri.parse("content://" + STATIC_CONTENT_AUTHORITY);
-
-
-
-    }
-
-
 }

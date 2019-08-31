@@ -1,6 +1,7 @@
 package com.example.delhitransit.Activities;
 
 import android.app.Service;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,6 +9,7 @@ import android.os.IBinder;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.example.delhitransit.Database.StaticDbHelper;
 import com.example.delhitransit.RoomData.AppDatabase;
 import com.example.delhitransit.RoomData.DAO.BusPositionDao;
 import com.example.delhitransit.RoomData.DAO.BusRouteDao;
@@ -31,6 +33,12 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_CODE;
+import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_ID;
+import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_LATITUDE;
+import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_LONGITUDE;
+import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_NAME;
 
 public class AppService extends Service {
 
@@ -423,9 +431,17 @@ public class AppService extends Service {
 
                         stop_lon = Double.parseDouble(line);
 
+                        ContentValues values = new ContentValues();
+                        values.put(COLUMN_NAME_STOP_ID, stop_id);
+                        values.put(COLUMN_NAME_STOP_CODE, stop_code);
+                        values.put(COLUMN_NAME_STOP_NAME, stop_name);
+                        values.put(COLUMN_NAME_STOP_LATITUDE, stop_lat);
+                        values.put(COLUMN_NAME_STOP_LONGITUDE, stop_lon);
+                        getContentResolver().insert(StaticDbHelper.STATIC_CONTENT_URI, values);
 
-                        BusStop busStop = new BusStop(stop_id, stop_code, stop_name, stop_lat, stop_lon);
-                        busStopDao.insertBusStop(busStop);
+//
+//                        BusStop busStop = new BusStop(stop_id, stop_code, stop_name, stop_lat, stop_lon);
+//                        busStopDao.insertBusStop(busStop);
 
 
                     }
