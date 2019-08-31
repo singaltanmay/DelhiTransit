@@ -43,7 +43,8 @@ public class NearbyStopsFragment extends Fragment {
 
         RecyclerView recyclerView = view.findViewById(R.id.nearbly_stops_recycler_view);
         StopsAdapter adapter = new StopsAdapter();
-        adapter.mDataset = database.getBusStopDao().loadAll();
+        //TODO get data from table
+        adapter.mDataset = null;
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
 

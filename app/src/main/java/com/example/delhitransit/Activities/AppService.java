@@ -5,20 +5,20 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.IBinder;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.example.delhitransit.Database.StaticDbHelper;
+import com.example.delhitransit.Database.StaticProvider;
 import com.example.delhitransit.RoomData.AppDatabase;
 import com.example.delhitransit.RoomData.DAO.BusPositionDao;
 import com.example.delhitransit.RoomData.DAO.BusRouteDao;
-import com.example.delhitransit.RoomData.DAO.BusStopDao;
 import com.example.delhitransit.RoomData.DAO.BusStopTimeDao;
 import com.example.delhitransit.RoomData.DAO.BusTripDao;
 import com.example.delhitransit.RoomData.DataClasses.BusPositionUpdate;
 import com.example.delhitransit.RoomData.DataClasses.BusRoute;
-import com.example.delhitransit.RoomData.DataClasses.BusStop;
 import com.example.delhitransit.RoomData.DataClasses.BusStopTime;
 import com.example.delhitransit.RoomData.DataClasses.BusTrip;
 import com.example.delhitransit.GtfsRealtime;
@@ -82,12 +82,6 @@ public class AppService extends Service {
             }
             return service;
         }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        context = null;
     }
 
     // Initiates web update and delegates all related tasks
@@ -202,7 +196,7 @@ public class AppService extends Service {
             }
         }
 
-        ;
+
 
         private void checkDatabaseIntegrity() {
 
@@ -358,9 +352,6 @@ public class AppService extends Service {
 
         private void initStopsTable(Context context) {
 
-            BusStopDao busStopDao = database.getBusStopDao();
-            busStopDao.deleteAll();
-
             InputStream stream = context.getResources().openRawResource(R.raw.stops);
 
             InputStreamReader inputStreamReader = new InputStreamReader(stream, Charset.forName("UTF-8" /*Name of Charset to convert to*/));
@@ -437,12 +428,9 @@ public class AppService extends Service {
                         values.put(COLUMN_NAME_STOP_NAME, stop_name);
                         values.put(COLUMN_NAME_STOP_LATITUDE, stop_lat);
                         values.put(COLUMN_NAME_STOP_LONGITUDE, stop_lon);
-                        getContentResolver().insert(StaticDbHelper.STATIC_CONTENT_URI, values);
-
-//
-//                        BusStop busStop = new BusStop(stop_id, stop_code, stop_name, stop_lat, stop_lon);
-//                        busStopDao.insertBusStop(busStop);
-
+                        Uri tableNameStopsContentUri = StaticDbHelper.TABLE_NAME_STOPS_CONTENT_URI;
+                        Log.v(LOG_TAG, tableNameStopsContentUri.toString());
+                        getContentResolver().insert(tableNameStopsContentUri, values);
 
                     }
 
@@ -454,7 +442,7 @@ public class AppService extends Service {
 
             stops_initialized = true;
             updateInitializationStatus();
-            Log.d(LOG_TAG, "stops table initialized, Rows inserted: " + busStopDao.getNumberOfRows());
+            Log.d(LOG_TAG, "stops table initialized.");
 
 
         }

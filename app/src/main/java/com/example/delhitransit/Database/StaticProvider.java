@@ -93,6 +93,8 @@ public class StaticProvider extends ContentProvider {
 
         if (rowID == -1) Log.e(LOG_TAG, "The provided Uri " + uri.toString() + " is not valid");
 
+        Log.v(LOG_TAG, "Added stop code : "  + values.getAsString(StaticDbHelper.COLUMN_NAME_STOP_CODE));
+
         // Notify about change
         getContext().getContentResolver().notifyChange(uri, null);
 

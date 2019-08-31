@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // Launches app background service that provides database access and fetches data from the internet
         launchAppService();
 
-        // Recycler View to show data fetched from server
+       /* // Recycler View to show data fetched from server
         RecyclerView busListView = findViewById(R.id.bus_list);
         busListView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new BusListAdapter(null);
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         // Initialize loader that keeps recycler view updated
         getLoaderManager().initLoader(2924, null, this);
-
+*/
     }
 
     private void launchAppService() {

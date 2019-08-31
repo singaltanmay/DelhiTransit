@@ -30,7 +30,10 @@ public class StaticDbHelper extends SQLiteOpenHelper {
     public static final String COLUMN_NAME_STOP_LONGITUDE = "stop_longitude";
 
     // Names of various tables
-    public static final String TABLE_NAME_STOPS = "busStops";
+    public static final String TABLE_NAME_STOPS = "stops";
+
+    public static final  String TABLE_STOPS_CONTENT_AUTHORITY = STATIC_CONTENT_AUTHORITY + "." + TABLE_NAME_STOPS;
+    public static final Uri TABLE_NAME_STOPS_CONTENT_URI = Uri.parse("content://" + TABLE_STOPS_CONTENT_AUTHORITY);
 
     // Create stops table
     public static final String SQL_CREATE_STOPS_TABLE =
