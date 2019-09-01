@@ -13,7 +13,6 @@ import com.example.delhitransit.Database.StaticDbHelper;
 import com.example.delhitransit.RoomData.AppDatabase;
 import com.example.delhitransit.RoomData.DAO.BusPositionDao;
 import com.example.delhitransit.RoomData.DataClasses.BusPositionUpdate;
-import com.example.delhitransit.RoomData.DataClasses.BusStopTime;
 import com.example.delhitransit.GtfsRealtime;
 import com.example.delhitransit.R;
 
@@ -27,6 +26,8 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_ARRIVAL_TIME;
+import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_DEPARTURE_TIME;
 import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_ROUTE_ID;
 import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_SERVICE_ID;
 import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_CODE;
@@ -34,7 +35,9 @@ import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_
 import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_LATITUDE;
 import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_LONGITUDE;
 import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_NAME;
+import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_SEQUENCE;
 import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_TRIP_ID;
+import static com.example.delhitransit.Database.StaticDbHelper.TABLE_NAME_STOP_TIMES_CONTENT_URI;
 
 public class AppService extends Service {
 
@@ -101,7 +104,8 @@ public class AppService extends Service {
             }
         });
 
-        thread.start();
+        //TODO update database updation
+//        thread.start();
 
         // Return list for displaying in GUI
         return positionList;
@@ -444,9 +448,6 @@ public class AppService extends Service {
 
         private void initStopTimesTable(Context context) {
 
-            final BusStopTimeDao busStopTimeDao = database.getBusStopTimeDao();
-            busStopTimeDao.deleteAll();
-
             InputStream stream = context.getResources().openRawResource(R.raw.stop_times);
 
             InputStreamReader inputStreamReader = new InputStreamReader(stream, Charset.forName("UTF-8" /*Name of Charset to convert to*/));
@@ -516,8 +517,14 @@ public class AppService extends Service {
 
                                 stop_sequence = Integer.parseInt(fLine);
 
-                                BusStopTime stopTime = new BusStopTime(trip_id, convertTimeToEpoch(arrival_time), convertTimeToEpoch(departure_time), stop_id, stop_sequence);
-                                busStopTimeDao.insertRoute(stopTime);
+                                ContentValues values = new ContentValues();
+                                values.put(COLUMN_NAME_TRIP_ID, trip_id);
+                                values.put(COLUMN_NAME_ARRIVAL_TIME, convertTimeToEpoch(arrival_time));
+                                values.put(COLUMN_NAME_DEPARTURE_TIME, convertTimeToEpoch(departure_time));
+                                values.put(COLUMN_NAME_STOP_ID, stop_id);
+                                values.put(COLUMN_NAME_STOP_SEQUENCE, stop_sequence);
+
+                                getContentResolver().insert(TABLE_NAME_STOP_TIMES_CONTENT_URI, values);
 
                             }
                         }
@@ -534,7 +541,7 @@ public class AppService extends Service {
 
             stop_times_initialized = true;
             updateInitializationStatus();
-            Log.d(LOG_TAG, "stop_times table initialized, Rows inserted: " + busStopTimeDao.loadAll().size());
+            Log.d(LOG_TAG, "stop_times table initialized.");
 
         }
 

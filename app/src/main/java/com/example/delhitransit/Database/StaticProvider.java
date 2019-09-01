@@ -1,17 +1,17 @@
 package com.example.delhitransit.Database;
 
-        import android.content.ContentProvider;
-        import android.content.ContentResolver;
-        import android.content.ContentUris;
-        import android.content.ContentValues;
-        import android.content.UriMatcher;
-        import android.database.Cursor;
-        import android.database.sqlite.SQLiteDatabase;
-        import android.net.Uri;
-        import android.util.Log;
+import android.content.ContentProvider;
+import android.content.ContentResolver;
+import android.content.ContentUris;
+import android.content.ContentValues;
+import android.content.UriMatcher;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
+import android.util.Log;
 
-        import androidx.annotation.NonNull;
-        import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 public class StaticProvider extends ContentProvider {
 
@@ -146,8 +146,6 @@ public class StaticProvider extends ContentProvider {
         long rowID = database.insert(table_name, null, values);
 
         if (rowID == -1) Log.e(LOG_TAG, "The provided Uri " + uri.toString() + " is not valid");
-
-        Log.v(LOG_TAG, "Added stop code : " + values.getAsString(StaticDbHelper.COLUMN_NAME_STOP_CODE));
 
         // Notify about change
         getContext().getContentResolver().notifyChange(uri, null);
