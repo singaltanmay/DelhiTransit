@@ -162,6 +162,8 @@ public class AppService extends Service {
     }
 
     private long convertTimeToEpoch(String timestamp) {
+
+
 //        try {
 //            long epoch = new java.text.SimpleDateFormat("MM/dd/yyyy HH:mm:ss").parse("01/01/1970" + timestamp).getTime() / 1000;
 //            Log.d(LOG_TAG, "Human, Epoch " + timestamp + "\t" + epoch);
@@ -169,6 +171,8 @@ public class AppService extends Service {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
+
+        //TODO actually do stuff
 
         return 0;
     }
@@ -195,7 +199,6 @@ public class AppService extends Service {
                 preferences.edit().putBoolean(AppDatabase.DATABASE_IS_INITIALIZED_SHARED_PREF_KEY, true).apply();
             }
         }
-
 
         private void checkDatabaseIntegrity() {
 
@@ -610,7 +613,6 @@ public class AppService extends Service {
             trips_initialized = true;
             updateInitializationStatus();
             Log.d(LOG_TAG, "trips table initialized");
-
 
         }
 
