@@ -42,7 +42,7 @@ public class StaticDbHelper extends SQLiteOpenHelper {
     public static final String TABLE_NAME_STOPS = "stops_table";
     public static final String TABLE_NAME_ROUTES = "routes_table";
     public static final String TABLE_NAME_TRIPS = "trips_table";
-    public static final String TABLE_NAME_STOP_TIMES = "stop_times_table"
+    public static final String TABLE_NAME_STOP_TIMES = "stop_times_table";
 
     // Uri pointing to this particular table
     public static final Uri TABLE_NAME_STOPS_CONTENT_URI = Uri.withAppendedPath(STATIC_CONTENT_URI, TABLE_NAME_STOPS);

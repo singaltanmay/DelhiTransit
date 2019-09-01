@@ -1,17 +1,17 @@
 package com.example.delhitransit.Database;
 
-import android.content.ContentProvider;
-import android.content.ContentResolver;
-import android.content.ContentUris;
-import android.content.ContentValues;
-import android.content.UriMatcher;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
-import android.util.Log;
+        import android.content.ContentProvider;
+        import android.content.ContentResolver;
+        import android.content.ContentUris;
+        import android.content.ContentValues;
+        import android.content.UriMatcher;
+        import android.database.Cursor;
+        import android.database.sqlite.SQLiteDatabase;
+        import android.net.Uri;
+        import android.util.Log;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+        import androidx.annotation.NonNull;
+        import androidx.annotation.Nullable;
 
 public class StaticProvider extends ContentProvider {
 
@@ -23,6 +23,8 @@ public class StaticProvider extends ContentProvider {
     private static final int ROUTES_ID = 3;
     private static final int TRIPS = 4;
     private static final int TRIPS_ID = 5;
+    private static final int STOP_TIMES = 6;
+    private static final int STOP_TIMES_ID = 7;
 
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
@@ -33,6 +35,8 @@ public class StaticProvider extends ContentProvider {
         sUriMatcher.addURI(StaticDbHelper.STATIC_CONTENT_AUTHORITY, StaticDbHelper.TABLE_NAME_ROUTES + "/#", ROUTES_ID);
         sUriMatcher.addURI(StaticDbHelper.STATIC_CONTENT_AUTHORITY, StaticDbHelper.TABLE_NAME_TRIPS, TRIPS);
         sUriMatcher.addURI(StaticDbHelper.STATIC_CONTENT_AUTHORITY, StaticDbHelper.TABLE_NAME_TRIPS + "/#", TRIPS_ID);
+        sUriMatcher.addURI(StaticDbHelper.STATIC_CONTENT_AUTHORITY, StaticDbHelper.TABLE_NAME_STOP_TIMES, STOP_TIMES);
+        sUriMatcher.addURI(StaticDbHelper.STATIC_CONTENT_AUTHORITY, StaticDbHelper.TABLE_NAME_STOP_TIMES + "/#", STOP_TIMES_ID);
     }
 
     private StaticDbHelper mDbHelper;
@@ -60,7 +64,13 @@ public class StaticProvider extends ContentProvider {
             case TRIPS:
                 return broadQuery(database, StaticDbHelper.TABLE_NAME_TRIPS, projection, selection, selectionArgs, sortOrder);
             case TRIPS_ID:
+                //TODO change and fix
                 return narrowQuery(StaticDbHelper.COLUMN_NAME_TRIP_ID, database, StaticDbHelper.TABLE_NAME_TRIPS, uri, projection, selection, selectionArgs, sortOrder);
+            case STOP_TIMES:
+                return broadQuery(database, StaticDbHelper.TABLE_NAME_STOP_TIMES, projection, selection, selectionArgs, sortOrder);
+            case STOP_TIMES_ID:
+                //TODO change and fix
+                return narrowQuery(StaticDbHelper.COLUMN_NAME_TRIP_ID, database, StaticDbHelper.TABLE_NAME_STOP_TIMES, uri, projection, selection, selectionArgs, sortOrder);
             default:
                 throw new IllegalArgumentException(invalidUriErrorGenerator(uri));
         }
@@ -94,6 +104,10 @@ public class StaticProvider extends ContentProvider {
                 return ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + BaseContract.CONTENT_AUTHORITY + "/" + StaticDbHelper.TABLE_NAME_TRIPS;
             case TRIPS_ID:
                 return ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + BaseContract.CONTENT_AUTHORITY + "/" + StaticDbHelper.TABLE_NAME_TRIPS;
+            case STOP_TIMES:
+                return ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + BaseContract.CONTENT_AUTHORITY + "/" + StaticDbHelper.TABLE_NAME_STOP_TIMES;
+            case STOP_TIMES_ID:
+                return ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + BaseContract.CONTENT_AUTHORITY + "/" + StaticDbHelper.TABLE_NAME_STOP_TIMES;
             default:
                 throw new IllegalStateException(invalidUriErrorGenerator(uri));
         }
@@ -103,21 +117,26 @@ public class StaticProvider extends ContentProvider {
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues contentValues) {
 
+        Uri rope;
+
         switch (sUriMatcher.match(uri)) {
             case STOPS:
-                insertItem(StaticDbHelper.TABLE_NAME_STOPS, contentValues, uri);
+                rope = insertItem(StaticDbHelper.TABLE_NAME_STOPS, contentValues, uri);
                 break;
             case ROUTES:
-                insertItem(StaticDbHelper.TABLE_NAME_ROUTES, contentValues, uri);
+                rope = insertItem(StaticDbHelper.TABLE_NAME_ROUTES, contentValues, uri);
                 break;
             case TRIPS:
-                insertItem(StaticDbHelper.TABLE_NAME_TRIPS, contentValues, uri);
+                rope = insertItem(StaticDbHelper.TABLE_NAME_TRIPS, contentValues, uri);
+                break;
+            case STOP_TIMES:
+                rope = insertItem(StaticDbHelper.TABLE_NAME_STOP_TIMES, contentValues, uri);
                 break;
             default:
                 throw new IllegalArgumentException(invalidUriErrorGenerator(uri));
         }
 
-        return null;
+        return rope;
     }
 
     private Uri insertItem(String table_name, ContentValues values, Uri uri) {
@@ -168,12 +187,25 @@ public class StaticProvider extends ContentProvider {
                 if (numDeletedRow != 0) getContext().getContentResolver().notifyChange(uri, null);
                 return numDeletedRow;
             case TRIPS_ID:
+                //TODO change and fix
                 s = StaticDbHelper.COLUMN_NAME_TRIP_ID + "=?";
                 strings = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 int numDeletedRows4 = deleteItem(s, strings, StaticDbHelper.TABLE_NAME_TRIPS);
                 if (numDeletedRows4 != 0)
                     getContext().getContentResolver().notifyChange(uri, null);
                 return numDeletedRows4;
+            case STOP_TIMES:
+                int numDletedRow = deleteItem(s, strings, StaticDbHelper.TABLE_NAME_STOP_TIMES);
+                if (numDletedRow != 0) getContext().getContentResolver().notifyChange(uri, null);
+                return numDletedRow;
+            case STOP_TIMES_ID:
+                //TODO change and fix
+                s = StaticDbHelper.COLUMN_NAME_ARRIVAL_TIME + "=?";
+                strings = new String[]{String.valueOf(ContentUris.parseId(uri))};
+                int numDeltedRows4 = deleteItem(s, strings, StaticDbHelper.TABLE_NAME_STOP_TIMES);
+                if (numDeltedRows4 != 0)
+                    getContext().getContentResolver().notifyChange(uri, null);
+                return numDeltedRows4;
             default:
                 throw new IllegalArgumentException(invalidUriErrorGenerator(uri));
 
@@ -220,18 +252,29 @@ public class StaticProvider extends ContentProvider {
                 if (numItemsUpate != 0) getContext().getContentResolver().notifyChange(uri, null);
                 return numItemsUpate;
             case TRIPS_ID:
+                //TODO change and fix
                 selection = StaticDbHelper.COLUMN_NAME_TRIP_ID + "=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 int numItemsUpdaeddx = updateItem(values, selection, selectionArgs, StaticDbHelper.TABLE_NAME_TRIPS);
                 if (numItemsUpdaeddx != 0)
                     getContext().getContentResolver().notifyChange(uri, null);
                 return numItemsUpdaeddx;
-
+            case STOP_TIMES:
+                int numItemUpate = updateItem(values, selection, selectionArgs, StaticDbHelper.TABLE_NAME_STOP_TIMES);
+                if (numItemUpate != 0) getContext().getContentResolver().notifyChange(uri, null);
+                return numItemUpate;
+            case STOP_TIMES_ID:
+                //TODO change and fix
+                selection = StaticDbHelper.COLUMN_NAME_STOP_ID + "=?";
+                selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
+                int numItemsUpdaddx = updateItem(values, selection, selectionArgs, StaticDbHelper.TABLE_NAME_STOP_TIMES);
+                if (numItemsUpdaddx != 0)
+                    getContext().getContentResolver().notifyChange(uri, null);
+                return numItemsUpdaddx;
             default:
                 throw new IllegalArgumentException(invalidUriErrorGenerator(uri));
         }
     }
-
 
     private int updateItem(ContentValues values, String selection, String[] selectionArgs, String tableName) {
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
