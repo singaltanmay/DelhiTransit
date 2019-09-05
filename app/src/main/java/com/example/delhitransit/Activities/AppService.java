@@ -1,6 +1,7 @@
 package com.example.delhitransit.Activities;
 
 import android.app.Service;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -9,10 +10,9 @@ import android.os.IBinder;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.example.delhitransit.Database.DynamicDbHelper;
 import com.example.delhitransit.Database.StaticDbHelper;
-import com.example.delhitransit.RoomData.AppDatabase;
-import com.example.delhitransit.RoomData.DAO.BusPositionDao;
-import com.example.delhitransit.RoomData.DataClasses.BusPositionUpdate;
+import com.example.delhitransit.BusPositionUpdate;
 import com.example.delhitransit.GtfsRealtime;
 import com.example.delhitransit.R;
 
@@ -41,9 +41,13 @@ import static com.example.delhitransit.Database.StaticDbHelper.TABLE_NAME_STOP_T
 
 public class AppService extends Service {
 
+
+    private static final String DATABASE_SHARED_PREF_KEY = "fj093g";
+    private static final String DATABASE_IS_INITIALIZED_SHARED_PREF_KEY = "fn0934";
+
+
     private static final String LOG_TAG = AppService.class.getSimpleName();
     private static Context context;
-    private AppDatabase database;
 
     public AppService() {
         Log.d(LOG_TAG, "Service constructed");
@@ -52,11 +56,6 @@ public class AppService extends Service {
 
     @Override
     public void onCreate() {
-
-        // Get a single instance of database to be used for all operations
-        // This ensures data integrity as only single instance of DB initialized by application
-        database = AppDatabase.getInstance(context.getApplicationContext());
-
         DatabaseInitializer initializer = new DatabaseInitializer();
         initializer.checkDatabaseIntegrity();
     }
@@ -75,10 +74,6 @@ public class AppService extends Service {
         if (context != null) return (AppService) context;
         else {
             AppService service = new AppService();
-            if (service.database == null) {
-                Log.d(LOG_TAG, "Lifecycle not complete. Calling onCreate");
-                //service.onCreate();
-            }
             return service;
         }
     }
@@ -104,8 +99,8 @@ public class AppService extends Service {
             }
         });
 
-        //TODO update database updation
-//        thread.start();
+
+        thread.start();
 
         // Return list for displaying in GUI
         return positionList;
@@ -157,8 +152,30 @@ public class AppService extends Service {
 
     // Updates the database with new information
     private void updatePositionDatabase(List<BusPositionUpdate> list, Context context) {
-        BusPositionDao busPositionDao = database.getBusPositionDao();
-        for (BusPositionUpdate position : list) busPositionDao.insertBusPosition(position);
+
+
+        String columnNameVehicleId = DynamicDbHelper.COLUMN_NAME_VEHICLE_ID;
+        String columnNameTripId = DynamicDbHelper.COLUMN_NAME_TRIP_ID;
+        String columnNameRouteId = DynamicDbHelper.COLUMN_NAME_ROUTE_ID;
+        String columnNameVehicleLatitude = DynamicDbHelper.COLUMN_NAME_VEHICLE_LATITUDE;
+        String columnNameVehicleLongitude = DynamicDbHelper.COLUMN_NAME_VEHICLE_LONGITUDE;
+        String columnNameVehicleSpeed = DynamicDbHelper.COLUMN_NAME_VEHICLE_SPEED;
+        String columnNameUpdateTimestamp = DynamicDbHelper.COLUMN_NAME_UPDATE_TIMESTAMP;
+
+        ContentResolver contentResolver = context.getContentResolver();
+
+        for (BusPositionUpdate position : list) {
+            ContentValues values = new ContentValues();
+            values.put(columnNameVehicleId, position.getVehicleID());
+            values.put(columnNameTripId, position.getTripID());
+            values.put(columnNameRouteId, position.getRouteID());
+            values.put(columnNameVehicleLatitude, position.getLatitude());
+            values.put(columnNameVehicleLongitude, position.getLongitude());
+            values.put(columnNameVehicleSpeed, position.getSpeed());
+            values.put(columnNameUpdateTimestamp, position.getTimestamp());
+
+            contentResolver.insert(DynamicDbHelper.TABLE_NAME_VEHICLE_POSITION_UPDATE_CONTENT_URI, values);
+        }
     }
 
     private long convertTimeToEpoch(String timestamp) {
@@ -193,20 +210,20 @@ public class AppService extends Service {
             if (routes_initialized && stops_initialized && stop_times_initialized && trips_initialized) {
 
                 // Get SharedPreferences that stores the state of the database
-                final SharedPreferences preferences = getSharedPreferences(AppDatabase.DATABASE_SHARED_PREF_KEY, MODE_PRIVATE);
+                final SharedPreferences preferences = getSharedPreferences(AppService.DATABASE_SHARED_PREF_KEY, MODE_PRIVATE);
 
-                boolean key_exists = preferences.contains(AppDatabase.DATABASE_IS_INITIALIZED_SHARED_PREF_KEY);
-                preferences.edit().putBoolean(AppDatabase.DATABASE_IS_INITIALIZED_SHARED_PREF_KEY, true).apply();
+                boolean key_exists = preferences.contains(AppService.DATABASE_IS_INITIALIZED_SHARED_PREF_KEY);
+                preferences.edit().putBoolean(AppService.DATABASE_IS_INITIALIZED_SHARED_PREF_KEY, true).apply();
             }
         }
 
         private void checkDatabaseIntegrity() {
 
             // Get SharedPreferences that stores the state of the database
-            final SharedPreferences preferences = getSharedPreferences(AppDatabase.DATABASE_SHARED_PREF_KEY, MODE_PRIVATE);
+            final SharedPreferences preferences = getSharedPreferences(AppService.DATABASE_SHARED_PREF_KEY, MODE_PRIVATE);
 
-            boolean key_exists = preferences.contains(AppDatabase.DATABASE_IS_INITIALIZED_SHARED_PREF_KEY);
-            boolean db_init_bool = key_exists && preferences.getBoolean(AppDatabase.DATABASE_IS_INITIALIZED_SHARED_PREF_KEY, false);
+            boolean key_exists = preferences.contains(AppService.DATABASE_IS_INITIALIZED_SHARED_PREF_KEY);
+            boolean db_init_bool = key_exists && preferences.getBoolean(AppService.DATABASE_IS_INITIALIZED_SHARED_PREF_KEY, false);
 
             // Check if database has already been initialized
             if (key_exists && db_init_bool) {
@@ -273,7 +290,7 @@ public class AppService extends Service {
 
             }
             // Update database state info stored in SharedPreferences
-            preferences.edit().putBoolean(AppDatabase.DATABASE_IS_INITIALIZED_SHARED_PREF_KEY, true).apply();
+            preferences.edit().putBoolean(AppService.DATABASE_IS_INITIALIZED_SHARED_PREF_KEY, true).apply();
         }
 
         private void initRoutesTable(Context context) {

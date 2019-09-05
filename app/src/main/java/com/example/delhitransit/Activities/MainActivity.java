@@ -2,7 +2,6 @@ package com.example.delhitransit.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,7 +14,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.example.delhitransit.RoomData.DataClasses.BusPositionUpdate;
+import com.example.delhitransit.BusPositionUpdate;
 import com.example.delhitransit.R;
 
 import java.util.List;

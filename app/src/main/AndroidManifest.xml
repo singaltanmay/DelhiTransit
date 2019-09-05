@@ -24,6 +24,11 @@
             android:authorities="com.example.delhitransit.Database.StaticProvider"
             android:exported="false" />
 
+        <provider
+            android:name=".Database.DynamicProvider"
+            android:authorities="com.example.delhitransit.Database.DynamicProvider"
+            android:exported="false" />
+
         <service android:name=".Activities.AppService" />
 
     </application>

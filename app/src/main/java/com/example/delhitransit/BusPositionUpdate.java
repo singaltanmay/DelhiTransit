@@ -1,11 +1,9 @@
-package com.example.delhitransit.RoomData.DataClasses;
+package com.example.delhitransit;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
-
-import com.example.delhitransit.GtfsRealtime;
 
 @Entity(tableName = "positions")
 public class BusPositionUpdate {
