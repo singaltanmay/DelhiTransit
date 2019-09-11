@@ -2,10 +2,12 @@ package com.example.delhitransit.Activities;
 
 import android.app.Service;
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.IBinder;
 import android.text.TextUtils;
 import android.util.Log;
@@ -176,7 +178,73 @@ public class AppService extends Service {
 
             contentResolver.insert(DynamicDbHelper.TABLE_NAME_VEHICLE_POSITION_UPDATE_CONTENT_URI, values);
         }
+
     }
+
+//    // For debugging purposes only
+//    // Test all CRUD functionality of Vehicle Positions Update db or whatever it is called
+//    private static void testDynamicCRUDOps() {
+//
+//        ContentResolver contentResolver = context.getContentResolver();
+//
+//        String columnNameId = DynamicDbHelper.COLUMN_NAME_ID;
+//        String[] projection = {
+//                columnNameId,
+//                DynamicDbHelper.COLUMN_NAME_VEHICLE_ID,
+//                DynamicDbHelper.COLUMN_NAME_TRIP_ID,
+//                DynamicDbHelper.COLUMN_NAME_UPDATE_TIMESTAMP,
+//                DynamicDbHelper.COLUMN_NAME_VEHICLE_SPEED,
+//                DynamicDbHelper.COLUMN_NAME_VEHICLE_LATITUDE,
+//                DynamicDbHelper.COLUMN_NAME_VEHICLE_LONGITUDE,
+//                DynamicDbHelper.COLUMN_NAME_ROUTE_ID
+//        };
+//
+////        Cursor allUpdates = contentResolver.query(DynamicDbHelper.TABLE_NAME_VEHICLE_POSITION_UPDATE_CONTENT_URI, projection, columnNameId + "=?", new String[]{Integer.toString(1)}, null);
+//
+////        Log.d(LOG_TAG, "Query run with " + allUpdates.getCount() + " results.");
+//
+//
+//        String columnNameVehicleId = DynamicDbHelper.COLUMN_NAME_VEHICLE_ID;
+//        String columnNameTripId = DynamicDbHelper.COLUMN_NAME_TRIP_ID;
+//        String columnNameRouteId = DynamicDbHelper.COLUMN_NAME_ROUTE_ID;
+//        String columnNameVehicleLatitude = DynamicDbHelper.COLUMN_NAME_VEHICLE_LATITUDE;
+//        String columnNameVehicleLongitude = DynamicDbHelper.COLUMN_NAME_VEHICLE_LONGITUDE;
+//        String columnNameVehicleSpeed = DynamicDbHelper.COLUMN_NAME_VEHICLE_SPEED;
+//        String columnNameUpdateTimestamp = DynamicDbHelper.COLUMN_NAME_UPDATE_TIMESTAMP;
+//
+//
+//        ContentValues values = new ContentValues();
+//        values.put(columnNameVehicleId, "vehicleiwfd");
+//
+//
+////        int update = contentResolver.update(DynamicDbHelper.TABLE_NAME_VEHICLE_POSITION_UPDATE_CONTENT_URI, values, columnNameId + "=?", new String[]{Integer.toString(1)});
+////        int update = contentResolver.update(ContentUris.withAppendedId(DynamicDbHelper.TABLE_NAME_VEHICLE_POSITION_UPDATE_CONTENT_URI,2), values, columnNameId, new String[]{Integer.toString(1)});
+//
+////        Log.d(LOG_TAG, "Update run with " + update + " results.");
+////
+////        int delete = contentResolver.delete(ContentUris.withAppendedId(DynamicDbHelper.TABLE_NAME_VEHICLE_POSITION_UPDATE_CONTENT_URI, 8), null, null);
+////
+////        Log.d(LOG_TAG, "Delete run with " + delete + " results.");
+//
+//        contentResolver.delete(DynamicDbHelper.TABLE_NAME_VEHICLE_POSITION_UPDATE_CONTENT_URI, null, null);
+//
+//
+//        if (feedEntities.size() > 0) {
+//
+//            ContentResolver contentResolver = getContentResolver();
+//
+//            String vehicleID = feedEntities.get(0).getVehicleID();
+//            Cursor cursor = contentResolver.query(DynamicDbHelper.TABLE_NAME_VEHICLE_POSITION_UPDATE_CONTENT_URI, new String[]{DynamicDbHelper.COLUMN_NAME_ID}, DynamicDbHelper.COLUMN_NAME_VEHICLE_ID, new String[]{vehicleID}, null);
+//
+//            while (cursor.moveToNext()) {
+//                int anInt = cursor.getInt(cursor.getColumnIndexOrThrow(DynamicDbHelper.COLUMN_NAME_ID));
+//                Log.d(LOG_TAG, "Removed vehicle with ID " + vehicleID + " and received code " + anInt + " after delete operation.");
+//            }
+//
+//
+//        }
+//
+//    }
 
     private long convertTimeToEpoch(String timestamp) {
 

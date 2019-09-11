@@ -118,7 +118,7 @@ public class DynamicProvider extends ContentProvider {
                 return numDeletedRow;
             case POSITION_UPDATE_ID:
                 //TODO change and fix
-                s = StaticDbHelper.COLUMN_NAME_TRIP_ID + "=?";
+                s = DynamicDbHelper.COLUMN_NAME_ID + "=?";
                 strings = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 int numDeletedRows4 = deleteItem(s, strings, DynamicDbHelper.TABLE_NAME_VEHICLE_POSITION_UPDATE);
                 if (numDeletedRows4 != 0)
@@ -148,8 +148,7 @@ public class DynamicProvider extends ContentProvider {
                 if (numItemUpate != 0) getContext().getContentResolver().notifyChange(uri, null);
                 return numItemUpate;
             case POSITION_UPDATE_ID:
-                //TODO change and fix
-                selection = StaticDbHelper.COLUMN_NAME_STOP_ID + "=?";
+                selection = DynamicDbHelper.COLUMN_NAME_ID + "=?";
                 selectionArgs = new String[]{String.valueOf(ContentUris.parseId(uri))};
                 int numItemsUpdaddx = updateItem(values, selection, selectionArgs, DynamicDbHelper.TABLE_NAME_VEHICLE_POSITION_UPDATE);
                 if (numItemsUpdaddx != 0)

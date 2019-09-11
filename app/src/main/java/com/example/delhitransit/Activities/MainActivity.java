@@ -6,8 +6,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.LoaderManager;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.Loader;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -15,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.example.delhitransit.BusPositionUpdate;
+import com.example.delhitransit.Database.DynamicDbHelper;
 import com.example.delhitransit.R;
 
 import java.util.List;
@@ -61,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoadFinished(Loader<List<BusPositionUpdate>> loader, List<BusPositionUpdate> feedEntities) {
         // Log the number of entries received by loader
         Log.d(LOG_TAG, "List Size Received by Loader : " + feedEntities.size());
+
         // Set new data-set on the adapter
         adapter.setDataset(feedEntities);
         // Update the adapter

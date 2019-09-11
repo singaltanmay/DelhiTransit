@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
+import android.provider.BaseColumns;
 
 public class DynamicDbHelper extends SQLiteOpenHelper {
 
@@ -21,6 +22,7 @@ public class DynamicDbHelper extends SQLiteOpenHelper {
     public static final Uri DYNAMIC_CONTENT_URI = Uri.parse("content://" + DYNAMIC_CONTENT_AUTHORITY);
 
     // Names of various columns
+    public static final String COLUMN_NAME_ID = BaseColumns._ID;
     public static final String COLUMN_NAME_VEHICLE_ID = "vehicle_id";
     public static final String COLUMN_NAME_TRIP_ID = StaticDbHelper.COLUMN_NAME_TRIP_ID;
     public static final String COLUMN_NAME_ROUTE_ID = StaticDbHelper.COLUMN_NAME_ROUTE_ID;
@@ -38,7 +40,8 @@ public class DynamicDbHelper extends SQLiteOpenHelper {
     // Create stops table
     public static final String SQL_CREATE_VEHICLE_POSITION_UPDATE_TABLE =
             "CREATE TABLE " + TABLE_NAME_VEHICLE_POSITION_UPDATE + " (" +
-                    COLUMN_NAME_VEHICLE_ID + " TEXT PRIMARY KEY, " +
+                    COLUMN_NAME_ID + " INTEGER PRIMARY KEY, " +
+                    COLUMN_NAME_VEHICLE_ID + " TEXT, " +
                     COLUMN_NAME_TRIP_ID + " TEXT, " +
                     COLUMN_NAME_ROUTE_ID + " TEXT, " +
                     COLUMN_NAME_VEHICLE_LATITUDE + " DOUBLE, " +
