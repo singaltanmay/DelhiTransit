@@ -2,6 +2,7 @@ package com.example.delhitransit.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -91,12 +92,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         switch (item.getItemId()) {
 
-           /* // Replace content with NearbyStopsFragment
+            // Replace content with NearbyStopsFragment
             case R.id.action_open_nearby_stops_fragment:
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(android.R.id.content, new NearbyStopsFragment());
                 transaction.commit();
-                break;*/
+                break;
         }
 
         return true;
