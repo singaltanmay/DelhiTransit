@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
+import android.provider.BaseColumns;
 
 public class StaticDbHelper extends SQLiteOpenHelper {
 
@@ -23,6 +24,7 @@ public class StaticDbHelper extends SQLiteOpenHelper {
 
 
     //  Names of various columns
+    public static final String COLUMN_NAME_BASE_ID = BaseColumns._ID;
     public static final String COLUMN_NAME_STOP_ID = "stop_id";
     public static final String COLUMN_NAME_STOP_CODE = "stop_code";
     public static final String COLUMN_NAME_STOP_NAME = "stop_name";
@@ -53,7 +55,8 @@ public class StaticDbHelper extends SQLiteOpenHelper {
     // Create stops table
     public static final String SQL_CREATE_STOPS_TABLE =
             "CREATE TABLE " + TABLE_NAME_STOPS + " (" +
-                    COLUMN_NAME_STOP_ID + " INTEGER PRIMARY KEY, " +
+                    COLUMN_NAME_BASE_ID + " INTEGER PRIMARY KEY, " +
+                    COLUMN_NAME_STOP_ID + " INTEGER, " +
                     COLUMN_NAME_STOP_CODE + " TEXT, " +
                     COLUMN_NAME_STOP_NAME + " TEXT, " +
                     COLUMN_NAME_STOP_LATITUDE + " DOUBLE, " +
