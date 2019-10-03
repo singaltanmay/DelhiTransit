@@ -2,7 +2,6 @@ package com.example.delhitransit.Activities;
 
 import android.app.Service;
 import android.content.ContentResolver;
-import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -179,6 +178,24 @@ public class AppService extends Service {
             contentResolver.insert(DynamicDbHelper.TABLE_NAME_VEHICLE_POSITION_UPDATE_CONTENT_URI, values);
         }
 
+    }
+
+    //Get all stops data
+    public static Cursor getAllStopsData() {
+
+        ContentResolver contentResolver = context.getContentResolver();
+
+        String[] projection = {
+                COLUMN_NAME_STOP_ID,
+                COLUMN_NAME_STOP_CODE,
+                COLUMN_NAME_STOP_NAME,
+                COLUMN_NAME_STOP_LATITUDE,
+                COLUMN_NAME_STOP_LONGITUDE
+        };
+
+        Cursor allStops = contentResolver.query(StaticDbHelper.TABLE_NAME_STOPS_CONTENT_URI, projection, null, null, null);
+
+        return allStops;
     }
 
 //    // For debugging purposes only
