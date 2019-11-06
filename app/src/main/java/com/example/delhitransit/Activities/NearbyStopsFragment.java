@@ -41,6 +41,7 @@ public class NearbyStopsFragment extends Fragment {
         adapter = new StopCursorAdapter(context, service.getAllStops());
                 listView.setAdapter(adapter);
 
+
         return rootView;
     }
 

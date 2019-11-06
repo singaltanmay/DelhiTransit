@@ -48,6 +48,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         // Initialize loader that keeps recycler view updated
         getLoaderManager().initLoader(2924, null, this);
+
+
     }
 
     private void launchAppService() {
@@ -94,9 +96,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
             // Replace content with NearbyStopsFragment
             case R.id.action_open_nearby_stops_fragment:
-                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                /*FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(android.R.id.content, new NearbyStopsFragment());
-                transaction.commit();
+                transaction.commit();*/
+                Log.d(LOG_TAG, "Search status : " + onSearchRequested());
                 break;
         }
 
