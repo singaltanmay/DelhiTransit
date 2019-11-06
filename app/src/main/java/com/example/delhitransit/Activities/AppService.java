@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_ARRIVAL_TIME;
+import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_BASE_ID;
 import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_DEPARTURE_TIME;
 import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_ROUTE_ID;
 import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_SERVICE_ID;
@@ -49,6 +50,7 @@ public class AppService extends Service {
 
     private static final String LOG_TAG = AppService.class.getSimpleName();
     private static Context context;
+    private static ContentResolver resolver;
 
     public AppService() {
         Log.d(LOG_TAG, "Service constructed");
@@ -57,6 +59,7 @@ public class AppService extends Service {
 
     @Override
     public void onCreate() {
+        resolver = context.getContentResolver();
         DatabaseInitializer initializer = new DatabaseInitializer();
         initializer.checkDatabaseIntegrity();
     }
@@ -163,7 +166,7 @@ public class AppService extends Service {
         String columnNameVehicleSpeed = DynamicDbHelper.COLUMN_NAME_VEHICLE_SPEED;
         String columnNameUpdateTimestamp = DynamicDbHelper.COLUMN_NAME_UPDATE_TIMESTAMP;
 
-        ContentResolver contentResolver = context.getContentResolver();
+//        ContentResolver contentResolver = context.getContentResolver();
 
         for (BusPositionUpdate position : list) {
             ContentValues values = new ContentValues();
@@ -175,27 +178,32 @@ public class AppService extends Service {
             values.put(columnNameVehicleSpeed, position.getSpeed());
             values.put(columnNameUpdateTimestamp, position.getTimestamp());
 
-            contentResolver.insert(DynamicDbHelper.TABLE_NAME_VEHICLE_POSITION_UPDATE_CONTENT_URI, values);
+            /*contentResolver*/
+            resolver.insert(DynamicDbHelper.TABLE_NAME_VEHICLE_POSITION_UPDATE_CONTENT_URI, values);
         }
 
     }
 
-    //Get all stops data
-    public static Cursor getAllStopsData() {
 
-        ContentResolver contentResolver = context.getContentResolver();
+     public Cursor getAllStops() {
 
-        String[] projection = {
-                COLUMN_NAME_STOP_ID,
-                COLUMN_NAME_STOP_CODE,
-                COLUMN_NAME_STOP_NAME,
-                COLUMN_NAME_STOP_LATITUDE,
-                COLUMN_NAME_STOP_LONGITUDE
-        };
+        Cursor result = null;
 
-        Cursor allStops = contentResolver.query(StaticDbHelper.TABLE_NAME_STOPS_CONTENT_URI, projection, null, null, null);
+            String[] projection = {
+                    COLUMN_NAME_BASE_ID,
+                    COLUMN_NAME_STOP_ID,
+                    COLUMN_NAME_STOP_CODE,
+                    COLUMN_NAME_STOP_NAME,
+                    COLUMN_NAME_STOP_LATITUDE,
+                    COLUMN_NAME_STOP_LONGITUDE
+            };
 
-        return allStops;
+
+        result= resolver.query(StaticDbHelper.TABLE_NAME_STOPS_CONTENT_URI, projection, null, null, null, null);
+
+        return result;
+
+
     }
 
 //    // For debugging purposes only
@@ -439,7 +447,8 @@ public class AppService extends Service {
                         values.put(StaticDbHelper.COLUMN_NAME_ROUTE_LONG_NAME, route_long_name);
                         values.put(StaticDbHelper.COLUMN_NAME_ROUTE_TYPE, route_type);
 
-                        getContentResolver().insert(StaticDbHelper.TABLE_NAME_ROUTES_CONTENT_URI, values);
+                        /*getContentResolver()*/
+                        resolver.insert(StaticDbHelper.TABLE_NAME_ROUTES_CONTENT_URI, values);
 
                     }
 
@@ -534,7 +543,8 @@ public class AppService extends Service {
                         values.put(COLUMN_NAME_STOP_NAME, stop_name);
                         values.put(COLUMN_NAME_STOP_LATITUDE, stop_lat);
                         values.put(COLUMN_NAME_STOP_LONGITUDE, stop_lon);
-                        getContentResolver().insert(StaticDbHelper.TABLE_NAME_STOPS_CONTENT_URI, values);
+                        /*getContentResolver()*/
+                        resolver.insert(StaticDbHelper.TABLE_NAME_STOPS_CONTENT_URI, values);
 
                     }
 
@@ -629,7 +639,8 @@ public class AppService extends Service {
                                 values.put(COLUMN_NAME_STOP_ID, stop_id);
                                 values.put(COLUMN_NAME_STOP_SEQUENCE, stop_sequence);
 
-                                getContentResolver().insert(TABLE_NAME_STOP_TIMES_CONTENT_URI, values);
+                                /*getContentResolver()*/
+                                resolver.insert(TABLE_NAME_STOP_TIMES_CONTENT_URI, values);
 
                             }
                         }
@@ -703,7 +714,8 @@ public class AppService extends Service {
                         values.put(COLUMN_NAME_ROUTE_ID, route_id);
                         values.put(COLUMN_NAME_SERVICE_ID, service_id);
                         values.put(COLUMN_NAME_TRIP_ID, trip_id);
-                        getContentResolver().insert(StaticDbHelper.TABLE_NAME_TRIPS_CONTENT_URI, values);
+                        /*getContentResolver()*/
+                        resolver.insert(StaticDbHelper.TABLE_NAME_TRIPS_CONTENT_URI, values);
                     }
 
                 } catch (IOException e) {

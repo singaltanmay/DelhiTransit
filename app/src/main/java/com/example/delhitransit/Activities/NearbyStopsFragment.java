@@ -37,10 +37,9 @@ public class NearbyStopsFragment extends Fragment {
         ListView listView = rootView.findViewById(R.id.nearby_stops_list_view);
 
         service = AppService.getInstance();
-        Log.d(LOG_TAG, "Instance of AppService received : " + service);
 
-        adapter = new StopCursorAdapter(context, service.getAllStopsData() /*cursor*/);
-        listView.setAdapter(adapter);
+        adapter = new StopCursorAdapter(context, service.getAllStops());
+                listView.setAdapter(adapter);
 
         return rootView;
     }
@@ -65,7 +64,6 @@ public class NearbyStopsFragment extends Fragment {
             String string = cursor.getString(columnIndexOrThrow);
 
             textView.setText(string);
-
 
         }
 

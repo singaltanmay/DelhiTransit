@@ -65,7 +65,8 @@ public class StaticDbHelper extends SQLiteOpenHelper {
     // Create routes table
     public static final String SQL_CREATE_ROUTES_TABLE =
             "CREATE TABLE " + TABLE_NAME_ROUTES + " (" +
-                    COLUMN_NAME_ROUTE_ID + " INTEGER PRIMARY KEY, " +
+                    COLUMN_NAME_BASE_ID + " INTEGER PRIMARY KEY, " +
+                    COLUMN_NAME_ROUTE_ID + " INTEGER, " +
                     COLUMN_NAME_ROUTE_SHORT_NAME + " TEXT, " +
                     COLUMN_NAME_ROUTE_LONG_NAME + " TEXT, " +
                     COLUMN_NAME_ROUTE_TYPE + " INTEGER);";
@@ -73,6 +74,7 @@ public class StaticDbHelper extends SQLiteOpenHelper {
     // Create trips table
     public static final String SQL_CREATE_TRIPS_TABLE =
             "CREATE TABLE " + TABLE_NAME_TRIPS + " (" +
+                    COLUMN_NAME_BASE_ID + " INTEGER PRIMARY KEY, " +
                     COLUMN_NAME_ROUTE_ID + " INTEGER, " +
                     COLUMN_NAME_TRIP_ID + " INTEGER, " +
                     COLUMN_NAME_SERVICE_ID + " INTEGER);";
@@ -80,6 +82,7 @@ public class StaticDbHelper extends SQLiteOpenHelper {
     // Create stop times table
     public static final String SQL_CREATE_STOP_TIMES_TABLE =
             "CREATE TABLE " + TABLE_NAME_STOP_TIMES + " (" +
+                    COLUMN_NAME_BASE_ID + " INTEGER PRIMARY KEY, " +
                     COLUMN_NAME_TRIP_ID + " INTEGER, " +
                     COLUMN_NAME_ARRIVAL_TIME + " INTEGER, " +
                     COLUMN_NAME_DEPARTURE_TIME + " INTEGER, " +

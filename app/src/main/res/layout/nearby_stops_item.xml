@@ -6,11 +6,11 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+    <!--android:minHeight="150dp"-->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:minHeight="150dp"
         app:cardCornerRadius="4dp"
         app:elevation="8dp">
 
