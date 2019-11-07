@@ -8,13 +8,16 @@ import android.util.Log
 
 class StopsSearchActivity : AppCompatActivity() {
 
-    private val LOG_TAG = this.javaClass.simpleName;
+    private val LOG_TAG = this.javaClass.simpleName
+    private var fragBundle = Bundle()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(android.R.id.content, NearbyStopsFragment())
+        val nearbyStopsFragment = NearbyStopsFragment()
+        nearbyStopsFragment.arguments = fragBundle
+        transaction.replace(android.R.id.content, nearbyStopsFragment)
         transaction.commit()
 
         handleIntent(intent)
@@ -33,6 +36,10 @@ class StopsSearchActivity : AppCompatActivity() {
                 doMySearch(query)
             }
         }
+    }
+
+    fun saveFragState(bundle: Bundle){
+        fragBundle = bundle
     }
 
 
