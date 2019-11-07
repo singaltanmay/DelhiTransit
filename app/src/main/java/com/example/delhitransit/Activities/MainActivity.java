@@ -7,10 +7,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.LoaderManager;
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.Loader;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -18,7 +16,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.example.delhitransit.BusPositionUpdate;
-import com.example.delhitransit.Database.DynamicDbHelper;
 import com.example.delhitransit.R;
 
 import java.util.List;
@@ -96,10 +93,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
             // Replace content with NearbyStopsFragment
             case R.id.action_open_nearby_stops_fragment:
-                /*FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(android.R.id.content, new NearbyStopsFragment());
-                transaction.commit();*/
-                Log.d(LOG_TAG, "Search status : " + onSearchRequested());
+                //https://developer.android.com/guide/topics/search/search-dialog
+//                Log.d(LOG_TAG, "Search status : " + onSearchRequested());
+
+//                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+//                transaction.replace(android.R.id.content, new NearbyStopsFragment());
+//                transaction.commit();
+
+                startActivity(new Intent(MainActivity.this, StopsSearchActivity.class));
+
                 break;
         }
 
