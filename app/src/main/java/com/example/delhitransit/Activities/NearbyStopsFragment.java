@@ -2,6 +2,7 @@ package com.example.delhitransit.Activities;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,9 +24,8 @@ import com.example.delhitransit.R;
 public class NearbyStopsFragment extends Fragment {
 
     private static String LOG_TAG = NearbyStopsFragment.class.getSimpleName();
-    static final String ROUTE_SOURCE_KEY = "xxfn398a";
-    static final String ROUTE_DESTINATION_KEY = "3fh90n398a";
-    public Bundle saveBundle;
+    private static final String ROUTE_SOURCE_KEY = "xxfn398a";
+    private static final String ROUTE_DESTINATION_KEY = "3fh90n398a";
     private View rootView;
     private AppService service;
     private StopCursorAdapter adapter;
@@ -33,11 +33,11 @@ public class NearbyStopsFragment extends Fragment {
     private StopsSearchActivity activity;
     private androidx.appcompat.widget.SearchView sourceSearchView;
     private androidx.appcompat.widget.SearchView destinationSearchView;
+    private SharedPreferences sharedPreferences;
 
     @Override
     public void onStart() {
         super.onStart();
-        saveBundle = activity.getFragBundle();
         if (sourceSearchView != null && destinationSearchView != null) restoreSearchTerms();
     }
 
@@ -48,7 +48,7 @@ public class NearbyStopsFragment extends Fragment {
         context = getContext();
         activity = (StopsSearchActivity) getActivity();
         service = AppService.getInstance();
-
+        sharedPreferences = activity.getSharedPreferences();
 
         rootView = inflater.inflate(R.layout.fragment_nearby_stops, container, false);
         ListView listView = rootView.findViewById(R.id.nearby_stops_list_view);
@@ -83,14 +83,12 @@ public class NearbyStopsFragment extends Fragment {
                     @Override
                     public boolean onQueryTextSubmit(String query) {
                         Log.d(LOG_TAG, "Q sub " + query);
-                        updateFragStateBundle();
-                        return false;
+                        updateSharedPrefValue();
+                        return true;
                     }
 
                     @Override
                     public boolean onQueryTextChange(String newText) {
-                        Log.d(LOG_TAG, "Q sub " + newText);
-                        updateFragStateBundle();
                         return false;
                     }
                 });
@@ -98,14 +96,12 @@ public class NearbyStopsFragment extends Fragment {
                     @Override
                     public boolean onQueryTextSubmit(String query) {
                         Log.d(LOG_TAG, "Q sub " + query);
-                        updateFragStateBundle();
+                        updateSharedPrefValue();
                         return false;
                     }
 
                     @Override
                     public boolean onQueryTextChange(String newText) {
-                        Log.d(LOG_TAG, "Q sub " + newText);
-                        updateFragStateBundle();
                         return false;
                     }
                 });
@@ -118,27 +114,30 @@ public class NearbyStopsFragment extends Fragment {
 
     }
 
-    public void restoreSearchTerms(){
-        if (saveBundle != null) {
-            sourceSearchView.setQuery(saveBundle.getString(ROUTE_SOURCE_KEY), false);
-            destinationSearchView.setQuery(saveBundle.getString(ROUTE_DESTINATION_KEY), false);
-        }
+    private void restoreSearchTerms() {
+        sourceSearchView.setQuery(sharedPreferences.getString(ROUTE_SOURCE_KEY, null), false);
+        destinationSearchView.setQuery(sharedPreferences.getString(ROUTE_DESTINATION_KEY, null), false);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        updateFragStateBundle();
+        updateSharedPrefValue();
     }
 
-    private void updateFragStateBundle() {
-        saveBundle.putString(ROUTE_SOURCE_KEY, sourceSearchView.getQuery().toString());
-        saveBundle.putString(ROUTE_DESTINATION_KEY, destinationSearchView.getQuery().toString());
+    private void updateSharedPrefValue() {
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString(ROUTE_SOURCE_KEY, sourceSearchView.getQuery().toString());
+        editor.putString(ROUTE_DESTINATION_KEY, destinationSearchView.getQuery().toString());
+
+        editor.apply();
     }
 
     private class StopCursorAdapter extends CursorAdapter {
 
-        public StopCursorAdapter(Context context, Cursor c) {
+        StopCursorAdapter(Context context, Cursor c) {
             super(context, c);
         }
 
