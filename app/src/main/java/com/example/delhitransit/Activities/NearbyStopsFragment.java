@@ -114,6 +114,17 @@ public class NearbyStopsFragment extends Fragment {
 
     }
 
+    // TODO Find all paths
+    private Cursor findAllPaths(){
+
+        Cursor cursor = null;
+
+
+
+        return cursor;
+
+    }
+
     private void restoreSearchTerms() {
         sourceSearchView.setQuery(sharedPreferences.getString(ROUTE_SOURCE_KEY, null), false);
         destinationSearchView.setQuery(sharedPreferences.getString(ROUTE_DESTINATION_KEY, null), false);
@@ -151,10 +162,13 @@ public class NearbyStopsFragment extends Fragment {
 
             TextView textView = view.findViewById(R.id.card_content);
 
-            int columnIndexOrThrow = cursor.getColumnIndexOrThrow(StaticDbHelper.COLUMN_NAME_STOP_NAME);
-            String string = cursor.getString(columnIndexOrThrow);
+            int snameIDX = cursor.getColumnIndexOrThrow(StaticDbHelper.COLUMN_NAME_STOP_NAME);
+            String stopName = cursor.getString(snameIDX);
 
-            textView.setText(string);
+            int sidIDX = cursor.getColumnIndexOrThrow(StaticDbHelper.COLUMN_NAME_STOP_ID);
+            int stopID = cursor.getInt(sidIDX);
+
+            textView.setText(stopID + "\t" + stopName);
 
         }
 
