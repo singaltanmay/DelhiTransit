@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_ARRIVAL_TIME;
-import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_BASE_ID;
 import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_DEPARTURE_TIME;
 import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_ROUTE_ID;
 import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_SERVICE_ID;
@@ -185,24 +184,31 @@ public class AppService extends Service {
     }
 
 
-     public Cursor getAllStops() {
-
-        Cursor result = null;
-
-            String[] projection = {
-                    COLUMN_NAME_BASE_ID,
-                    COLUMN_NAME_STOP_ID,
-                    COLUMN_NAME_STOP_CODE,
-                    COLUMN_NAME_STOP_NAME,
-                    COLUMN_NAME_STOP_LATITUDE,
-                    COLUMN_NAME_STOP_LONGITUDE
-            };
+    // TODO Find all paths
+    public Cursor findAllPaths(String source, String destination) {
 
 
-        result= resolver.query(StaticDbHelper.TABLE_NAME_STOPS_CONTENT_URI, projection, null, null, null, null);
+        String selection = COLUMN_NAME_STOP_ID + "=? OR " + COLUMN_NAME_STOP_ID + "=?";
 
-        return result;
+        String[] selectionArgs = {source, destination};
 
+        return resolver.query(StaticDbHelper.TABLE_NAME_STOP_TIMES_CONTENT_URI, null, selection, selectionArgs, null, null);
+
+    }
+
+    public Cursor getAllStops() {
+
+//        String[] projection = {
+//                COLUMN_NAME_BASE_ID,
+//                COLUMN_NAME_STOP_ID,
+//                COLUMN_NAME_STOP_CODE,
+//                COLUMN_NAME_STOP_NAME,
+//                COLUMN_NAME_STOP_LATITUDE,
+//                COLUMN_NAME_STOP_LONGITUDE
+//        };
+
+
+        return resolver.query(StaticDbHelper.TABLE_NAME_STOPS_CONTENT_URI, null, null, null, null, null);
 
     }
 

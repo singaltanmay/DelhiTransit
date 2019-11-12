@@ -58,6 +58,8 @@ public class NearbyStopsFragment extends Fragment {
 
         setupSearch();
 
+        Log.v(LOG_TAG,"No of routes found: " + service.findAllPaths("Hari Nagar Clock Tower","DDU Hospital").getCount());
+
         return rootView;
     }
 
@@ -111,17 +113,6 @@ public class NearbyStopsFragment extends Fragment {
         });
 
         thread.start();
-
-    }
-
-    // TODO Find all paths
-    private Cursor findAllPaths(){
-
-        Cursor cursor = null;
-
-
-
-        return cursor;
 
     }
 
