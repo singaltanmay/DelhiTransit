@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,6 +26,8 @@ public class StaticProvider extends ContentProvider {
     private static final int TRIPS_ID = 5;
     private static final int STOP_TIMES = 6;
     private static final int STOP_TIMES_ID = 7;
+
+    private static final int PATHS_BETWEEN_STOPS = 8;
 
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
@@ -67,6 +70,7 @@ public class StaticProvider extends ContentProvider {
                 //TODO change and fix
                 return narrowQuery(StaticDbHelper.COLUMN_NAME_TRIP_ID, database, StaticDbHelper.TABLE_NAME_TRIPS, uri, projection, selection, selectionArgs, sortOrder);
             case STOP_TIMES:
+                Log.d(LOG_TAG, "Stop Times broad query: " + selection);
                 return broadQuery(database, StaticDbHelper.TABLE_NAME_STOP_TIMES, projection, selection, selectionArgs, sortOrder);
             case STOP_TIMES_ID:
                 //TODO change and fix

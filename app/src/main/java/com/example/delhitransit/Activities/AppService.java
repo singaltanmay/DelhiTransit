@@ -188,7 +188,7 @@ public class AppService extends Service {
     public Cursor findAllPaths(String source, String destination) {
 
 
-        String selection = COLUMN_NAME_STOP_ID + "=? OR " + COLUMN_NAME_STOP_ID + "=?";
+        String selection = COLUMN_NAME_STOP_ID + "= ? OR " + COLUMN_NAME_STOP_ID + "= ?";
 
         String[] selectionArgs = {source, destination};
 
