@@ -38,6 +38,7 @@ import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_
 import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_NAME;
 import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_SEQUENCE;
 import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_TRIP_ID;
+import static com.example.delhitransit.Database.StaticDbHelper.TABLE_NAME_STOP_TIMES;
 import static com.example.delhitransit.Database.StaticDbHelper.TABLE_NAME_STOP_TIMES_CONTENT_URI;
 
 public class AppService extends Service {
@@ -187,8 +188,7 @@ public class AppService extends Service {
     // TODO Find all paths
     public Cursor findAllPaths(String source, String destination) {
 
-
-        String selection = COLUMN_NAME_STOP_ID + "= ? OR " + COLUMN_NAME_STOP_ID + "= ?";
+        String selection = COLUMN_NAME_STOP_ID + " = ? OR " + COLUMN_NAME_STOP_ID + " = ?;";
 
         String[] selectionArgs = {source, destination};
 
@@ -197,16 +197,6 @@ public class AppService extends Service {
     }
 
     public Cursor getAllStops() {
-
-//        String[] projection = {
-//                COLUMN_NAME_BASE_ID,
-//                COLUMN_NAME_STOP_ID,
-//                COLUMN_NAME_STOP_CODE,
-//                COLUMN_NAME_STOP_NAME,
-//                COLUMN_NAME_STOP_LATITUDE,
-//                COLUMN_NAME_STOP_LONGITUDE
-//        };
-
 
         return resolver.query(StaticDbHelper.TABLE_NAME_STOPS_CONTENT_URI, null, null, null, null, null);
 
