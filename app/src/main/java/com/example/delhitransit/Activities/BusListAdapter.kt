@@ -24,7 +24,7 @@ class BusListAdapter(private var mDataset: List<BusPositionUpdate>?) : RecyclerV
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.textView.text = mDataset!![position].toString()
+        holder.textView.text = mDataset?.get(position).toString()
     }
 
     override fun getItemCount(): Int {
@@ -33,7 +33,7 @@ class BusListAdapter(private var mDataset: List<BusPositionUpdate>?) : RecyclerV
         } else 0
     }
 
-    fun setDataset(mDataset: List<BusPositionUpdate>) {
+    fun setDataset(mDataset: List<BusPositionUpdate>?) {
         this.mDataset = mDataset
     }
 

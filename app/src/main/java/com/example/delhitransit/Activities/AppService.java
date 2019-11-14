@@ -38,14 +38,16 @@ import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_
 import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_NAME;
 import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_SEQUENCE;
 import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_TRIP_ID;
-import static com.example.delhitransit.Database.StaticDbHelper.TABLE_NAME_STOP_TIMES;
 import static com.example.delhitransit.Database.StaticDbHelper.TABLE_NAME_STOP_TIMES_CONTENT_URI;
 
 public class AppService extends Service {
 
 
-    private static final String DATABASE_SHARED_PREF_KEY = "fj093g";
-    private static final String DATABASE_IS_INITIALIZED_SHARED_PREF_KEY = "fn0934";
+    private static final String DATABASE_SHARED_PREF_KEY = "staticDB";
+    private static final String TABLE_STOPS_INITIALIZED = "stops_table_init";
+    private static final String TABLE_ROUTES_INITIALIZED = "routes_table_init";
+    private static final String TABLE_TRIPS_INITIALIZED = "trips_table_init";
+    private static final String TABLE_STOP_TIMES_INITIALIZED = "stop_times_init";
 
 
     private static final String LOG_TAG = AppService.class.getSimpleName();
@@ -166,8 +168,6 @@ public class AppService extends Service {
         String columnNameVehicleSpeed = DynamicDbHelper.COLUMN_NAME_VEHICLE_SPEED;
         String columnNameUpdateTimestamp = DynamicDbHelper.COLUMN_NAME_UPDATE_TIMESTAMP;
 
-//        ContentResolver contentResolver = context.getContentResolver();
-
         for (BusPositionUpdate position : list) {
             ContentValues values = new ContentValues();
             values.put(columnNameVehicleId, position.getVehicleID());
@@ -178,7 +178,6 @@ public class AppService extends Service {
             values.put(columnNameVehicleSpeed, position.getSpeed());
             values.put(columnNameUpdateTimestamp, position.getTimestamp());
 
-            /*contentResolver*/
             resolver.insert(DynamicDbHelper.TABLE_NAME_VEHICLE_POSITION_UPDATE_CONTENT_URI, values);
         }
 
@@ -284,102 +283,77 @@ public class AppService extends Service {
     }
 
     /* Class responsible for all initialization operation on the
-     permanent data containing table of the database*/
+     permanent static data containing tables in the database */
     private class DatabaseInitializer {
 
         private final String LOG_TAG = DatabaseInitializer.class.getSimpleName();
+        private SharedPreferences staticDBPrefs;
+        private SharedPreferences.Editor staticDBPrefsEditor;
 
-        private boolean routes_initialized = false;
-        private boolean stops_initialized = false;
-        private boolean stop_times_initialized = false;
-        private boolean trips_initialized = false;
 
-        private void updateInitializationStatus() {
+        // Helper method that checks if a table is to be initialized or not
+        private boolean tableHasToBeInitialized(String tableName) {
+            return !staticDBPrefs.getBoolean(tableName, false);
+        }
 
-            if (routes_initialized && stops_initialized && stop_times_initialized && trips_initialized) {
-
-                // Get SharedPreferences that stores the state of the database
-                final SharedPreferences preferences = getSharedPreferences(AppService.DATABASE_SHARED_PREF_KEY, MODE_PRIVATE);
-
-                boolean key_exists = preferences.contains(AppService.DATABASE_IS_INITIALIZED_SHARED_PREF_KEY);
-                preferences.edit().putBoolean(AppService.DATABASE_IS_INITIALIZED_SHARED_PREF_KEY, true).apply();
-            }
+        // Helper method to change table initialization flag stored in Shared Preferences
+        private void updateInitializationStatus(String TABLE_NAME) {
+            staticDBPrefsEditor.putBoolean(TABLE_NAME, true);
+            staticDBPrefsEditor.apply();
         }
 
         private void checkDatabaseIntegrity() {
 
             // Get SharedPreferences that stores the state of the database
-            final SharedPreferences preferences = getSharedPreferences(AppService.DATABASE_SHARED_PREF_KEY, MODE_PRIVATE);
+            staticDBPrefs = getSharedPreferences(AppService.DATABASE_SHARED_PREF_KEY, MODE_PRIVATE);
+            staticDBPrefsEditor = staticDBPrefs.edit();
 
-            boolean key_exists = preferences.contains(AppService.DATABASE_IS_INITIALIZED_SHARED_PREF_KEY);
-            boolean db_init_bool = key_exists && preferences.getBoolean(AppService.DATABASE_IS_INITIALIZED_SHARED_PREF_KEY, false);
-
-            // Check if database has already been initialized
-            if (key_exists && db_init_bool) {
-
-                routes_initialized = true;
-                stop_times_initialized = true;
-                stops_initialized = true;
-                trips_initialized = true;
-                Log.d(LOG_TAG, "Database is already initialized. Nothing to do.");
-
-            } else {
-
-                // DB not initialized
-                Log.d(LOG_TAG, "Initializing the database");
-
-                if (!routes_initialized) {
-                    // Create new thread to init table
-                    Thread initRoutes = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            initRoutesTable(context);
-//                logAllEntries(database.getBusRouteDao().loadAll());
-                        }
-                    });
-                    initRoutes.start();
-                }
-
-                if (!stops_initialized) {
-                    // Create new thread to init table
-                    final Thread initStops = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            initStopsTable(context);
-//                logAllEntries(database.getBusStopDao().loadAll());
-                        }
-                    });
-                    initStops.start();
-                }
-
-                if (!stop_times_initialized) {
-                    // Create new thread to init table
-                    final Thread initStopTimes = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            initStopTimesTable(context);
-//                logAllEntries(database.getBusStopTimeDao().loadAll());
-                        }
-                    });
-                    initStopTimes.start();
-                }
-
-                if (!trips_initialized) {
-                    // Create new thread to init table
-                    final Thread initTrips = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            initTripsTable(context);
-//                logAllEntries(database.getBusTripDao().loadAll());
-                        }
-                    });
-                    initTrips.start();
-                }
-
-
+            // Checks if tables in the database have already been initialized
+            // Initializes tables if not already initialized
+            if (tableHasToBeInitialized(TABLE_STOPS_INITIALIZED)) {
+                // Create new thread to init table
+                final Thread initStops = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        initStopsTable(context);
+                    }
+                });
+                initStops.start();
             }
-            // Update database state info stored in SharedPreferences
-            preferences.edit().putBoolean(AppService.DATABASE_IS_INITIALIZED_SHARED_PREF_KEY, true).apply();
+
+            if (tableHasToBeInitialized(TABLE_ROUTES_INITIALIZED)) {
+                // Create new thread to init table
+                Thread initRoutes = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        initRoutesTable(context);
+                    }
+                });
+                initRoutes.start();
+            }
+
+            if (tableHasToBeInitialized(TABLE_TRIPS_INITIALIZED)) {
+                // Create new thread to init table
+                final Thread initTrips = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        initTripsTable(context);
+                    }
+                });
+                initTrips.start();
+            }
+
+            if (tableHasToBeInitialized(TABLE_STOP_TIMES_INITIALIZED)) {
+                // Create new thread to init table
+                final Thread initStopTimes = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        initStopTimesTable(context);
+                    }
+                });
+                initStopTimes.start();
+            }
+
         }
 
         private void initRoutesTable(Context context) {
@@ -443,7 +417,6 @@ public class AppService extends Service {
                         values.put(StaticDbHelper.COLUMN_NAME_ROUTE_LONG_NAME, route_long_name);
                         values.put(StaticDbHelper.COLUMN_NAME_ROUTE_TYPE, route_type);
 
-                        /*getContentResolver()*/
                         resolver.insert(StaticDbHelper.TABLE_NAME_ROUTES_CONTENT_URI, values);
 
                     }
@@ -454,9 +427,8 @@ public class AppService extends Service {
 
             }
 
-            routes_initialized = true;
-            updateInitializationStatus();
-            Log.d(LOG_TAG, "routes table initialized");
+            updateInitializationStatus(TABLE_ROUTES_INITIALIZED);
+            Log.v(LOG_TAG, "routes table initialized");
 
 
         }
@@ -539,7 +511,7 @@ public class AppService extends Service {
                         values.put(COLUMN_NAME_STOP_NAME, stop_name);
                         values.put(COLUMN_NAME_STOP_LATITUDE, stop_lat);
                         values.put(COLUMN_NAME_STOP_LONGITUDE, stop_lon);
-                        /*getContentResolver()*/
+
                         resolver.insert(StaticDbHelper.TABLE_NAME_STOPS_CONTENT_URI, values);
 
                     }
@@ -550,8 +522,7 @@ public class AppService extends Service {
 
             }
 
-            stops_initialized = true;
-            updateInitializationStatus();
+            updateInitializationStatus(TABLE_STOPS_INITIALIZED);
             Log.d(LOG_TAG, "stops table initialized.");
 
 
@@ -635,7 +606,6 @@ public class AppService extends Service {
                                 values.put(COLUMN_NAME_STOP_ID, stop_id);
                                 values.put(COLUMN_NAME_STOP_SEQUENCE, stop_sequence);
 
-                                /*getContentResolver()*/
                                 resolver.insert(TABLE_NAME_STOP_TIMES_CONTENT_URI, values);
 
                             }
@@ -651,8 +621,7 @@ public class AppService extends Service {
 
             }
 
-            stop_times_initialized = true;
-            updateInitializationStatus();
+            updateInitializationStatus(TABLE_STOP_TIMES_INITIALIZED);
             Log.d(LOG_TAG, "stop_times table initialized.");
 
         }
@@ -710,7 +679,6 @@ public class AppService extends Service {
                         values.put(COLUMN_NAME_ROUTE_ID, route_id);
                         values.put(COLUMN_NAME_SERVICE_ID, service_id);
                         values.put(COLUMN_NAME_TRIP_ID, trip_id);
-                        /*getContentResolver()*/
                         resolver.insert(StaticDbHelper.TABLE_NAME_TRIPS_CONTENT_URI, values);
                     }
 
@@ -720,18 +688,11 @@ public class AppService extends Service {
 
             }
 
-            trips_initialized = true;
-            updateInitializationStatus();
+            updateInitializationStatus(TABLE_TRIPS_INITIALIZED);
             Log.d(LOG_TAG, "trips table initialized");
 
         }
 
-        // For debugging purposes only
-        private <T> void logAllEntries(List<T> list) {
-            for (T item : list) {
-                Log.v(LOG_TAG, item.toString());
-            }
-        }
 
     }
 

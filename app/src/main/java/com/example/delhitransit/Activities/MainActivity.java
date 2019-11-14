@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private void launchAppService() {
         Intent intent = new Intent(MainActivity.this, AppService.class);
         startService(intent);
-        Log.d(LOG_TAG, "Starting AppService");
+        Log.v(LOG_TAG, "Starting AppService");
     }
 
     @Override
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(Loader<List<BusPositionUpdate>> loader, List<BusPositionUpdate> feedEntities) {
         // Log the number of entries received by loader
-        Log.d(LOG_TAG, "List Size Received by Loader : " + feedEntities.size());
+        Log.v(LOG_TAG, "List Size Received by Loader : " + feedEntities.size());
 
         // Set new data-set on the adapter
         adapter.setDataset(feedEntities);
