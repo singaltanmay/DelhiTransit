@@ -23,7 +23,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,7 +101,7 @@ public class AppService extends Service {
             @Override
             public void run() {
                 // Update database with new information
-                updatePositionDatabase(positionList, context);
+                updatePositionDatabase(positionList);
             }
         });
 
@@ -150,14 +150,14 @@ public class AppService extends Service {
 
         } catch (
                 Exception e) {
-            e.printStackTrace();
+            Log.e(LOG_TAG, e.toString());
         }
 
         return feedEntityList;
     }
 
     // Updates the database with new information
-    private void updatePositionDatabase(List<BusPositionUpdate> list, Context context) {
+    private void updatePositionDatabase(List<BusPositionUpdate> list) {
 
 
         String columnNameVehicleId = DynamicDbHelper.COLUMN_NAME_VEHICLE_ID;
@@ -201,84 +201,9 @@ public class AppService extends Service {
 
     }
 
-//    // For debugging purposes only
-//    // Test all CRUD functionality of Vehicle Positions Update db or whatever it is called
-//    private static void testDynamicCRUDOps() {
-//
-//        ContentResolver contentResolver = context.getContentResolver();
-//
-//        String columnNameId = DynamicDbHelper.COLUMN_NAME_ID;
-//        String[] projection = {
-//                columnNameId,
-//                DynamicDbHelper.COLUMN_NAME_VEHICLE_ID,
-//                DynamicDbHelper.COLUMN_NAME_TRIP_ID,
-//                DynamicDbHelper.COLUMN_NAME_UPDATE_TIMESTAMP,
-//                DynamicDbHelper.COLUMN_NAME_VEHICLE_SPEED,
-//                DynamicDbHelper.COLUMN_NAME_VEHICLE_LATITUDE,
-//                DynamicDbHelper.COLUMN_NAME_VEHICLE_LONGITUDE,
-//                DynamicDbHelper.COLUMN_NAME_ROUTE_ID
-//        };
-//
-////        Cursor allUpdates = contentResolver.query(DynamicDbHelper.TABLE_NAME_VEHICLE_POSITION_UPDATE_CONTENT_URI, projection, columnNameId + "=?", new String[]{Integer.toString(1)}, null);
-//
-////        Log.d(LOG_TAG, "Query run with " + allUpdates.getCount() + " results.");
-//
-//
-//        String columnNameVehicleId = DynamicDbHelper.COLUMN_NAME_VEHICLE_ID;
-//        String columnNameTripId = DynamicDbHelper.COLUMN_NAME_TRIP_ID;
-//        String columnNameRouteId = DynamicDbHelper.COLUMN_NAME_ROUTE_ID;
-//        String columnNameVehicleLatitude = DynamicDbHelper.COLUMN_NAME_VEHICLE_LATITUDE;
-//        String columnNameVehicleLongitude = DynamicDbHelper.COLUMN_NAME_VEHICLE_LONGITUDE;
-//        String columnNameVehicleSpeed = DynamicDbHelper.COLUMN_NAME_VEHICLE_SPEED;
-//        String columnNameUpdateTimestamp = DynamicDbHelper.COLUMN_NAME_UPDATE_TIMESTAMP;
-//
-//
-//        ContentValues values = new ContentValues();
-//        values.put(columnNameVehicleId, "vehicleiwfd");
-//
-//
-////        int update = contentResolver.update(DynamicDbHelper.TABLE_NAME_VEHICLE_POSITION_UPDATE_CONTENT_URI, values, columnNameId + "=?", new String[]{Integer.toString(1)});
-////        int update = contentResolver.update(ContentUris.withAppendedId(DynamicDbHelper.TABLE_NAME_VEHICLE_POSITION_UPDATE_CONTENT_URI,2), values, columnNameId, new String[]{Integer.toString(1)});
-//
-////        Log.d(LOG_TAG, "Update run with " + update + " results.");
-////
-////        int delete = contentResolver.delete(ContentUris.withAppendedId(DynamicDbHelper.TABLE_NAME_VEHICLE_POSITION_UPDATE_CONTENT_URI, 8), null, null);
-////
-////        Log.d(LOG_TAG, "Delete run with " + delete + " results.");
-//
-//        contentResolver.delete(DynamicDbHelper.TABLE_NAME_VEHICLE_POSITION_UPDATE_CONTENT_URI, null, null);
-//
-//
-//        if (feedEntities.size() > 0) {
-//
-//            ContentResolver contentResolver = getContentResolver();
-//
-//            String vehicleID = feedEntities.get(0).getVehicleID();
-//            Cursor cursor = contentResolver.query(DynamicDbHelper.TABLE_NAME_VEHICLE_POSITION_UPDATE_CONTENT_URI, new String[]{DynamicDbHelper.COLUMN_NAME_ID}, DynamicDbHelper.COLUMN_NAME_VEHICLE_ID, new String[]{vehicleID}, null);
-//
-//            while (cursor.moveToNext()) {
-//                int anInt = cursor.getInt(cursor.getColumnIndexOrThrow(DynamicDbHelper.COLUMN_NAME_ID));
-//                Log.d(LOG_TAG, "Removed vehicle with ID " + vehicleID + " and received code " + anInt + " after delete operation.");
-//            }
-//
-//
-//        }
-//
-//    }
 
     private long convertTimeToEpoch(String timestamp) {
-
-
-//        try {
-//            long epoch = new java.text.SimpleDateFormat("MM/dd/yyyy HH:mm:ss").parse("01/01/1970" + timestamp).getTime() / 1000;
-//            Log.d(LOG_TAG, "Human, Epoch " + timestamp + "\t" + epoch);
-//            return epoch;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
         //TODO actually do stuff
-
         return 0;
     }
 
@@ -360,7 +285,7 @@ public class AppService extends Service {
 
             InputStream stream = context.getResources().openRawResource(R.raw.routes);
 
-            InputStreamReader inputStreamReader = new InputStreamReader(stream, Charset.forName("UTF-8" /*Name of Charset to convert to*/));
+            InputStreamReader inputStreamReader = new InputStreamReader(stream, StandardCharsets.UTF_8 );
 
             // Since InputStreamReader can only read one character at a time
             // but a BufferedReader can read a lot more at once it is being used
@@ -373,7 +298,7 @@ public class AppService extends Service {
             try {
                 line = bufferedReader.readLine();
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.e(LOG_TAG, e.toString());
             }
 
             // Read till end of stream
@@ -392,19 +317,19 @@ public class AppService extends Service {
                         int route_id;
 
                         if (line.contains(",")) {
-                            int comma = line.indexOf(",");
+                            int comma = line.indexOf(',');
                             route_short_name = line.substring(0, comma);
                             line = line.substring(comma + 1);
                         }
 
                         if (line.contains(",")) {
-                            int comma = line.indexOf(",");
+                            int comma = line.indexOf(',');
                             route_long_name = line.substring(0, comma);
                             line = line.substring(comma + 1);
                         }
 
                         if (line.contains(",")) {
-                            int comma = line.indexOf(",");
+                            int comma = line.indexOf(',');
                             route_type = Integer.parseInt(line.substring(0, comma));
                             line = line.substring(comma + 1);
                         }
@@ -422,7 +347,7 @@ public class AppService extends Service {
                     }
 
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Log.e(LOG_TAG, e.toString());
                 }
 
             }
@@ -437,7 +362,7 @@ public class AppService extends Service {
 
             InputStream stream = context.getResources().openRawResource(R.raw.stops);
 
-            InputStreamReader inputStreamReader = new InputStreamReader(stream, Charset.forName("UTF-8" /*Name of Charset to convert to*/));
+            InputStreamReader inputStreamReader = new InputStreamReader(stream, StandardCharsets.UTF_8);
 
             // Since InputStreamReader can only read one character at a time
             // but a BufferedReader can read a lot more at once it is being used
@@ -450,7 +375,7 @@ public class AppService extends Service {
             try {
                 line = bufferedReader.readLine();
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.e(LOG_TAG, e.toString());
             }
 
             // Read till end of stream
@@ -471,34 +396,28 @@ public class AppService extends Service {
                         double stop_lon = -1;
 
                         if (line.contains(",")) {
-                            int comma = line.indexOf(",");
+                            int comma = line.indexOf(',');
                             stop_id = Integer.parseInt(line.substring(0, comma));
                             line = line.substring(comma + 1);
                         }
 
                         if (line.contains(",")) {
-                            int comma = line.indexOf(",");
+                            int comma = line.indexOf(',');
                             stop_code = line.substring(0, comma);
                             line = line.substring(comma + 1);
                         }
 
                         if (line.contains(",")) {
-                            int comma = line.indexOf(",");
+                            int comma = line.indexOf(',');
                             //TODO implement stack based method to ignore , between ""
                             //TODO restore "Sec-7 / 8 Xing" to "Sec-7,8 Xing" in line 2586
-                        /*// Prevent parsing comma that is part of value
-                        if (line.substring(0, comma).contains("\"")) {
-                            if (line.substring(comma + 1).contains("\"")) {
-                                comma += line.substring(comma + 1).indexOf("\"");
-                            }
-                        }*/
 
                             stop_name = line.substring(0, comma);
                             line = line.substring(comma + 1);
                         }
 
                         if (line.contains(",")) {
-                            int comma = line.indexOf(",");
+                            int comma = line.indexOf(',');
                             stop_lat = Double.parseDouble(line.substring(0, comma));
                             line = line.substring(comma + 1);
                         }
@@ -517,7 +436,7 @@ public class AppService extends Service {
                     }
 
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Log.e(LOG_TAG, e.toString());
                 }
 
             }
@@ -532,7 +451,7 @@ public class AppService extends Service {
 
             InputStream stream = context.getResources().openRawResource(R.raw.stop_times);
 
-            InputStreamReader inputStreamReader = new InputStreamReader(stream, Charset.forName("UTF-8" /*Name of Charset to convert to*/));
+            InputStreamReader inputStreamReader = new InputStreamReader(stream, StandardCharsets.UTF_8);
 
             // Since InputStreamReader can only read one character at a time
             // but a BufferedReader can read a lot more at once it is being used
@@ -545,7 +464,7 @@ public class AppService extends Service {
             try {
                 line = bufferedReader.readLine();
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.e(LOG_TAG, e.toString());
             }
 
             // Read till end of stream
@@ -573,26 +492,26 @@ public class AppService extends Service {
                                 int stop_sequence = -1;
 
                                 if (fLine.contains(",")) {
-                                    int comma = fLine.indexOf(",");
+                                    int comma = fLine.indexOf(',');
                                     trip_id = Integer.parseInt(fLine.substring(0, comma));
                                     fLine = fLine.substring(comma + 1);
                                 }
 
                                 if (fLine.contains(",")) {
-                                    int comma = fLine.indexOf(",");
+                                    int comma = fLine.indexOf(',');
                                     arrival_time = fLine.substring(0, comma);
                                     fLine = fLine.substring(comma + 1);
                                 }
 
                                 if (fLine.contains(",")) {
-                                    int comma = fLine.indexOf(",");
+                                    int comma = fLine.indexOf(',');
                                     departure_time = fLine.substring(0, comma);
                                     fLine = fLine.substring(comma + 1);
                                 }
 
 
                                 if (fLine.contains(",")) {
-                                    int comma = fLine.indexOf(",");
+                                    int comma = fLine.indexOf(',');
                                     stop_id = Long.parseLong(fLine.substring(0, comma));
                                     fLine = fLine.substring(comma + 1);
                                 }
@@ -616,7 +535,7 @@ public class AppService extends Service {
 
 
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Log.e(LOG_TAG, e.toString());
                 }
 
             }
@@ -630,7 +549,7 @@ public class AppService extends Service {
 
             InputStream stream = context.getResources().openRawResource(R.raw.trips);
 
-            InputStreamReader inputStreamReader = new InputStreamReader(stream, Charset.forName("UTF-8" /*Name of Charset to convert to*/));
+            InputStreamReader inputStreamReader = new InputStreamReader(stream, StandardCharsets.UTF_8);
 
             // Since InputStreamReader can only read one character at a time
             // but a BufferedReader can read a lot more at once it is being used
@@ -643,7 +562,7 @@ public class AppService extends Service {
             try {
                 line = bufferedReader.readLine();
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.e(LOG_TAG, e.toString());
             }
 
             // Read till end of stream
@@ -662,13 +581,13 @@ public class AppService extends Service {
                         int trip_id;
 
                         if (line.contains(",")) {
-                            int comma = line.indexOf(",");
+                            int comma = line.indexOf(',');
                             route_id = Integer.parseInt(line.substring(0, comma));
                             line = line.substring(comma + 1);
                         }
 
                         if (line.contains(",")) {
-                            int comma = line.indexOf(",");
+                            int comma = line.indexOf(',');
                             service_id = Integer.parseInt(line.substring(0, comma));
                             line = line.substring(comma + 1);
                         }
@@ -683,7 +602,7 @@ public class AppService extends Service {
                     }
 
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Log.e(LOG_TAG, e.toString());
                 }
 
             }

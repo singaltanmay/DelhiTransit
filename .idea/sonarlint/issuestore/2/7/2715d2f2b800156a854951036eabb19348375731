@@ -1,0 +1,7 @@
+
+U"squid:SwitchLastCaseIsDefaultCheck[""Add a default case to this switch.(ψε΄΅ÿÿÿÿÿ
+gsquid:CommentedOutCodeLineb"<This block of commented-out lines of code should be removed.(Έ•΄£ώÿÿÿÿ
+wsquid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ερ‡ψÿÿÿÿ
+asquid:CommentedOutCodeLine`"<This block of commented-out lines of code should be removed.(δ½γ?
+Msquid:S2696+"6Make the enclosing method "static" or remove this set.(ψΏϋΕ
+gsquid:S1301["KReplace this "switch" statement by "if" statements to increase readability.(ψε΄΅ÿÿÿÿÿ

@@ -9,7 +9,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,8 +25,6 @@ public class StaticProvider extends ContentProvider {
     private static final int TRIPS_ID = 5;
     private static final int STOP_TIMES = 6;
     private static final int STOP_TIMES_ID = 7;
-
-    private static final int PATHS_BETWEEN_STOPS = 8;
 
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
@@ -143,11 +140,11 @@ public class StaticProvider extends ContentProvider {
         return rope;
     }
 
-    private Uri insertItem(String table_name, ContentValues values, Uri uri) {
+    private Uri insertItem(String tableName, ContentValues values, Uri uri) {
 
         SQLiteDatabase database = mDbHelper.getWritableDatabase();
 
-        long rowID = database.insert(table_name, null, values);
+        long rowID = database.insert(tableName, null, values);
 
         if (rowID == -1) Log.e(LOG_TAG, "The provided Uri " + uri.toString() + " is not valid");
 

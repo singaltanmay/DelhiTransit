@@ -1,0 +1,82 @@
+
+^squid:S1192ë"FDefine a constant instead of duplicating this literal "UTF-8" 4 times.(áÓˆ
+vsquid:S1488R"_Immediately return this expression instead of assigning it to the temporary variable "service".(†‘µÁ
+osquid:S00117¬"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÿ•‡îüÿÿÿÿ
+osquid:S00117…"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ıª¬½ùÿÿÿÿ
+jsquid:S00117†"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(êº´Ú
+jsquid:S00117‡"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ä¦É”
+osquid:S00117ˆ"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÉÑêÄûÿÿÿÿ
+jsquid:S00117Ó"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(×ÓçÒ
+jsquid:S00117Ô"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(å²´·
+osquid:S00117Õ"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¡¬ƒÿÿÿÿÿ
+osquid:S00117Ö"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¿è£ªşÿÿÿÿ
+jsquid:S00117×"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(»ŞûÑ
+osquid:S00117¹"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(®—Šæùÿÿÿÿ
+jsquid:S00117º"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(‰å‚ş
+osquid:S00117»"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÿüî»şÿÿÿÿ
+osquid:S00117¼"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¨‘¦üÿÿÿÿ
+jsquid:S00117½"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(òÖÑü
+osquid:S00117”"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(õ…Øøúÿÿÿÿ
+jsquid:S00117•"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(è›œ°
+jsquid:S00117–"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(õÔ¦Ÿ
+wsquid:S00120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(åñ‡øÿÿÿÿ
+@squid:S1148™"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+@squid:S1148ø"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+@squid:S1148©"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+@squid:S1148Å"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+@squid:S1148ˆ"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+@squid:S1148¤"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+@squid:S1148ë"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+@squid:S1148†"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+@squid:S1148®"#Use a logger to log this exception.(€ÉÔ…ıÿÿÿÿ
+;squid:S3010;"$Remove this assignment of "context".(—ÈëÕ
+Rsquid:S2696@"6Make the enclosing method "static" or remove this set.(×Ûøüÿÿÿÿ
+Fsquid:S1172 ".Remove this unused method parameter "context".(æöØÊ
+Jsquid:S1135»"2Complete the task associated to this TODO comment.(Ä¸Ì
+Qsquid:S3400š"9Remove this method and declare a constant for this value.(”·³›
+Hsquid:S1172"0Remove this unused method parameter "timestamp".(÷Óî®
+Jsquid:S1135˜"2Complete the task associated to this TODO comment.(¡§È½
+psquid:S00116¡"RRename this field "LOG_TAG" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(°ïÒàøÿÿÿÿ
+Rsquid:S4719ë":Replace Charset.forName() call with StandardCharsets.UTF_8(áÓˆ
+csquid:S3027‹"FPut single-quotes around ',' to use the faster "indexOf(char)" method.(ÒØÖÅùÿÿÿÿ
+csquid:S3027‘"FPut single-quotes around ',' to use the faster "indexOf(char)" method.(ÒØÖÅùÿÿÿÿ
+csquid:S3027—"FPut single-quotes around ',' to use the faster "indexOf(char)" method.(ÒØÖÅùÿÿÿÿ
+jsquid:S3776´"RRefactor this method to reduce its Cognitive Complexity from 18 to the 15 allowed.(…Ÿï
+Rsquid:S4719¸":Replace Charset.forName() call with StandardCharsets.UTF_8(áÓˆ
+csquid:S3027Ú"FPut single-quotes around ',' to use the faster "indexOf(char)" method.(ÒØÖÅùÿÿÿÿ
+csquid:S3027à"FPut single-quotes around ',' to use the faster "indexOf(char)" method.(ÒØÖÅùÿÿÿÿ
+csquid:S3027æ"FPut single-quotes around ',' to use the faster "indexOf(char)" method.(ÒØÖÅùÿÿÿÿ
+Jsquid:S1135ç"2Complete the task associated to this TODO comment.(“€Ïó
+Osquid:S1135è"2Complete the task associated to this TODO comment.(¯¨êœùÿÿÿÿ
+csquid:S3027õ"FPut single-quotes around ',' to use the faster "indexOf(char)" method.(ÒØÖÅùÿÿÿÿ
+isquid:S3776“"RRefactor this method to reduce its Cognitive Complexity from 23 to the 15 allowed.(ƒÌ•
+Rsquid:S4719—":Replace Charset.forName() call with StandardCharsets.UTF_8(áÓˆ
+csquid:S3027À"FPut single-quotes around ',' to use the faster "indexOf(char)" method.(øøÿÿÿÿ
+csquid:S3027Æ"FPut single-quotes around ',' to use the faster "indexOf(char)" method.(øøÿÿÿÿ
+csquid:S3027Ì"FPut single-quotes around ',' to use the faster "indexOf(char)" method.(øøÿÿÿÿ
+csquid:S3027Ó"FPut single-quotes around ',' to use the faster "indexOf(char)" method.(øøÿÿÿÿ
+Rsquid:S4719ù":Replace Charset.forName() call with StandardCharsets.UTF_8(áÓˆ
+csquid:S3027™"FPut single-quotes around ',' to use the faster "indexOf(char)" method.(ÒØÖÅùÿÿÿÿ
+csquid:S3027Ÿ"FPut single-quotes around ',' to use the faster "indexOf(char)" method.(ÒØÖÅùÿÿÿÿ
+Dsquid:S3398",Move this method into "DatabaseInitializer".(÷Óî®
+hsquid:CommentedOutCodeLineÎ"<This block of commented-out lines of code should be removed.(ÅÉÖ¦øÿÿÿÿ
+csquid:CommentedOutCodeLineĞ"<This block of commented-out lines of code should be removed.(ş¬­Ÿ
+hsquid:CommentedOutCodeLineÒ"<This block of commented-out lines of code should be removed.(â½Üñúÿÿÿÿ
+csquid:CommentedOutCodeLineÜ"<This block of commented-out lines of code should be removed.(Œï¡
+csquid:CommentedOutCodeLineŞ"<This block of commented-out lines of code should be removed.(¼®—Ó
+bsquid:CommentedOutCodeLineà"<This block of commented-out lines of code should be removed.(—Í”
+hsquid:CommentedOutCodeLineã"<This block of commented-out lines of code should be removed.(âĞöøÿÿÿÿ
+csquid:CommentedOutCodeLineì"<This block of commented-out lines of code should be removed.(Øñ¬¥
+csquid:CommentedOutCodeLineğ"<This block of commented-out lines of code should be removed.(ì×¥´
+hsquid:CommentedOutCodeLineó"<This block of commented-out lines of code should be removed.(©¯Ä„ùÿÿÿÿ
+hsquid:CommentedOutCodeLineõ"<This block of commented-out lines of code should be removed.(ƒ¯ê¼ûÿÿÿÿ
+csquid:CommentedOutCodeLine÷"<This block of commented-out lines of code should be removed.(Öî®
+csquid:CommentedOutCodeLineù"<This block of commented-out lines of code should be removed.(–ßõì
+csquid:CommentedOutCodeLineü"<This block of commented-out lines of code should be removed.(ş±‡“
+csquid:CommentedOutCodeLineş"<This block of commented-out lines of code should be removed.(îåµ
+csquid:CommentedOutCodeLine€"<This block of commented-out lines of code should be removed.(åÄÓÂ
+hsquid:CommentedOutCodeLineƒ"<This block of commented-out lines of code should be removed.(ÜñÅíüÿÿÿÿ
+hsquid:CommentedOutCodeLine‰"<This block of commented-out lines of code should be removed.(éØ»Úûÿÿÿÿ
+hsquid:CommentedOutCodeLine‹"<This block of commented-out lines of code should be removed.(éØ»Úûÿÿÿÿ
+hsquid:CommentedOutCodeLine"<This block of commented-out lines of code should be removed.(ñ¥ùšøÿÿÿÿ
+hsquid:CommentedOutCodeLineê"<This block of commented-out lines of code should be removed.(éĞÑëÿÿÿÿÿ
