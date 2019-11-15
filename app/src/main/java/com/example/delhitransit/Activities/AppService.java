@@ -27,18 +27,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_ARRIVAL_TIME;
-import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_DEPARTURE_TIME;
-import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_ROUTE_ID;
-import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_SERVICE_ID;
-import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_CODE;
-import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_ID;
-import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_LATITUDE;
-import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_LONGITUDE;
-import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_NAME;
-import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_SEQUENCE;
-import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_TRIP_ID;
-
 public class AppService extends Service {
 
 
@@ -186,7 +174,7 @@ public class AppService extends Service {
     // TODO Find all paths
     public Cursor findAllPaths(String source, String destination) {
 
-        String selection = COLUMN_NAME_STOP_ID + " = ? OR " + COLUMN_NAME_STOP_ID + " = ?;";
+        String selection = StaticDbHelper.COLUMN_NAME_STOP_ID + " = ? OR " + StaticDbHelper.COLUMN_NAME_STOP_ID + " = ?;";
 
         String[] selectionArgs = {source, destination};
 
@@ -424,11 +412,11 @@ public class AppService extends Service {
                         stop_lon = Double.parseDouble(line);
 
                         ContentValues values = new ContentValues();
-                        values.put(COLUMN_NAME_STOP_ID, stop_id);
-                        values.put(COLUMN_NAME_STOP_CODE, stop_code);
-                        values.put(COLUMN_NAME_STOP_NAME, stop_name);
-                        values.put(COLUMN_NAME_STOP_LATITUDE, stop_lat);
-                        values.put(COLUMN_NAME_STOP_LONGITUDE, stop_lon);
+                        values.put(StaticDbHelper.COLUMN_NAME_STOP_ID, stop_id);
+                        values.put(StaticDbHelper.COLUMN_NAME_STOP_CODE, stop_code);
+                        values.put(StaticDbHelper.COLUMN_NAME_STOP_NAME, stop_name);
+                        values.put(StaticDbHelper.COLUMN_NAME_STOP_LATITUDE, stop_lat);
+                        values.put(StaticDbHelper.COLUMN_NAME_STOP_LONGITUDE, stop_lon);
 
                         resolver.insert(StaticDbHelper.Companion.getTABLE_NAME_STOPS_CONTENT_URI(), values);
 
@@ -518,11 +506,11 @@ public class AppService extends Service {
                                 stop_sequence = Integer.parseInt(fLine);
 
                                 ContentValues values = new ContentValues();
-                                values.put(COLUMN_NAME_TRIP_ID, trip_id);
-                                values.put(COLUMN_NAME_ARRIVAL_TIME, convertTimeToEpoch(arrival_time));
-                                values.put(COLUMN_NAME_DEPARTURE_TIME, convertTimeToEpoch(departure_time));
-                                values.put(COLUMN_NAME_STOP_ID, stop_id);
-                                values.put(COLUMN_NAME_STOP_SEQUENCE, stop_sequence);
+                                values.put(StaticDbHelper.COLUMN_NAME_TRIP_ID, trip_id);
+                                values.put(StaticDbHelper.COLUMN_NAME_ARRIVAL_TIME, convertTimeToEpoch(arrival_time));
+                                values.put(StaticDbHelper.COLUMN_NAME_DEPARTURE_TIME, convertTimeToEpoch(departure_time));
+                                values.put(StaticDbHelper.COLUMN_NAME_STOP_ID, stop_id);
+                                values.put(StaticDbHelper.COLUMN_NAME_STOP_SEQUENCE, stop_sequence);
 
                                 resolver.insert(StaticDbHelper.Companion.getTABLE_NAME_STOP_TIMES_CONTENT_URI(), values);
 
@@ -594,9 +582,9 @@ public class AppService extends Service {
                         trip_id = Integer.parseInt(line);
 
                         ContentValues values = new ContentValues();
-                        values.put(COLUMN_NAME_ROUTE_ID, route_id);
-                        values.put(COLUMN_NAME_SERVICE_ID, service_id);
-                        values.put(COLUMN_NAME_TRIP_ID, trip_id);
+                        values.put(StaticDbHelper.COLUMN_NAME_ROUTE_ID, route_id);
+                        values.put(StaticDbHelper.COLUMN_NAME_SERVICE_ID, service_id);
+                        values.put(StaticDbHelper.COLUMN_NAME_TRIP_ID, trip_id);
                         resolver.insert(StaticDbHelper.Companion.getTABLE_NAME_TRIPS_CONTENT_URI(), values);
                     }
 
