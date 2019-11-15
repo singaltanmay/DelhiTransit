@@ -11,8 +11,7 @@ import com.example.delhitransit.R
 
 class BusListAdapter(private var mDataset: List<BusPositionUpdate>?) : RecyclerView.Adapter<BusListAdapter.MyViewHolder>() {
 
-    inner class MyViewHolder(// each data item is just a string in this case
-            var textView: TextView) : RecyclerView.ViewHolder(textView)
+    inner class MyViewHolder(var textView: TextView) : RecyclerView.ViewHolder(textView)
 
     // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {

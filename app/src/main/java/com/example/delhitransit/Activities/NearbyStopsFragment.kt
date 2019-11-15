@@ -9,16 +9,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CursorAdapter
-import android.widget.ListView
 import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.loader.app.LoaderManager
+import androidx.loader.content.AsyncTaskLoader
+import androidx.loader.content.Loader
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 import com.example.delhitransit.Database.StaticDbHelper
 import com.example.delhitransit.R
 
-class NearbyStopsFragment : Fragment() {
+class NearbyStopsFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
 
     // Equivalent to a static block in Java (kinda)
     companion object {
@@ -29,7 +32,7 @@ class NearbyStopsFragment : Fragment() {
 
     private var mRootView: View? = null
     private var mService: AppService? = null
-    private var mAdapter: StopCursorAdapter? = null
+    private var mAdapter: RoutesCursorAdapter? = null
     private var mContext: Context? = null
     private var mActivity: StopsSearchActivity? = null
     private var sourceSearchView: SearchView? = null
@@ -50,12 +53,15 @@ class NearbyStopsFragment : Fragment() {
         mPreferences = mActivity?.sharedPreferences
 
         mRootView = inflater.inflate(R.layout.fragment_nearby_stops, container, false)
-        val mListView = mRootView!!.findViewById<ListView>(R.id.nearby_stops_list_view)
 
-        mAdapter = StopCursorAdapter(mContext!!, mService!!.allStops)
-        mListView.adapter = mAdapter
+        val mRecyclerView = mRootView!!.findViewById<RecyclerView>(R.id.nearby_stops_recycler_view)
+        mRecyclerView.layoutManager = LinearLayoutManager(mContext)
+        mAdapter = RoutesCursorAdapter(null)
+        mRecyclerView.adapter = mAdapter
 
         setupSearch()
+
+        loaderManager.initLoader(1921, null, this)
 
         Log.v(LOG_TAG, "No of routes found: " + mService!!.findAllPaths("2270"/*"Hari Nagar Clock Tower"*/, "978"/*"DDU Hospital"*/).count)
 
@@ -109,6 +115,18 @@ class NearbyStopsFragment : Fragment() {
         destinationSearchView?.setQuery(mPreferences?.getString(ROUTE_DESTINATION_KEY, null), false)
     }
 
+    override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> = RoutesLoader(this as Context)
+
+    override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor?) {
+        mAdapter?.setDataset(data)
+        mAdapter?.notifyDataSetChanged()
+    }
+
+    override fun onLoaderReset(loader: Loader<Cursor>) {
+        mAdapter?.setDataset(null)
+        mAdapter?.notifyDataSetChanged()
+    }
+
     override fun onPause() {
         super.onPause()
         updateSharedPrefValue()
@@ -124,27 +142,52 @@ class NearbyStopsFragment : Fragment() {
         }
     }
 
-    private inner class StopCursorAdapter internal constructor(context: Context, c: Cursor) : CursorAdapter(context, c) {
+    private inner class RoutesCursorAdapter(private var mDataset: Cursor?) : RecyclerView.Adapter<RoutesCursorAdapter.MyViewHolder>() {
 
-        override fun newView(context: Context, cursor: Cursor, viewGroup: ViewGroup): View {
-            return LayoutInflater.from(context).inflate(R.layout.nearby_stops_item, viewGroup, false)
-        }
+        val snameIDX = mDataset?.getColumnIndexOrThrow(StaticDbHelper.COLUMN_NAME_STOP_NAME)
+        val sidIDX = mDataset?.getColumnIndexOrThrow(StaticDbHelper.COLUMN_NAME_STOP_ID)
 
-        override fun bindView(view: View, context: Context, cursor: Cursor) {
+        private inner class MyViewHolder(var view: View) : RecyclerView.ViewHolder(view)
 
-            val textView = view.findViewById<TextView>(R.id.card_content)
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MyViewHolder(LayoutInflater.from(context).inflate(R.layout.nearby_stops_item, parent, false))
 
-            val snameIDX = cursor.getColumnIndexOrThrow(StaticDbHelper.COLUMN_NAME_STOP_NAME)
-            val stopName = cursor.getString(snameIDX)
+        override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
-            val sidIDX = cursor.getColumnIndexOrThrow(StaticDbHelper.COLUMN_NAME_STOP_ID)
-            val stopID = cursor.getInt(sidIDX)
+            mDataset?.moveToPosition(position)
+
+            val textView = holder.view.findViewById<TextView>(R.id.card_content)
+
+            var stopName: String? = ""
+            var stopID: Int? = -1
+
+
+            if (snameIDX != null) {
+                stopName = mDataset?.getString(snameIDX)
+            }
+
+            if (sidIDX != null) {
+                stopID = mDataset?.getInt(sidIDX)
+            }
 
             val text = stopID.toString() + "\t" + stopName
             textView.text = text
+        }
 
+        override fun getItemCount(): Int {
+            return if (mDataset != null) {
+                mDataset!!.count
+            } else 0
+        }
+
+        fun setDataset(mDataset: Cursor?) {
+            this.mDataset = mDataset
         }
 
     }
 
+    private inner class RoutesLoader(context: Context) : AsyncTaskLoader<Cursor>(context) {
+
+        override fun loadInBackground(): Cursor? = mService!!.allStops
+
+    }
 }
