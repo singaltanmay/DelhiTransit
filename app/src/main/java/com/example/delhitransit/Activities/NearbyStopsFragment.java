@@ -58,7 +58,7 @@ public class NearbyStopsFragment extends Fragment {
 
         setupSearch();
 
-        Log.v(LOG_TAG,"No of routes found: " + service.findAllPaths("2270"/*"Hari Nagar Clock Tower"*/,"978"/*"DDU Hospital"*/).getCount());
+        Log.v(LOG_TAG, "No of routes found: " + service.findAllPaths("2270"/*"Hari Nagar Clock Tower"*/, "978"/*"DDU Hospital"*/).getCount());
 
         return rootView;
     }
