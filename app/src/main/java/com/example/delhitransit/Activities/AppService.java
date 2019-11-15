@@ -1,4 +1,4 @@
-package com.example.delhitransit.Activities;
+package com.example.delhitransit.activities;
 
 import android.app.Service;
 import android.content.ContentResolver;
@@ -11,8 +11,8 @@ import android.os.IBinder;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.example.delhitransit.Database.DynamicDbHelper;
-import com.example.delhitransit.Database.StaticDbHelper;
+import com.example.delhitransit.database.DynamicDbHelper;
+import com.example.delhitransit.database.StaticDbHelper;
 import com.example.delhitransit.BusPositionUpdate;
 import com.example.delhitransit.GtfsRealtime;
 import com.example.delhitransit.R;
@@ -27,18 +27,17 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_ARRIVAL_TIME;
-import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_DEPARTURE_TIME;
-import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_ROUTE_ID;
-import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_SERVICE_ID;
-import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_CODE;
-import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_ID;
-import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_LATITUDE;
-import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_LONGITUDE;
-import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_NAME;
-import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_SEQUENCE;
-import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_TRIP_ID;
-import static com.example.delhitransit.Database.StaticDbHelper.TABLE_NAME_STOP_TIMES_CONTENT_URI;
+import static com.example.delhitransit.database.StaticDbHelper.COLUMN_NAME_ARRIVAL_TIME;
+import static com.example.delhitransit.database.StaticDbHelper.COLUMN_NAME_DEPARTURE_TIME;
+import static com.example.delhitransit.database.StaticDbHelper.COLUMN_NAME_ROUTE_ID;
+import static com.example.delhitransit.database.StaticDbHelper.COLUMN_NAME_SERVICE_ID;
+import static com.example.delhitransit.database.StaticDbHelper.COLUMN_NAME_STOP_CODE;
+import static com.example.delhitransit.database.StaticDbHelper.COLUMN_NAME_STOP_ID;
+import static com.example.delhitransit.database.StaticDbHelper.COLUMN_NAME_STOP_LATITUDE;
+import static com.example.delhitransit.database.StaticDbHelper.COLUMN_NAME_STOP_LONGITUDE;
+import static com.example.delhitransit.database.StaticDbHelper.COLUMN_NAME_STOP_NAME;
+import static com.example.delhitransit.database.StaticDbHelper.COLUMN_NAME_STOP_SEQUENCE;
+import static com.example.delhitransit.database.StaticDbHelper.COLUMN_NAME_TRIP_ID;
 
 public class AppService extends Service {
 
@@ -178,7 +177,7 @@ public class AppService extends Service {
             values.put(columnNameVehicleSpeed, position.getSpeed());
             values.put(columnNameUpdateTimestamp, position.getTimestamp());
 
-            resolver.insert(DynamicDbHelper.TABLE_NAME_VEHICLE_POSITION_UPDATE_CONTENT_URI, values);
+            resolver.insert(DynamicDbHelper.Companion.getTABLE_NAME_VEHICLE_POSITION_UPDATE_CONTENT_URI(), values);
         }
 
     }
@@ -191,13 +190,13 @@ public class AppService extends Service {
 
         String[] selectionArgs = {source, destination};
 
-        return resolver.query(StaticDbHelper.TABLE_NAME_STOP_TIMES_CONTENT_URI, null, selection, selectionArgs, null, null);
+        return resolver.query(StaticDbHelper.Companion.getTABLE_NAME_STOP_TIMES_CONTENT_URI(), null, selection, selectionArgs, null, null);
 
     }
 
     public Cursor getAllStops() {
 
-        return resolver.query(StaticDbHelper.TABLE_NAME_STOPS_CONTENT_URI, null, null, null, null, null);
+        return resolver.query(StaticDbHelper.Companion.getTABLE_NAME_STOPS_CONTENT_URI(), null, null, null, null, null);
 
     }
 
@@ -342,7 +341,7 @@ public class AppService extends Service {
                         values.put(StaticDbHelper.COLUMN_NAME_ROUTE_LONG_NAME, route_long_name);
                         values.put(StaticDbHelper.COLUMN_NAME_ROUTE_TYPE, route_type);
 
-                        resolver.insert(StaticDbHelper.TABLE_NAME_ROUTES_CONTENT_URI, values);
+                        resolver.insert(StaticDbHelper.Companion.getTABLE_NAME_ROUTES_CONTENT_URI(), values);
 
                     }
 
@@ -431,7 +430,7 @@ public class AppService extends Service {
                         values.put(COLUMN_NAME_STOP_LATITUDE, stop_lat);
                         values.put(COLUMN_NAME_STOP_LONGITUDE, stop_lon);
 
-                        resolver.insert(StaticDbHelper.TABLE_NAME_STOPS_CONTENT_URI, values);
+                        resolver.insert(StaticDbHelper.Companion.getTABLE_NAME_STOPS_CONTENT_URI(), values);
 
                     }
 
@@ -525,7 +524,7 @@ public class AppService extends Service {
                                 values.put(COLUMN_NAME_STOP_ID, stop_id);
                                 values.put(COLUMN_NAME_STOP_SEQUENCE, stop_sequence);
 
-                                resolver.insert(TABLE_NAME_STOP_TIMES_CONTENT_URI, values);
+                                resolver.insert(StaticDbHelper.Companion.getTABLE_NAME_STOP_TIMES_CONTENT_URI(), values);
 
                             }
                         }
@@ -598,7 +597,7 @@ public class AppService extends Service {
                         values.put(COLUMN_NAME_ROUTE_ID, route_id);
                         values.put(COLUMN_NAME_SERVICE_ID, service_id);
                         values.put(COLUMN_NAME_TRIP_ID, trip_id);
-                        resolver.insert(StaticDbHelper.TABLE_NAME_TRIPS_CONTENT_URI, values);
+                        resolver.insert(StaticDbHelper.Companion.getTABLE_NAME_TRIPS_CONTENT_URI(), values);
                     }
 
                 } catch (IOException e) {

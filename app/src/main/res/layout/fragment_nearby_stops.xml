@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/background_light"
     android:orientation="vertical"
-    tools:context=".Activities.NearbyStopsFragment">
+    tools:context=".activities.NearbyStopsFragment">
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/fromSearchView"

@@ -1,4 +1,4 @@
-package com.example.delhitransit.Activities;
+package com.example.delhitransit.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

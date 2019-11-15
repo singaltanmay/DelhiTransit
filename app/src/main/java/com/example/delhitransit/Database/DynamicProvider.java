@@ -1,4 +1,4 @@
-package com.example.delhitransit.Database;
+package com.example.delhitransit.database;
 
 import android.content.ContentProvider;
 import android.content.ContentResolver;
@@ -23,8 +23,8 @@ public class DynamicProvider extends ContentProvider {
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
-        sUriMatcher.addURI(DynamicDbHelper.DYNAMIC_CONTENT_AUTHORITY, DynamicDbHelper.TABLE_NAME_VEHICLE_POSITION_UPDATE, POSITION_UPDATE);
-        sUriMatcher.addURI(DynamicDbHelper.DYNAMIC_CONTENT_AUTHORITY, DynamicDbHelper.TABLE_NAME_VEHICLE_POSITION_UPDATE + "/#", POSITION_UPDATE_ID);
+        sUriMatcher.addURI(DynamicDbHelper.Companion.getDYNAMIC_CONTENT_AUTHORITY(), DynamicDbHelper.TABLE_NAME_VEHICLE_POSITION_UPDATE, POSITION_UPDATE);
+        sUriMatcher.addURI(DynamicDbHelper.Companion.getDYNAMIC_CONTENT_AUTHORITY(), DynamicDbHelper.TABLE_NAME_VEHICLE_POSITION_UPDATE+ "/#", POSITION_UPDATE_ID);
     }
 
     private DynamicDbHelper mDbHelper;
@@ -67,9 +67,9 @@ public class DynamicProvider extends ContentProvider {
     public String getType(@NonNull Uri uri) {
         switch (sUriMatcher.match(uri)) {
             case POSITION_UPDATE:
-                return ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + BaseContract.CONTENT_AUTHORITY + "/" + DynamicDbHelper.TABLE_NAME_VEHICLE_POSITION_UPDATE;
+                return ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + BaseContract.INSTANCE.getCONTENT_AUTHORITY() + "/" + DynamicDbHelper.TABLE_NAME_VEHICLE_POSITION_UPDATE;
             case POSITION_UPDATE_ID:
-                return ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + BaseContract.CONTENT_AUTHORITY + "/" + DynamicDbHelper.TABLE_NAME_VEHICLE_POSITION_UPDATE;
+                return ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + BaseContract.INSTANCE.getCONTENT_AUTHORITY() + "/" + DynamicDbHelper.TABLE_NAME_VEHICLE_POSITION_UPDATE;
             default:
                 throw new IllegalStateException(invalidUriErrorGenerator(uri));
         }

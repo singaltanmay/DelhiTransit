@@ -1,4 +1,4 @@
-package com.example.delhitransit.Database;
+package com.example.delhitransit.database;
 
 import android.content.ContentProvider;
 import android.content.ContentResolver;
@@ -29,14 +29,14 @@ public class StaticProvider extends ContentProvider {
     private static final UriMatcher sUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
-        sUriMatcher.addURI(StaticDbHelper.STATIC_CONTENT_AUTHORITY, StaticDbHelper.TABLE_NAME_STOPS, STOPS);
-        sUriMatcher.addURI(StaticDbHelper.STATIC_CONTENT_AUTHORITY, StaticDbHelper.TABLE_NAME_STOPS + "/#", STOPS_ID);
-        sUriMatcher.addURI(StaticDbHelper.STATIC_CONTENT_AUTHORITY, StaticDbHelper.TABLE_NAME_ROUTES, ROUTES);
-        sUriMatcher.addURI(StaticDbHelper.STATIC_CONTENT_AUTHORITY, StaticDbHelper.TABLE_NAME_ROUTES + "/#", ROUTES_ID);
-        sUriMatcher.addURI(StaticDbHelper.STATIC_CONTENT_AUTHORITY, StaticDbHelper.TABLE_NAME_TRIPS, TRIPS);
-        sUriMatcher.addURI(StaticDbHelper.STATIC_CONTENT_AUTHORITY, StaticDbHelper.TABLE_NAME_TRIPS + "/#", TRIPS_ID);
-        sUriMatcher.addURI(StaticDbHelper.STATIC_CONTENT_AUTHORITY, StaticDbHelper.TABLE_NAME_STOP_TIMES, STOP_TIMES);
-        sUriMatcher.addURI(StaticDbHelper.STATIC_CONTENT_AUTHORITY, StaticDbHelper.TABLE_NAME_STOP_TIMES + "/#", STOP_TIMES_ID);
+        sUriMatcher.addURI(StaticDbHelper.Companion.getSTATIC_CONTENT_AUTHORITY(), StaticDbHelper.TABLE_NAME_STOPS, STOPS);
+        sUriMatcher.addURI(StaticDbHelper.Companion.getSTATIC_CONTENT_AUTHORITY(), StaticDbHelper.TABLE_NAME_STOPS + "/#", STOPS_ID);
+        sUriMatcher.addURI(StaticDbHelper.Companion.getSTATIC_CONTENT_AUTHORITY(), StaticDbHelper.TABLE_NAME_ROUTES, ROUTES);
+        sUriMatcher.addURI(StaticDbHelper.Companion.getSTATIC_CONTENT_AUTHORITY(), StaticDbHelper.TABLE_NAME_ROUTES + "/#", ROUTES_ID);
+        sUriMatcher.addURI(StaticDbHelper.Companion.getSTATIC_CONTENT_AUTHORITY(), StaticDbHelper.TABLE_NAME_TRIPS, TRIPS);
+        sUriMatcher.addURI(StaticDbHelper.Companion.getSTATIC_CONTENT_AUTHORITY(), StaticDbHelper.TABLE_NAME_TRIPS + "/#", TRIPS_ID);
+        sUriMatcher.addURI(StaticDbHelper.Companion.getSTATIC_CONTENT_AUTHORITY(), StaticDbHelper.TABLE_NAME_STOP_TIMES, STOP_TIMES);
+        sUriMatcher.addURI(StaticDbHelper.Companion.getSTATIC_CONTENT_AUTHORITY(), StaticDbHelper.TABLE_NAME_STOP_TIMES + "/#", STOP_TIMES_ID);
     }
 
     private StaticDbHelper mDbHelper;
@@ -94,21 +94,21 @@ public class StaticProvider extends ContentProvider {
     public String getType(@NonNull Uri uri) {
         switch (sUriMatcher.match(uri)) {
             case STOPS:
-                return ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + BaseContract.CONTENT_AUTHORITY + "/" + StaticDbHelper.TABLE_NAME_STOPS;
+                return ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + BaseContract.INSTANCE.getCONTENT_AUTHORITY() + "/" + StaticDbHelper.TABLE_NAME_STOPS;
             case STOPS_ID:
-                return ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + BaseContract.CONTENT_AUTHORITY + "/" + StaticDbHelper.TABLE_NAME_STOPS;
+                return ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + BaseContract.INSTANCE.getCONTENT_AUTHORITY() + "/" + StaticDbHelper.TABLE_NAME_STOPS;
             case ROUTES:
-                return ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + BaseContract.CONTENT_AUTHORITY + "/" + StaticDbHelper.TABLE_NAME_ROUTES;
+                return ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + BaseContract.INSTANCE.getCONTENT_AUTHORITY() + "/" + StaticDbHelper.TABLE_NAME_ROUTES;
             case ROUTES_ID:
-                return ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + BaseContract.CONTENT_AUTHORITY + "/" + StaticDbHelper.TABLE_NAME_ROUTES;
+                return ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + BaseContract.INSTANCE.getCONTENT_AUTHORITY() + "/" + StaticDbHelper.TABLE_NAME_ROUTES;
             case TRIPS:
-                return ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + BaseContract.CONTENT_AUTHORITY + "/" + StaticDbHelper.TABLE_NAME_TRIPS;
+                return ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + BaseContract.INSTANCE.getCONTENT_AUTHORITY() + "/" + StaticDbHelper.TABLE_NAME_TRIPS;
             case TRIPS_ID:
-                return ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + BaseContract.CONTENT_AUTHORITY + "/" + StaticDbHelper.TABLE_NAME_TRIPS;
+                return ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + BaseContract.INSTANCE.getCONTENT_AUTHORITY() + "/" + StaticDbHelper.TABLE_NAME_TRIPS;
             case STOP_TIMES:
-                return ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + BaseContract.CONTENT_AUTHORITY + "/" + StaticDbHelper.TABLE_NAME_STOP_TIMES;
+                return ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + BaseContract.INSTANCE.getCONTENT_AUTHORITY() + "/" + StaticDbHelper.TABLE_NAME_STOP_TIMES;
             case STOP_TIMES_ID:
-                return ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + BaseContract.CONTENT_AUTHORITY + "/" + StaticDbHelper.TABLE_NAME_STOP_TIMES;
+                return ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + BaseContract.INSTANCE.getCONTENT_AUTHORITY() + "/" + StaticDbHelper.TABLE_NAME_STOP_TIMES;
             default:
                 throw new IllegalStateException(invalidUriErrorGenerator(uri));
         }

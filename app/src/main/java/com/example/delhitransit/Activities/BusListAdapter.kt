@@ -1,4 +1,4 @@
-package com.example.delhitransit.Activities
+package com.example.delhitransit.activities
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

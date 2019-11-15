@@ -1,12 +1,9 @@
-package com.example.delhitransit.Activities
+package com.example.delhitransit.activities
 
-import android.app.SearchManager
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 
 class StopsSearchActivity : AppCompatActivity() {
 

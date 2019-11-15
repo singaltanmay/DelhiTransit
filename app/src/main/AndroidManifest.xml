@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".Activities.StopsSearchActivity"
+            android:name=".activities.StopsSearchActivity"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -24,10 +24,10 @@
                 android:resource="@xml/searchable" />
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Activities.MainActivity" />
+                android:value=".activities.MainActivity" />
 
         </activity>
-        <activity android:name=".Activities.MainActivity">
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -35,15 +35,15 @@
         </activity>
 
         <provider
-            android:name=".Database.StaticProvider"
-            android:authorities="com.example.delhitransit.Database.StaticProvider"
+            android:name=".database.StaticProvider"
+            android:authorities="com.example.delhitransit.database.StaticProvider"
             android:exported="false" />
         <provider
-            android:name=".Database.DynamicProvider"
-            android:authorities="com.example.delhitransit.Database.DynamicProvider"
+            android:name=".database.DynamicProvider"
+            android:authorities="com.example.delhitransit.database.DynamicProvider"
             android:exported="false" />
 
-        <service android:name=".Activities.AppService" />
+        <service android:name=".activities.AppService" />
     </application>
 
 </manifest>

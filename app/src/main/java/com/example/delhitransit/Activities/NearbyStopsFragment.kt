@@ -1,4 +1,4 @@
-package com.example.delhitransit.Activities
+package com.example.delhitransit.activities
 
 import android.app.SearchManager
 import android.content.Context
@@ -15,7 +15,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 
-import com.example.delhitransit.Database.StaticDbHelper
+import com.example.delhitransit.database.StaticDbHelper
 import com.example.delhitransit.R
 
 class NearbyStopsFragment : Fragment() {
@@ -23,8 +23,8 @@ class NearbyStopsFragment : Fragment() {
     // Equivalent to a static block in Java (kinda)
     companion object {
         private val LOG_TAG = NearbyStopsFragment::class.java.simpleName
-        private const val ROUTE_SOURCE_KEY = "xxfn398a"
-        private const val ROUTE_DESTINATION_KEY = "3fh90n398a"
+        private const val ROUTE_SOURCE_KEY = "route_SKey"
+        private const val ROUTE_DESTINATION_KEY = "route_DKey"
     }
 
     private var mRootView: View? = null
@@ -118,8 +118,8 @@ class NearbyStopsFragment : Fragment() {
         val editor = mPreferences?.edit()
 
         if (editor != null) {
-            editor.putString(ROUTE_SOURCE_KEY, sourceSearchView!!.query.toString())
-            editor.putString(ROUTE_DESTINATION_KEY, destinationSearchView!!.query.toString())
+            editor.putString(ROUTE_SOURCE_KEY, sourceSearchView?.query.toString())
+            editor.putString(ROUTE_DESTINATION_KEY, destinationSearchView?.query.toString())
             editor.apply()
         }
     }
