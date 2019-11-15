@@ -1,43 +1,7 @@
 package com.example.delhitransit
 
-import androidx.room.Entity
-import androidx.room.Ignore
-import androidx.room.PrimaryKey
+data class BusPositionUpdate(var vehicleID : String = "",var tripID: String? = null,var routeID: String? = null,var latitude: Float = 0.toFloat(),var longitude: Float = 0.toFloat(),var speed: Float = 0.toFloat(),var timestamp: Long = 0){
 
-@Entity(tableName = "positions")
-class BusPositionUpdate {
-
-    @PrimaryKey
-    var vehicleID = ""
-        private set
-
-    var tripID: String? = null
-        private set
-    var routeID: String? = null
-        private set
-    var latitude: Float = 0.toFloat()
-        private set
-    var longitude: Float = 0.toFloat()
-        private set
-    var speed: Float = 0.toFloat()
-        private set
-    var timestamp: Long = 0
-        private set
-
-    constructor(vehicleID: String, tripID: String, routeID: String, latitude: Float, longitude: Float, speed: Float, timestamp: Long) {
-        this.vehicleID = vehicleID
-        this.tripID = tripID
-        this.routeID = routeID
-        this.latitude = latitude
-        this.longitude = longitude
-        this.speed = speed
-        this.timestamp = timestamp
-    }
-
-    @Ignore
-    constructor()
-
-    @Ignore
     fun parseFrom(entity: GtfsRealtime.FeedEntity): BusPositionUpdate {
         this.vehicleID = entity.id
 
