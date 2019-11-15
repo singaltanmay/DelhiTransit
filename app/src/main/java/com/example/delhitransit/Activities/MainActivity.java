@@ -1,6 +1,5 @@
 package com.example.delhitransit.Activities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,12 +9,11 @@ import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.view.View;
 
 import com.example.delhitransit.BusPositionUpdate;
 import com.example.delhitransit.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -33,9 +31,31 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         Log.d(LOG_TAG, "Current time : " + System.currentTimeMillis() / 1000);
 
-        // Launches app background service that provides Database access and fetches data from the internet
-        launchAppService();
 
+        initAppService();
+        initNavFab();
+        initUpdatesList();
+
+    }
+
+    private void initAppService() {
+        // Launches app background service that provides Database access and fetches data from the internet
+        Intent intent = new Intent(MainActivity.this, AppService.class);
+        startService(intent);
+        Log.v(LOG_TAG, "Starting AppService");
+    }
+
+    private void initNavFab(){
+        FloatingActionButton floatingActionButton = findViewById(R.id.navigateFAB);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, StopsSearchActivity.class));
+            }
+        });
+    }
+
+    private void initUpdatesList(){
         // Recycler View to show data fetched from server
         RecyclerView busListView = findViewById(R.id.bus_list);
         busListView.setLayoutManager(new LinearLayoutManager(this));
@@ -44,13 +64,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         // Initialize loader that keeps recycler view updated
         getLoaderManager().initLoader(2924, null, this);
-
-    }
-
-    private void launchAppService() {
-        Intent intent = new Intent(MainActivity.this, AppService.class);
-        startService(intent);
-        Log.v(LOG_TAG, "Starting AppService");
     }
 
     @Override
@@ -77,26 +90,4 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         adapter.notifyDataSetChanged();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        //Inflate action menu
-        new MenuInflater(this).inflate(R.menu.main_activity_action_bar, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        switch (item.getItemId()) {
-
-            // Replace content with NearbyStopsFragment
-            case R.id.action_open_nearby_stops_fragment:
-                //https://developer.android.com/guide/topics/search/search-dialog
-                startActivity(new Intent(MainActivity.this, StopsSearchActivity.class));
-
-                break;
-        }
-
-        return true;
-    }
 }
