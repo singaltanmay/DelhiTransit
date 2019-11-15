@@ -1,4 +1,4 @@
-package com.example.delhitransit.activities
+package com.example.delhitransit.Activities
 
 import android.app.SearchManager
 import android.content.Context
@@ -15,7 +15,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 
-import com.example.delhitransit.database.StaticDbHelper
+import com.example.delhitransit.Database.StaticDbHelper
 import com.example.delhitransit.R
 
 class NearbyStopsFragment : Fragment() {

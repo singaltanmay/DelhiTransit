@@ -1,4 +1,4 @@
-package com.example.delhitransit.activities;
+package com.example.delhitransit.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         Log.d(LOG_TAG, "Current time : " + System.currentTimeMillis() / 1000);
 
-        // Launches app background service that provides database access and fetches data from the internet
+        // Launches app background service that provides Database access and fetches data from the internet
         launchAppService();
 
         // Recycler View to show data fetched from server

@@ -1,4 +1,4 @@
-package com.example.delhitransit.activities;
+package com.example.delhitransit.Activities;
 
 import android.app.Service;
 import android.content.ContentResolver;
@@ -11,8 +11,8 @@ import android.os.IBinder;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.example.delhitransit.database.DynamicDbHelper;
-import com.example.delhitransit.database.StaticDbHelper;
+import com.example.delhitransit.Database.DynamicDbHelper;
+import com.example.delhitransit.Database.StaticDbHelper;
 import com.example.delhitransit.BusPositionUpdate;
 import com.example.delhitransit.GtfsRealtime;
 import com.example.delhitransit.R;
@@ -27,17 +27,17 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.delhitransit.database.StaticDbHelper.COLUMN_NAME_ARRIVAL_TIME;
-import static com.example.delhitransit.database.StaticDbHelper.COLUMN_NAME_DEPARTURE_TIME;
-import static com.example.delhitransit.database.StaticDbHelper.COLUMN_NAME_ROUTE_ID;
-import static com.example.delhitransit.database.StaticDbHelper.COLUMN_NAME_SERVICE_ID;
-import static com.example.delhitransit.database.StaticDbHelper.COLUMN_NAME_STOP_CODE;
-import static com.example.delhitransit.database.StaticDbHelper.COLUMN_NAME_STOP_ID;
-import static com.example.delhitransit.database.StaticDbHelper.COLUMN_NAME_STOP_LATITUDE;
-import static com.example.delhitransit.database.StaticDbHelper.COLUMN_NAME_STOP_LONGITUDE;
-import static com.example.delhitransit.database.StaticDbHelper.COLUMN_NAME_STOP_NAME;
-import static com.example.delhitransit.database.StaticDbHelper.COLUMN_NAME_STOP_SEQUENCE;
-import static com.example.delhitransit.database.StaticDbHelper.COLUMN_NAME_TRIP_ID;
+import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_ARRIVAL_TIME;
+import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_DEPARTURE_TIME;
+import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_ROUTE_ID;
+import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_SERVICE_ID;
+import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_CODE;
+import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_ID;
+import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_LATITUDE;
+import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_LONGITUDE;
+import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_NAME;
+import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_STOP_SEQUENCE;
+import static com.example.delhitransit.Database.StaticDbHelper.COLUMN_NAME_TRIP_ID;
 
 public class AppService extends Service {
 
@@ -99,7 +99,7 @@ public class AppService extends Service {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                // Update database with new information
+                // Update Database with new information
                 updatePositionDatabase(positionList);
             }
         });
@@ -155,7 +155,7 @@ public class AppService extends Service {
         return feedEntityList;
     }
 
-    // Updates the database with new information
+    // Updates the Database with new information
     private void updatePositionDatabase(List<BusPositionUpdate> list) {
 
 
@@ -207,7 +207,7 @@ public class AppService extends Service {
     }
 
     /* Class responsible for all initialization operation on the
-     permanent static data containing tables in the database */
+     permanent static data containing tables in the Database */
     private class DatabaseInitializer {
 
         private final String LOG_TAG = DatabaseInitializer.class.getSimpleName();
@@ -228,11 +228,11 @@ public class AppService extends Service {
 
         private void checkDatabaseIntegrity() {
 
-            // Get SharedPreferences that stores the state of the database
+            // Get SharedPreferences that stores the state of the Database
             staticDBPrefs = getSharedPreferences(AppService.DATABASE_SHARED_PREF_KEY, MODE_PRIVATE);
             staticDBPrefsEditor = staticDBPrefs.edit();
 
-            // Checks if tables in the database have already been initialized
+            // Checks if tables in the Database have already been initialized
             // Initializes tables if not already initialized
             if (tableHasToBeInitialized(TABLE_STOPS_INITIALIZED)) {
                 // Create new thread to init table

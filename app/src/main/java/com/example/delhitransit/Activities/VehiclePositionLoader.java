@@ -1,4 +1,4 @@
-package com.example.delhitransit.activities;
+package com.example.delhitransit.Activities;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;

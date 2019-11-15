@@ -1,4 +1,4 @@
-package com.example.delhitransit.activities
+package com.example.delhitransit.Activities
 
 import android.content.Context
 import android.content.SharedPreferences

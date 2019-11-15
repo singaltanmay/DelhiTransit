@@ -1,4 +1,4 @@
-package com.example.delhitransit.database
+package com.example.delhitransit.Database
 
 import android.net.Uri
 

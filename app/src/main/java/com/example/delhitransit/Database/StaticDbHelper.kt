@@ -1,4 +1,4 @@
-package com.example.delhitransit.database
+package com.example.delhitransit.Database
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
@@ -37,7 +37,7 @@ class StaticDbHelper(private val context: Context) : SQLiteOpenHelper(context, D
         const val DATABASE_VERSION = 1
 
 
-        val STATIC_CONTENT_AUTHORITY = BaseContract.CONTENT_AUTHORITY + ".database.StaticProvider"
+        val STATIC_CONTENT_AUTHORITY = BaseContract.CONTENT_AUTHORITY + ".Database.StaticProvider"
         val STATIC_CONTENT_URI = Uri.parse("content://$STATIC_CONTENT_AUTHORITY")
 
 

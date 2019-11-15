@@ -1,4 +1,4 @@
-package com.example.delhitransit.database
+package com.example.delhitransit.Database
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
@@ -30,7 +30,7 @@ class DynamicDbHelper(private val context: Context) : SQLiteOpenHelper(context, 
         const val DATABASE_NAME = "dynamicData.db"
         const val DATABASE_VERSION = 1
 
-        val DYNAMIC_CONTENT_AUTHORITY = BaseContract.CONTENT_AUTHORITY + ".database.DynamicProvider"
+        val DYNAMIC_CONTENT_AUTHORITY = BaseContract.CONTENT_AUTHORITY + ".Database.DynamicProvider"
         val DYNAMIC_CONTENT_URI = Uri.parse("content://$DYNAMIC_CONTENT_AUTHORITY")
 
         // Names of various columns

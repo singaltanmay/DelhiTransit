@@ -1,4 +1,4 @@
-package com.example.delhitransit.database;
+package com.example.delhitransit.Database;
 
 import android.content.ContentProvider;
 import android.content.ContentResolver;
