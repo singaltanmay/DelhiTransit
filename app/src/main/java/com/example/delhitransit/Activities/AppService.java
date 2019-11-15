@@ -29,7 +29,6 @@ import java.util.List;
 
 public class AppService extends Service {
 
-
     private static final String DATABASE_SHARED_PREF_KEY = "staticDB";
     private static final String TABLE_STOPS_INITIALIZED = "stops_table_init";
     private static final String TABLE_ROUTES_INITIALIZED = "routes_table_init";
