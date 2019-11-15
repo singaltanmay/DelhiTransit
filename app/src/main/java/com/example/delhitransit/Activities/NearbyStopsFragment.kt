@@ -13,7 +13,6 @@ import android.widget.TextView
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.loader.app.LoaderManager
-import androidx.loader.content.AsyncTaskLoader
 import androidx.loader.content.Loader
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -115,7 +114,7 @@ class NearbyStopsFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
         destinationSearchView?.setQuery(mPreferences?.getString(ROUTE_DESTINATION_KEY, null), false)
     }
 
-    override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> = RoutesLoader(this as Context)
+    override fun onCreateLoader(id: Int, args: Bundle?): Loader<Cursor> = RoutesLoader(mContext!!)
 
     override fun onLoadFinished(loader: Loader<Cursor>, data: Cursor?) {
         mAdapter?.setDataset(data)
@@ -144,12 +143,15 @@ class NearbyStopsFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
 
     private inner class RoutesCursorAdapter(private var mDataset: Cursor?) : RecyclerView.Adapter<RoutesCursorAdapter.MyViewHolder>() {
 
-        val snameIDX = mDataset?.getColumnIndexOrThrow(StaticDbHelper.COLUMN_NAME_STOP_NAME)
-        val sidIDX = mDataset?.getColumnIndexOrThrow(StaticDbHelper.COLUMN_NAME_STOP_ID)
+        var snameIDX: Int? = null
+        var sidIDX: Int? = null
 
-        private inner class MyViewHolder(var view: View) : RecyclerView.ViewHolder(view)
+        private inner class MyViewHolder(val view: View) : RecyclerView.ViewHolder(view)
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MyViewHolder(LayoutInflater.from(context).inflate(R.layout.nearby_stops_item, parent, false))
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = MyViewHolder(LayoutInflater.from(context).inflate(R.layout.nearby_stops_item, parent, false)).also {
+            if (snameIDX == null) snameIDX = mDataset?.getColumnIndexOrThrow(StaticDbHelper.COLUMN_NAME_STOP_NAME)
+            if (sidIDX == null) sidIDX = mDataset?.getColumnIndexOrThrow(StaticDbHelper.COLUMN_NAME_STOP_ID)
+        }
 
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
@@ -160,14 +162,16 @@ class NearbyStopsFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
             var stopName: String? = ""
             var stopID: Int? = -1
 
-
             if (snameIDX != null) {
-                stopName = mDataset?.getString(snameIDX)
+                stopName = mDataset?.getString(snameIDX!!)
             }
+            Log.d(LOG_TAG, "StopName is $stopName")
 
             if (sidIDX != null) {
-                stopID = mDataset?.getInt(sidIDX)
+                stopID = mDataset?.getInt(sidIDX!!)
             }
+            Log.d(LOG_TAG, "StopID is $stopID")
+
 
             val text = stopID.toString() + "\t" + stopName
             textView.text = text
@@ -182,12 +186,5 @@ class NearbyStopsFragment : Fragment(), LoaderManager.LoaderCallbacks<Cursor> {
         fun setDataset(mDataset: Cursor?) {
             this.mDataset = mDataset
         }
-
-    }
-
-    private inner class RoutesLoader(context: Context) : AsyncTaskLoader<Cursor>(context) {
-
-        override fun loadInBackground(): Cursor? = mService!!.allStops
-
     }
 }
