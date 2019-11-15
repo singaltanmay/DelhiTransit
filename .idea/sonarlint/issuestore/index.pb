@@ -6,6 +6,6 @@ Napp/src/main/java/com/example/delhitransit/Activities/NearbyStopsFragment.java
 w
 Gapp/src/main/java/com/example/delhitransit/Activities/BusListAdapter.kt,c/c/cc718533ba76df4e49734389133e3c8c63e3b9e0
 w
-Gapp/src/main/java/com/example/delhitransit/Activities/MainActivity.java,2/7/2715d2f2b800156a854951036eabb19348375731
+Gapp/src/main/java/com/example/delhitransit/Activities/MainActivity.java,2\7\2715d2f2b800156a854951036eabb19348375731
 u
 Eapp/src/main/java/com/example/delhitransit/Activities/AppService.java,c/0/c06bdf599e983926d4a83f9f962df3568684fb74
