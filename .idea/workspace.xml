@@ -19,9 +19,9 @@
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/classAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/jarAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/jarAnalysis.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/javaCompile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/NearbyStopsFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/NearbyStopsFragment.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/VehiclePositionLoader.java" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -69,11 +69,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/NearbyStopsFragment.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1181">
-              <caret line="119" column="33" selection-start-line="119" selection-start-column="33" selection-end-line="119" selection-end-column="33" />
+            <state relative-caret-position="361">
+              <caret line="123" column="56" lean-forward="true" selection-start-line="123" selection-start-column="56" selection-end-line="123" selection-end-column="56" />
               <folding>
                 <element signature="e#45#754#0" expanded="true" />
               </folding>
@@ -94,17 +94,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/VehiclePositionLoader.java">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/VehiclePositionLoader.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="400">
-              <caret line="20" column="5" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#516#517#0" expanded="true" />
-                <element signature="e#546#547#0" expanded="true" />
-                <element signature="e#600#601#0" expanded="true" />
-                <element signature="e#627#628#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="80">
+              <caret line="4" selection-start-line="4" selection-end-line="4" />
             </state>
           </provider>
         </entry>
@@ -132,6 +125,21 @@
                 <element signature="e#9669#9670#0" expanded="true" />
                 <element signature="e#17630#20313#0" expanded="true" />
                 <element signature="e#20312#20313#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/MainActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="20">
+              <caret line="36" column="27" lean-forward="true" selection-start-line="36" selection-start-column="27" selection-end-line="36" selection-end-column="27" />
+              <folding>
+                <element signature="method#launchAppService#0;class#MainActivity#0" />
+                <element signature="method#onCreateOptionsMenu#0;class#MainActivity#0" />
+                <element signature="method#onOptionsItemSelected#0;class#MainActivity#0" />
+                <element signature="e#2961#3281#0" />
               </folding>
             </state>
           </provider>
@@ -184,11 +192,9 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/MainActivity.kt" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Database/StaticDbHelper.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/BusPositionUpdate.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/VehiclePositionLoader.kt" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Database/BaseContract.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/GtfsRealtime.kt" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/GtfsRealtime.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Database/StaticProvider.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/NearbyStopsFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/database/StaticDbHelper.kt" />
@@ -206,6 +212,8 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/AppService.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/RoutesLoader.kt" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/NearbyStopsFragment.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/VehiclePositionLoader.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/MainActivity.java" />
       </list>
     </option>
   </component>
@@ -368,6 +376,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
       <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.17377399" />
@@ -382,10 +391,10 @@
       <window_info anchor="bottom" id="Logcat" order="1" sideWeight="0.49893278" weight="0.43661973" />
       <window_info anchor="bottom" id="TODO" order="2" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.32896176" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="4" sideWeight="0.49893278" visible="true" weight="0.28710726" />
+      <window_info anchor="bottom" id="Terminal" order="4" sideWeight="0.49893278" weight="0.28710726" />
       <window_info anchor="bottom" id="Event Log" order="5" sideWeight="0.5010672" side_tool="true" weight="0.43715847" />
       <window_info anchor="bottom" id="Version Control" order="6" />
-      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.49839914" weight="0.33694476" />
+      <window_info active="true" anchor="bottom" id="Build" order="7" sideWeight="0.49839914" visible="true" weight="0.33694476" />
       <window_info anchor="bottom" id="Android Profiler" order="8" />
       <window_info anchor="bottom" id="Find" order="9" weight="0.32827735" />
       <window_info anchor="bottom" id="SonarLint" order="10" weight="0.32936078" />
@@ -616,19 +625,6 @@
       </provider>
       <provider editor-type-id="android-designer2" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-79">
-          <caret line="40" column="25" lean-forward="true" selection-start-line="40" selection-start-column="25" selection-end-line="40" selection-end-column="25" />
-          <folding>
-            <element signature="method#launchAppService#0;class#MainActivity#0" />
-            <element signature="method#onCreateOptionsMenu#0;class#MainActivity#0" />
-            <element signature="method#onOptionsItemSelected#0;class#MainActivity#0" />
-            <element signature="e#2961#3281#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Database/StaticDbHelper.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="160">
@@ -685,26 +681,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/VehiclePositionLoader.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/VehiclePositionLoader.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="20" column="5" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#516#517#0" expanded="true" />
-            <element signature="e#546#547#0" expanded="true" />
-            <element signature="e#600#601#0" expanded="true" />
-            <element signature="e#627#628#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="80">
+          <caret line="4" selection-start-line="4" selection-end-line="4" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/NearbyStopsFragment.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1181">
-          <caret line="119" column="33" selection-start-line="119" selection-start-column="33" selection-end-line="119" selection-end-column="33" />
+        <state relative-caret-position="361">
+          <caret line="123" column="56" lean-forward="true" selection-start-line="123" selection-start-column="56" selection-end-line="123" selection-end-column="56" />
           <folding>
             <element signature="e#45#754#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/delhitransit/Activities/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="20">
+          <caret line="36" column="27" lean-forward="true" selection-start-line="36" selection-start-column="27" selection-end-line="36" selection-end-column="27" />
+          <folding>
+            <element signature="method#launchAppService#0;class#MainActivity#0" />
+            <element signature="method#onCreateOptionsMenu#0;class#MainActivity#0" />
+            <element signature="method#onOptionsItemSelected#0;class#MainActivity#0" />
+            <element signature="e#2961#3281#0" />
           </folding>
         </state>
       </provider>

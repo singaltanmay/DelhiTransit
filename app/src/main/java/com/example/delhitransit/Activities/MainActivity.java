@@ -19,7 +19,7 @@ import com.example.delhitransit.R;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<BusPositionUpdate>> {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<? extends BusPositionUpdate>> {
 
     //LOG_TAG
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
@@ -54,23 +54,23 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     @Override
-    public Loader<List<BusPositionUpdate>> onCreateLoader(int i, Bundle bundle) {
+    public Loader<List<? extends BusPositionUpdate>> onCreateLoader(int i, Bundle bundle) {
         return new VehiclePositionLoader(this);
     }
 
     @Override
-    public void onLoadFinished(Loader<List<BusPositionUpdate>> loader, List<BusPositionUpdate> feedEntities) {
+    public void onLoadFinished(Loader<List<? extends BusPositionUpdate>> loader, List<? extends BusPositionUpdate> feedEntities) {
         // Log the number of entries received by loader
         Log.v(LOG_TAG, "List Size Received by Loader : " + feedEntities.size());
 
         // Set new data-set on the adapter
-        adapter.setDataset(feedEntities);
+        adapter.setDataset((List<BusPositionUpdate>) feedEntities);
         // Update the adapter
         adapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onLoaderReset(Loader<List<BusPositionUpdate>> loader) {
+    public void onLoaderReset(Loader<List<? extends BusPositionUpdate>> loader) {
         // Set null data-set on the adapter
         adapter.setDataset(null);
         // Clear the adapter
