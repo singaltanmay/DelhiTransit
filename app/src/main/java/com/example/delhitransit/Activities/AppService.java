@@ -210,6 +210,8 @@ public class AppService extends Service {
      permanent static data containing tables in the Database */
     private class DatabaseInitializer {
 
+        //TODO drop table before initializing because if app quit previously while init was underway, some entries might get added twice
+
         private final String LOG_TAG = DatabaseInitializer.class.getSimpleName();
         private SharedPreferences staticDBPrefs;
         private SharedPreferences.Editor staticDBPrefsEditor;
