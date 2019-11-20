@@ -191,8 +191,8 @@ public class AppService extends Service {
 
     private long convertTimeToEpoch(String timestamp) {
         long time;
-        long hour = Long.parseLong(timestamp.substring(0,2));
-        long minute = Long.parseLong(timestamp.substring(3,5));
+        long hour = Long.parseLong(timestamp.substring(0, 2));
+        long minute = Long.parseLong(timestamp.substring(3, 5));
         long second = Long.parseLong(timestamp.substring(6));
 
         time = (((hour * 60) + minute) * 60) + second;
@@ -407,9 +407,11 @@ public class AppService extends Service {
                         }
 
                         if (line.contains(",")) {
-                            int comma = line.indexOf(',');
-                            //TODO implement stack based method to ignore , between ""
-                            //TODO restore "Sec-7 / 8 Xing" to "Sec-7,8 Xing" in line 2586
+                            int comma;
+
+                            if (line.charAt(0) == '"') {
+                                comma = line.indexOf('"', 1) + 1;
+                            } else comma = line.indexOf(',');
 
                             stop_name = line.substring(0, comma);
                             line = line.substring(comma + 1);
