@@ -11,10 +11,11 @@ import android.os.IBinder;
 import android.text.TextUtils;
 import android.util.Log;
 
+
+import com.example.delhitransit.GtfsRealtime;
+import com.example.delhitransit.BusPositionUpdate;
 import com.example.delhitransit.Database.DynamicDbHelper;
 import com.example.delhitransit.Database.StaticDbHelper;
-import com.example.delhitransit.BusPositionUpdate;
-import com.example.delhitransit.GtfsRealtime;
 import com.example.delhitransit.R;
 
 import java.io.BufferedReader;
@@ -25,6 +26,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class AppService extends Service {
@@ -74,7 +76,7 @@ public class AppService extends Service {
     public List<BusPositionUpdate> fetchAllPosition(final Context context) {
 
         final List<BusPositionUpdate> positionList = new ArrayList<>();
-
+        
         // Get the latest update from server
         List<GtfsRealtime.FeedEntity> feedEntities = fetchUpdateFromServer();
 
@@ -191,6 +193,33 @@ public class AppService extends Service {
     private long convertTimeToEpoch(String timestamp) {
         //TODO actually do stuff
         return 0;
+    }
+
+    private boolean isTimeOkay(String timestamp){
+
+        int hours=Integer.parseInt(timestamp.substring(0,2));
+        int min=Integer.parseInt(timestamp.substring(3,5));
+        int sec=Integer.parseInt(timestamp.substring(6,8));
+        if (Calendar.getInstance().get(Calendar.HOUR_OF_DAY)>hours){
+            return false;
+        }else{
+            if (Calendar.getInstance().get(Calendar.MINUTE)>min){
+                return false;
+            }else {
+                if (Calendar.getInstance().get(Calendar.SECOND)>sec){
+                    return false;
+                }else {
+                    return true;
+                }
+            }
+
+        }
+
+    }
+
+    private long getTimeInSec(){
+        return Calendar.getInstance().get(Calendar.HOUR_OF_DAY)*60+Calendar.getInstance().get(Calendar.MINUTE)*60
+                +Calendar.getInstance().get(Calendar.SECOND);
     }
 
     /* Class responsible for all initialization operation on the
@@ -395,11 +424,16 @@ public class AppService extends Service {
 
                         if (line.contains(",")) {
                             int comma = line.indexOf(',');
+
                             //TODO implement stack based method to ignore , between ""
                             //TODO restore "Sec-7 / 8 Xing" to "Sec-7,8 Xing" in line 2586
-
-                            stop_name = line.substring(0, comma);
-                            line = line.substring(comma + 1);
+                            if (line.charAt(0)=='"'){
+                                stop_name = line.substring(1, comma);
+                                line = line.substring(line.indexOf('"') + 1);
+                            }else{
+                                stop_name = line.substring(0, comma);
+                                line = line.substring(comma + 1);
+                            }
                         }
 
                         if (line.contains(",")) {
