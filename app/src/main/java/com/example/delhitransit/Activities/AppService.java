@@ -25,6 +25,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class AppService extends Service {
@@ -189,8 +190,20 @@ public class AppService extends Service {
 
 
     private long convertTimeToEpoch(String timestamp) {
-        //TODO actually do stuff
-        return 0;
+        long time;
+        long hour = Long.parseLong(timestamp.substring(0,2));
+        long minute = Long.parseLong(timestamp.substring(3,5));
+        long second = Long.parseLong(timestamp.substring(6));
+
+        time = (((hour * 60) + minute) * 60) + second;
+
+        return time;
+    }
+
+    public long timeSince12AM() {
+        Calendar instance = Calendar.getInstance();
+        return ((((instance.get(Calendar.HOUR_OF_DAY) * 60) + instance.get(Calendar.MINUTE)) * 60)
+                + instance.get(Calendar.SECOND));
     }
 
     /* Class responsible for all initialization operation on the
@@ -271,7 +284,7 @@ public class AppService extends Service {
 
             InputStream stream = context.getResources().openRawResource(R.raw.routes);
 
-            InputStreamReader inputStreamReader = new InputStreamReader(stream, StandardCharsets.UTF_8 );
+            InputStreamReader inputStreamReader = new InputStreamReader(stream, StandardCharsets.UTF_8);
 
             // Since InputStreamReader can only read one character at a time
             // but a BufferedReader can read a lot more at once it is being used
