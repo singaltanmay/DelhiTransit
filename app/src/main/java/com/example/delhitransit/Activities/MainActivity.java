@@ -1,5 +1,6 @@
 package com.example.delhitransit.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,6 +10,8 @@ import android.content.Intent;
 import android.content.Loader;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.example.delhitransit.BusPositionUpdate;
@@ -45,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         Log.v(LOG_TAG, "Starting AppService");
     }
 
-    private void initNavFab(){
+    private void initNavFab() {
         FloatingActionButton floatingActionButton = findViewById(R.id.navigateFAB);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         });
     }
 
-    private void initUpdatesList(){
+    private void initUpdatesList() {
         // Recycler View to show data fetched from server
         RecyclerView busListView = findViewById(R.id.bus_list);
         busListView.setLayoutManager(new LinearLayoutManager(this));
@@ -90,4 +93,23 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         adapter.notifyDataSetChanged();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main_activity, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_open_app_pref: {
+
+                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+
+                break;
+            }
+        }
+
+        return false;
+    }
 }
