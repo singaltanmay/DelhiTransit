@@ -42,21 +42,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     private void initAppService() {
-
-        AppService service = null;
-
-        try {
-            service = AppService.getInstance();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        if (service == null) {
-            // Launches app background service that provides Database access and fetches data from the internet
-            Intent intent = new Intent(MainActivity.this, AppService.class);
-            startService(intent);
-            Log.v(LOG_TAG, "Starting AppService");
-        }
+        // Launches app background service that provides Database access and fetches data from the internet
+        Intent intent = new Intent(MainActivity.this, AppService.class);
+        startService(intent);
+        Log.v(LOG_TAG, "Starting AppService");
     }
 
     private void initNavFab() {
