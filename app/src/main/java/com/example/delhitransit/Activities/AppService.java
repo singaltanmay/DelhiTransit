@@ -30,16 +30,15 @@ import java.util.List;
 
 public class AppService extends Service {
 
-    private static final String DATABASE_SHARED_PREF_KEY = "staticDB";
-    private static final String TABLE_STOPS_INITIALIZED = "stops_table_init";
-    private static final String TABLE_ROUTES_INITIALIZED = "routes_table_init";
-    private static final String TABLE_TRIPS_INITIALIZED = "trips_table_init";
-    private static final String TABLE_STOP_TIMES_INITIALIZED = "stop_times_init";
-
+    public static final String DATABASE_SHARED_PREF_KEY = "staticDB";
+    public static final short TABLE_OPS_INIT = 0;
+    public static final short TABLE_OPS_DROP = 1;
 
     private static final String LOG_TAG = AppService.class.getSimpleName();
     private static Context context;
     private static ContentResolver resolver;
+
+    private DatabaseOps databaseOps;
 
     public AppService() {
         Log.d(LOG_TAG, "Service constructed");
@@ -49,8 +48,8 @@ public class AppService extends Service {
     @Override
     public void onCreate() {
         resolver = context.getContentResolver();
-        DatabaseInitializer initializer = new DatabaseInitializer();
-        initializer.checkDatabaseIntegrity();
+        databaseOps = new DatabaseOps();
+        databaseOps.checkDatabaseIntegrity();
     }
 
     @Override
@@ -167,7 +166,6 @@ public class AppService extends Service {
 
     }
 
-
     // TODO Find all paths
     public Cursor findAllPaths(String source, String destination) {
 
@@ -203,16 +201,64 @@ public class AppService extends Service {
                 + instance.get(Calendar.SECOND));
     }
 
+    public void modifyDatabaseTable(final String table_key, final short operation) {
+
+        if (table_key.equals(getString(R.string.routes_initialized_key))) {
+            switch (operation) {
+                case TABLE_OPS_INIT: {
+                    databaseOps.initRoutesTable();
+                    break;
+                }
+                case TABLE_OPS_DROP: {
+                    databaseOps.dropRoutesTable();
+                    break;
+                }
+            }
+        } else if (table_key.equals(getString(R.string.stops_initialized_key))) {
+            switch (operation) {
+                case TABLE_OPS_INIT: {
+                    databaseOps.initStopsTable();
+                    break;
+                }
+                case TABLE_OPS_DROP: {
+                    databaseOps.dropStopsTable();
+                    break;
+                }
+            }
+        } else if (table_key.equals(getString(R.string.trips_initialized_key))) {
+            switch (operation) {
+                case TABLE_OPS_INIT: {
+                    databaseOps.initTripsTable();
+                    break;
+                }
+                case TABLE_OPS_DROP: {
+                    databaseOps.dropTripsTable();
+                    break;
+                }
+            }
+        } else if (table_key.equals(getString(R.string.stop_times_initialized_key))) {
+            switch (operation) {
+                case TABLE_OPS_INIT: {
+                    databaseOps.initStopTimesTable();
+                    break;
+                }
+                case TABLE_OPS_DROP: {
+                    databaseOps.dropStopTimesTable();
+                    break;
+                }
+            }
+        }
+
+    }
+
+
     /* Class responsible for all initialization operation on the
      permanent static data containing tables in the Database */
-    private class DatabaseInitializer {
+    private class DatabaseOps {
 
-        //TODO drop table before initializing because if app quit previously while init was underway, some entries might get added twice
-
-        private final String LOG_TAG = DatabaseInitializer.class.getSimpleName();
+        private final String LOG_TAG = DatabaseOps.class.getSimpleName();
         private SharedPreferences staticDBPrefs;
         private SharedPreferences.Editor staticDBPrefsEditor;
-
 
         // Helper method that checks if a table is to be initialized or not
         private boolean tableHasToBeInitialized(String tableName) {
@@ -233,53 +279,112 @@ public class AppService extends Service {
 
             // Checks if tables in the Database have already been initialized
             // Initializes tables if not already initialized
-            if (tableHasToBeInitialized(TABLE_STOPS_INITIALIZED)) {
-                // Create new thread to init table
-                final Thread initStops = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        initStopsTable(context);
-                    }
-                });
-                initStops.start();
-            }
+            if (tableHasToBeInitialized(getString(R.string.stops_initialized_key)))
+                initStopsTable();
 
-            if (tableHasToBeInitialized(TABLE_ROUTES_INITIALIZED)) {
-                // Create new thread to init table
-                Thread initRoutes = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        initRoutesTable(context);
-                    }
-                });
-                initRoutes.start();
-            }
+            if (tableHasToBeInitialized(getString(R.string.routes_initialized_key)))
+                initRoutesTable();
 
-            if (tableHasToBeInitialized(TABLE_TRIPS_INITIALIZED)) {
-                // Create new thread to init table
-                final Thread initTrips = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        initTripsTable(context);
-                    }
-                });
-                initTrips.start();
-            }
+            if (tableHasToBeInitialized(getString(R.string.trips_initialized_key)))
+                initTripsTable();
 
-            if (tableHasToBeInitialized(TABLE_STOP_TIMES_INITIALIZED)) {
-                // Create new thread to init table
-                final Thread initStopTimes = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        initStopTimesTable(context);
-                    }
-                });
-                initStopTimes.start();
-            }
+            if (tableHasToBeInitialized(getString(R.string.stop_times_initialized_key)))
+                initStopTimesTable();
 
         }
 
+        void initRoutesTable() {
+            // Create new thread to init table
+            final Thread initRoutes = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    initRoutesTable(context);
+                }
+            });
+            initRoutes.start();
+        }
+
+        void initStopsTable() {
+            // Create new thread to init table
+            Thread initStops = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    initStopsTable(context);
+                }
+            });
+            initStops.start();
+        }
+
+        void initTripsTable() {
+            // Create new thread to init table
+            final Thread initTrips = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    initTripsTable(context);
+                }
+            });
+            initTrips.start();
+        }
+
+        void initStopTimesTable() {
+            // Create new thread to init table
+            final Thread initStopTimes = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    initStopTimesTable(context);
+                }
+            });
+            initStopTimes.start();
+        }
+
+        void dropRoutesTable() {
+            new Thread(
+                    new Runnable() {
+                        @Override
+                        public void run() {
+                            resolver.delete(StaticDbHelper.Companion.getTABLE_NAME_ROUTES_CONTENT_URI(), null, null);
+                        }
+                    }
+            ).start();
+        }
+
+        void dropStopsTable() {
+            new Thread(
+                    new Runnable() {
+                        @Override
+                        public void run() {
+                            resolver.delete(StaticDbHelper.Companion.getTABLE_NAME_STOPS_CONTENT_URI(), null, null);
+                        }
+                    }
+            ).start();
+        }
+
+        void dropStopTimesTable() {
+            new Thread(
+                    new Runnable() {
+                        @Override
+                        public void run() {
+                            resolver.delete(StaticDbHelper.Companion.getTABLE_NAME_STOP_TIMES_CONTENT_URI(), null, null);
+                        }
+                    }
+            ).start();
+        }
+
+        void dropTripsTable() {
+            new Thread(
+                    new Runnable() {
+                        @Override
+                        public void run() {
+                            resolver.delete(StaticDbHelper.Companion.getTABLE_NAME_TRIPS_CONTENT_URI(), null, null);
+                        }
+                    }
+            ).start();
+        }
+
         private void initRoutesTable(Context context) {
+
+            // Drop any pre-existing table to prevent duplicacy
+            dropRoutesTable();
 
             InputStream stream = context.getResources().openRawResource(R.raw.routes);
 
@@ -350,13 +455,16 @@ public class AppService extends Service {
 
             }
 
-            updateInitializationStatus(TABLE_ROUTES_INITIALIZED);
+            updateInitializationStatus(getString(R.string.routes_initialized_key));
             Log.v(LOG_TAG, "routes table initialized");
 
 
         }
 
         private void initStopsTable(Context context) {
+
+            // Drop any pre-existing table to prevent duplicacy
+            dropStopsTable();
 
             InputStream stream = context.getResources().openRawResource(R.raw.stops);
 
@@ -441,13 +549,16 @@ public class AppService extends Service {
 
             }
 
-            updateInitializationStatus(TABLE_STOPS_INITIALIZED);
+            updateInitializationStatus(getString(R.string.stops_initialized_key));
             Log.d(LOG_TAG, "stops table initialized.");
 
 
         }
 
         private void initStopTimesTable(Context context) {
+
+            // Drop any pre-existing table to prevent duplicacy
+            dropStopTimesTable();
 
             InputStream stream = context.getResources().openRawResource(R.raw.stop_times);
 
@@ -540,12 +651,15 @@ public class AppService extends Service {
 
             }
 
-            updateInitializationStatus(TABLE_STOP_TIMES_INITIALIZED);
+            updateInitializationStatus(getString(R.string.stop_times_initialized_key));
             Log.d(LOG_TAG, "stop_times table initialized.");
 
         }
 
         private void initTripsTable(Context context) {
+
+            // Drop any pre-existing table to prevent duplicacy
+            dropTripsTable();
 
             InputStream stream = context.getResources().openRawResource(R.raw.trips);
 
@@ -607,11 +721,10 @@ public class AppService extends Service {
 
             }
 
-            updateInitializationStatus(TABLE_TRIPS_INITIALIZED);
+            updateInitializationStatus(getString(R.string.trips_initialized_key));
             Log.d(LOG_TAG, "trips table initialized");
 
         }
-
 
     }
 

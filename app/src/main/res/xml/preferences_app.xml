@@ -3,18 +3,26 @@
 
     <SwitchPreferenceCompat
         android:defaultValue="false"
+        android:icon="@drawable/ic_border_all_black_24dp"
+        android:key="@string/routes_initialized_key"
         android:title="Routes Table Initialized" />
 
     <SwitchPreferenceCompat
         android:defaultValue="false"
+        android:icon="@drawable/ic_border_all_black_24dp"
+        android:key="@string/stops_initialized_key"
         android:title="Stops Table Initialized" />
 
     <SwitchPreferenceCompat
         android:defaultValue="false"
+        android:icon="@drawable/ic_border_all_black_24dp"
+        android:key="@string/trips_initialized_key"
         android:title="Trips Table Initialized" />
 
     <SwitchPreferenceCompat
         android:defaultValue="false"
+        android:icon="@drawable/ic_border_all_black_24dp"
+        android:key="@string/stop_times_initialized_key"
         android:title="Stop Times Table Initialized" />
 
 
