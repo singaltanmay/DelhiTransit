@@ -65,10 +65,7 @@ public class AppService extends Service {
 
     public static AppService getInstance() {
         if (context != null) return (AppService) context;
-        else {
-            AppService service = new AppService();
-            return service;
-        }
+        else return new AppService();
     }
 
     // Initiates web update and delegates all related tasks
