@@ -2,12 +2,12 @@ package com.example.delhitransit.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.loader.app.LoaderManager;
+import androidx.loader.content.Loader;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.LoaderManager;
 import android.content.Intent;
-import android.content.Loader;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         busListView.setAdapter(adapter);
 
         // Initialize loader that keeps recycler view updated
-        getLoaderManager().initLoader(2924, null, this);
+        getSupportLoaderManager().initLoader(2924, null, this);
     }
 
     @Override
