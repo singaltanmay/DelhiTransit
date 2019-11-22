@@ -41,7 +41,7 @@ public class AppService extends Service {
     private DatabaseOps databaseOps;
 
     public AppService() {
-        Log.d(LOG_TAG, "Service constructed");
+        Log.d(LOG_TAG, "AppService constructed");
         context = this;
     }
 
@@ -64,11 +64,11 @@ public class AppService extends Service {
 
     public static AppService getInstance() {
         if (context != null) return (AppService) context;
-        else return new AppService();
+        else  return new AppService();
     }
 
     // Initiates web update and delegates all related tasks
-    public List<BusPositionUpdate> fetchAllPosition(final Context context) {
+    public List<BusPositionUpdate> fetchAllPosition() {
 
         final List<BusPositionUpdate> positionList = new ArrayList<>();
 
@@ -80,16 +80,9 @@ public class AppService extends Service {
             positionList.add(new BusPositionUpdate().parseFrom(entity));
         }
 
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                // Update Database with new information
-                updatePositionDatabase(positionList);
-            }
-        });
+        if (databaseOps == null) databaseOps = new DatabaseOps();
 
-
-        thread.start();
+        databaseOps.updatePositionDatabase(positionList);
 
         // Return list for displaying in GUI
         return positionList;
@@ -121,7 +114,7 @@ public class AppService extends Service {
                 GtfsRealtime.FeedMessage feedMessage = GtfsRealtime.FeedMessage.parseFrom(inputStream);
                 feedEntityList = feedMessage.getEntityList();
 
-                Log.d(LOG_TAG, "List Size : " + feedEntityList.size());
+                Log.d(LOG_TAG, "Size of FeedEntity list received from server : " + feedEntityList.size());
 
             } else
                 Log.e(LOG_TAG, "Error connecting to server. Response code : " + urlConnection.getResponseCode());
@@ -137,33 +130,6 @@ public class AppService extends Service {
         }
 
         return feedEntityList;
-    }
-
-    // Updates the Database with new information
-    private void updatePositionDatabase(List<BusPositionUpdate> list) {
-
-
-        String columnNameVehicleId = DynamicDbHelper.COLUMN_NAME_VEHICLE_ID;
-        String columnNameTripId = DynamicDbHelper.COLUMN_NAME_TRIP_ID;
-        String columnNameRouteId = DynamicDbHelper.COLUMN_NAME_ROUTE_ID;
-        String columnNameVehicleLatitude = DynamicDbHelper.COLUMN_NAME_VEHICLE_LATITUDE;
-        String columnNameVehicleLongitude = DynamicDbHelper.COLUMN_NAME_VEHICLE_LONGITUDE;
-        String columnNameVehicleSpeed = DynamicDbHelper.COLUMN_NAME_VEHICLE_SPEED;
-        String columnNameUpdateTimestamp = DynamicDbHelper.COLUMN_NAME_UPDATE_TIMESTAMP;
-
-        for (BusPositionUpdate position : list) {
-            ContentValues values = new ContentValues();
-            values.put(columnNameVehicleId, position.getVehicleID());
-            values.put(columnNameTripId, position.getTripID());
-            values.put(columnNameRouteId, position.getRouteID());
-            values.put(columnNameVehicleLatitude, position.getLatitude());
-            values.put(columnNameVehicleLongitude, position.getLongitude());
-            values.put(columnNameVehicleSpeed, position.getSpeed());
-            values.put(columnNameUpdateTimestamp, position.getTimestamp());
-
-            resolver.insert(DynamicDbHelper.Companion.getTABLE_NAME_VEHICLE_POSITION_UPDATE_CONTENT_URI(), values);
-        }
-
     }
 
     // TODO Find all paths
@@ -195,7 +161,7 @@ public class AppService extends Service {
         return time;
     }
 
-    public long timeSince12AM() {
+    public long secondsSince12AM() {
         Calendar instance = Calendar.getInstance();
         return ((((instance.get(Calendar.HOUR_OF_DAY) * 60) + instance.get(Calendar.MINUTE)) * 60)
                 + instance.get(Calendar.SECOND));
@@ -254,7 +220,7 @@ public class AppService extends Service {
 
     /* Class responsible for all initialization operation on the
      permanent static data containing tables in the Database */
-    private class DatabaseOps {
+    private final class DatabaseOps {
 
         private final String LOG_TAG = DatabaseOps.class.getSimpleName();
         private SharedPreferences staticDBPrefs;
@@ -723,6 +689,44 @@ public class AppService extends Service {
 
             updateInitializationStatus(getString(R.string.trips_initialized_key));
             Log.d(LOG_TAG, "trips table initialized");
+
+        }
+
+        public void updatePositionDatabase(final List<BusPositionUpdate> list) {
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    // Update Database with new information
+                    mUpdatePositionDatabase(list);
+                }
+            }).start();
+
+        }
+
+        // Updates the Database with new information
+        private void mUpdatePositionDatabase(List<BusPositionUpdate> list) {
+
+            String columnNameVehicleId = DynamicDbHelper.COLUMN_NAME_VEHICLE_ID;
+            String columnNameTripId = DynamicDbHelper.COLUMN_NAME_TRIP_ID;
+            String columnNameRouteId = DynamicDbHelper.COLUMN_NAME_ROUTE_ID;
+            String columnNameVehicleLatitude = DynamicDbHelper.COLUMN_NAME_VEHICLE_LATITUDE;
+            String columnNameVehicleLongitude = DynamicDbHelper.COLUMN_NAME_VEHICLE_LONGITUDE;
+            String columnNameVehicleSpeed = DynamicDbHelper.COLUMN_NAME_VEHICLE_SPEED;
+            String columnNameUpdateTimestamp = DynamicDbHelper.COLUMN_NAME_UPDATE_TIMESTAMP;
+
+            for (BusPositionUpdate position : list) {
+                ContentValues values = new ContentValues();
+                values.put(columnNameVehicleId, position.getVehicleID());
+                values.put(columnNameTripId, position.getTripID());
+                values.put(columnNameRouteId, position.getRouteID());
+                values.put(columnNameVehicleLatitude, position.getLatitude());
+                values.put(columnNameVehicleLongitude, position.getLongitude());
+                values.put(columnNameVehicleSpeed, position.getSpeed());
+                values.put(columnNameUpdateTimestamp, position.getTimestamp());
+
+                resolver.insert(DynamicDbHelper.Companion.getTABLE_NAME_VEHICLE_POSITION_UPDATE_CONTENT_URI(), values);
+            }
 
         }
 
