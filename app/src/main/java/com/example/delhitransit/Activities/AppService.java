@@ -204,6 +204,13 @@ public class AppService extends Service {
                 + instance.get(Calendar.SECOND));
     }
 
+    public Double getStopRange() {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.app_preferences_shared_pref_key), Context.MODE_PRIVATE);
+        String string = sharedPreferences.getString(context.getString(R.string.nearby_stops_range_key), context.getString(R.string.nearby_stops_range_default_value));
+        Log.v(LOG_TAG, "The value received is " + string);
+        return java.lang.Double.parseDouble(string);
+    }
+
     public void modifyDatabaseTable(final String table_key, final short operation) {
 
         if (table_key.equals(getString(R.string.routes_initialized_key))) {
@@ -253,7 +260,6 @@ public class AppService extends Service {
         }
 
     }
-
 
     /**
      * Class responsible for all initialization operation on the
