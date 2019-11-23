@@ -1,10 +1,4 @@
 <resources>
     <string name="app_name">Delhi Transit</string>
 
-    <!-- Keys used in various places to store table initialization status etc -->
-    <string name="routes_initialized_key">routes_init_key</string>
-    <string name="trips_initialized_key">trips_init_key</string>
-    <string name="stops_initialized_key">stops_init_key</string>
-    <string name="stop_times_initialized_key">stop_times_init_key</string>
-
 </resources>
