@@ -14,6 +14,7 @@ import android.util.Log;
 import com.example.delhitransit.Database.DynamicDbHelper;
 import com.example.delhitransit.Database.StaticDbHelper;
 import com.example.delhitransit.BusPositionUpdate;
+import com.example.delhitransit.GeoLocation;
 import com.example.delhitransit.GtfsRealtime;
 import com.example.delhitransit.R;
 
@@ -30,7 +31,6 @@ import java.util.List;
 
 public class AppService extends Service {
 
-    public static final String DATABASE_SHARED_PREF_KEY = "staticDB";
     public static final short TABLE_OPS_INIT = 0;
     public static final short TABLE_OPS_DROP = 1;
 
@@ -64,10 +64,12 @@ public class AppService extends Service {
 
     public static AppService getInstance() {
         if (context != null) return (AppService) context;
-        else  return new AppService();
+        else return new AppService();
     }
 
-    // Initiates web update and delegates all related tasks
+    /**
+     * Initiates web update and delegates all related tasks
+     */
     public List<BusPositionUpdate> fetchAllPosition() {
 
         final List<BusPositionUpdate> positionList = new ArrayList<>();
@@ -88,7 +90,9 @@ public class AppService extends Service {
         return positionList;
     }
 
-    // Makes a HTTP request and returns the latest update in a list
+    /**
+     * Makes a HTTP request and returns the latest update in a list
+     */
     private List<GtfsRealtime.FeedEntity> fetchUpdateFromServer() {
 
         List<GtfsRealtime.FeedEntity> feedEntityList = null;
@@ -135,7 +139,9 @@ public class AppService extends Service {
     // TODO Find all paths
     public Cursor findAllPaths(String source, String destination) {
 
-        String selection = StaticDbHelper.COLUMN_NAME_STOP_ID + " = ? OR " + StaticDbHelper.COLUMN_NAME_STOP_ID + " = ?;";
+        String columnNameStopId = StaticDbHelper.COLUMN_NAME_STOP_ID;
+
+        String selection = columnNameStopId + " = ? OR " + columnNameStopId + " = ?;";
 
         String[] selectionArgs = {source, destination};
 
@@ -149,6 +155,37 @@ public class AppService extends Service {
 
     }
 
+    /**
+     * Returns all stops within the given radius from the co-ordinates passed into it.
+     *
+     * @param latitude   is the latitude of user's current location
+     * @param longitude  is the longitude of user's current location
+     * @param radius     is the radius in km in which latitude & longitude of stops can vary
+     * @param projection is used to specify the columns required. Pass null to get all columns
+     */
+    public Cursor getAllStopsWithinRange(final double latitude, final double longitude, final double radius, String[] projection) {
+
+        GeoLocation[] boundingCoordinates = GeoLocation.fromDegrees(latitude, longitude).boundingCoordinates(radius, null);
+
+        final String minLat = Double.toString(boundingCoordinates[0].getLatitudeInDegrees());
+        final String minLong = Double.toString(boundingCoordinates[0].getLongitudeInDegrees());
+        final String maxLat = Double.toString(boundingCoordinates[1].getLatitudeInDegrees());
+        final String maxLong = Double.toString(boundingCoordinates[1].getLongitudeInDegrees());
+
+        String latCondition = StaticDbHelper.COLUMN_NAME_STOP_LATITUDE + " > ? AND " + StaticDbHelper.COLUMN_NAME_STOP_LATITUDE + " < ?";
+        String longCondition = StaticDbHelper.COLUMN_NAME_STOP_LONGITUDE + " > ? AND " + StaticDbHelper.COLUMN_NAME_STOP_LONGITUDE + " < ?";
+
+        String selection = "(" + latCondition + ") AND (" + longCondition + ");";
+        String[] selectionArgs = {
+                minLat,
+                maxLat,
+                minLong,
+                maxLong
+        };
+
+        return resolver.query(StaticDbHelper.Companion.getTABLE_NAME_STOPS_CONTENT_URI(), projection, selection, selectionArgs, null, null);
+
+    }
 
     private long convertTimeToEpoch(String timestamp) {
         long time;
@@ -218,8 +255,10 @@ public class AppService extends Service {
     }
 
 
-    /* Class responsible for all initialization operation on the
-     permanent static data containing tables in the Database */
+    /**
+     * Class responsible for all initialization operation on the
+     * permanent static data containing tables in the Database
+     */
     private final class DatabaseOps {
 
         private final String LOG_TAG = DatabaseOps.class.getSimpleName();
@@ -240,7 +279,7 @@ public class AppService extends Service {
         private void checkDatabaseIntegrity() {
 
             // Get SharedPreferences that stores the state of the Database
-            staticDBPrefs = getSharedPreferences(AppService.DATABASE_SHARED_PREF_KEY, MODE_PRIVATE);
+            staticDBPrefs = getSharedPreferences(getString(R.string.database_shared_pref_key), MODE_PRIVATE);
             staticDBPrefsEditor = staticDBPrefs.edit();
 
             // Checks if tables in the Database have already been initialized

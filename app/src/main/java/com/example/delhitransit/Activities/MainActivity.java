@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         Log.d(LOG_TAG, "Current time : " + System.currentTimeMillis() / 1000);
 
-
         initAppService();
         initNavFab();
         initUpdatesList();

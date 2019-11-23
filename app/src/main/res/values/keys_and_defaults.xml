@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Keys used to store Shared Preferences -->
+    <string name="database_shared_pref_key">staticDB</string>
+    <string name="app_preferences_shared_pref_key">appPreferences</string>
+
+    <!-- Keys used in various places to store table initialization status etc -->
+    <string name="routes_initialized_key">routes_init_key</string>
+    <string name="trips_initialized_key">trips_init_key</string>
+    <string name="stops_initialized_key">stops_init_key</string>
+    <string name="stop_times_initialized_key">stop_times_init_key</string>
+
+    <!-- Key used to store the default radius in km within which nearby stops are recommended on the map -->
+    <string name="nearby_stops_range_key">nearby_stops_range_key</string>
+    <string name="nearby_stops_range_default_value">0.5</string>
+
+</resources>
