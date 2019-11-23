@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.preference.EditTextPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -19,6 +20,8 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     class AppSettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceChangeListener {
+
+        private val LOG_TAG = this.javaClass.simpleName
 
         private var staticDBPrefs: SharedPreferences? = null
         private var appPreferences : SharedPreferences? = null
@@ -81,7 +84,11 @@ class SettingsActivity : AppCompatActivity() {
 
             nearbyStopRadiusEditText?.setDefaultValue(appPreferences?.getString(getString(R.string.nearby_stops_range_key), getString(R.string.nearby_stops_range_default_value)))
 
+            nearbyStopRadiusEditText?.onPreferenceChangeListener = this
+
         }
+
+
 
         override fun onPreferenceChange(preference: Preference?, newValue: Any?): Boolean {
 
@@ -116,16 +123,17 @@ class SettingsActivity : AppCompatActivity() {
                         val service = AppService.getInstance()
                         val b = newValue as Boolean
                         staticDBPrefs?.edit()?.apply {
-                            putBoolean(stop_times_key, b)
-                            apply()
+                            this.putBoolean(stop_times_key, b)
+                            this.apply()
                         }
 
                         service.modifyDatabaseTable(stop_times_key, if (b) AppService.TABLE_OPS_INIT else AppService.TABLE_OPS_DROP)
                     }
                     nearbyStopRadiusEditText -> {
+                        Log.v(LOG_TAG, "The new value is ${newValue as String}")
                         appPreferences?.edit()?.apply{
-                            putString(getString(R.string.nearby_stops_range_key), newValue as String)
-                            apply()
+                            this.putString(getString(R.string.nearby_stops_range_key), newValue)
+                            this.apply()
                         }
                     }
                 }
