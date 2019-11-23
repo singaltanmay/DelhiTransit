@@ -13,7 +13,7 @@ class StopsSearchActivity : AppCompatActivity() {
         actionBar?.setDisplayHomeAsUpEnabled(true)
 
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(android.R.id.content, StopsMapFragment())
+        transaction.replace(android.R.id.content, StopsMapFragment(this))
         transaction.commit()
 
     }
