@@ -92,7 +92,7 @@ class SettingsActivity : AppCompatActivity() {
 
         override fun onPreferenceChange(preference: Preference?, newValue: Any?): Boolean {
 
-            if (preference != null) {
+            if (newValue != null && preference != null) {
 
                 when (preference) {
                     routesInitializedToggle -> {
@@ -131,6 +131,7 @@ class SettingsActivity : AppCompatActivity() {
                     }
                     nearbyStopRadiusEditText -> {
                         Log.v(LOG_TAG, "The new value is ${newValue as String}")
+                        if ((newValue).isNotBlank())
                         appPreferences?.edit()?.apply{
                             this.putString(getString(R.string.nearby_stops_range_key), newValue)
                             this.apply()

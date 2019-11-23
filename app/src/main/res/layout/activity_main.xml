@@ -8,11 +8,12 @@
     android:orientation="vertical"
     tools:context=".Activities.MainActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/bus_list"
+    <fragment
+        android:id="@+id/map"
+        tools:context=".Activities.MainActivity"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="start|top" />
+        android:layout_height="match_parent"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/navigateFAB"

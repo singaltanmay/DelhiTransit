@@ -4,8 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.Loader;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,16 +14,22 @@ import android.view.View;
 
 import com.example.delhitransit.BusPositionUpdate;
 import com.example.delhitransit.R;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<? extends BusPositionUpdate>> {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<? extends BusPositionUpdate>>, OnMapReadyCallback {
 
     //LOG_TAG
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
-    private static BusListAdapter adapter;
+    private GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         initAppService();
         initNavFab();
         initUpdatesList();
+        initMap();
 
     }
 
@@ -58,15 +63,27 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     private void initUpdatesList() {
-        // Recycler View to show data fetched from server
-        RecyclerView busListView = findViewById(R.id.bus_list);
-        busListView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new BusListAdapter(null);
-        busListView.setAdapter(adapter);
 
         // Initialize loader that keeps recycler view updated
         getSupportLoaderManager().initLoader(2924, null, this);
     }
+
+    private void initMap() {
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        // Add a marker in Sydney, Australia, and move the camera.
+        LatLng sydney = new LatLng(-34, 151);
+        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+    }
+
 
     @Override
     public Loader<List<? extends BusPositionUpdate>> onCreateLoader(int i, Bundle bundle) {
@@ -78,18 +95,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         // Log the number of entries received by loader
         Log.v(LOG_TAG, "List Size Received by Loader : " + feedEntities.size());
 
-        // Set new data-set on the adapter
-        adapter.setDataset((List<BusPositionUpdate>) feedEntities);
-        // Update the adapter
-        adapter.notifyDataSetChanged();
     }
 
     @Override
     public void onLoaderReset(Loader<List<? extends BusPositionUpdate>> loader) {
-        // Set null data-set on the adapter
-        adapter.setDataset(null);
-        // Clear the adapter
-        adapter.notifyDataSetChanged();
+
     }
 
     @Override
