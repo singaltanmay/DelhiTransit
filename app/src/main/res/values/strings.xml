@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Delhi Transit</string>
+    <string name="title_activity_maps">mpa</string>
 
 </resources>
