@@ -25,5 +25,13 @@
         android:key="@string/stop_times_initialized_key"
         android:title="Stop Times Table Initialized" />
 
+    <EditTextPreference
+        android:summary="Set the range within which nearby bus stops are recommended to you on the map."
+        android:key="@string/nearby_stops_range_key"
+        android:icon="@drawable/ic_near_me_black_24dp"
+        android:title="Nearby stops range"
+        android:defaultValue="@string/nearby_stops_range_default_value"
+        />
+
 
 </PreferenceScreen>
